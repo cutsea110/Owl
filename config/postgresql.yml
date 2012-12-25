@@ -1,0 +1,24 @@
+Default: &defaults
+  user: owl
+  password: owl
+  host: localhost
+  port: 5432
+  database: owl
+  poolsize: 10
+
+Development:
+  <<: *defaults
+
+Testing:
+  database: owl_test
+  <<: *defaults
+
+Staging:
+  database: owl_staging
+  poolsize: 100
+  <<: *defaults
+
+Production:
+  database: owl_production
+  poolsize: 100
+  <<: *defaults
