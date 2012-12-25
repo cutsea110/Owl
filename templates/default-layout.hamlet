@@ -1,3 +1,93 @@
-$maybe msg <- mmsg
-    <div #message>#{msg}
-^{widget}
+<div .container>
+  <!-- Nav Menu -->
+  <div .navbar.navbar-inverse.navbar-fixed-top>
+    <div .navbar-inner>
+      <div .container>
+        <a href="" .brand>Owl
+        <ul .nav>
+          <li .active><a href=""><i class="icon-home"></i> Home</a>
+          <li><a href="">Help</a>
+        <ul .nav.pull-right>
+          <li .dropdown>
+            <a href="" .dropdown-toggle data-toggle="dropdown">cutsea110<span class="caret"></span>
+            <ul .dropdown-menu>
+              <li><a href=""><i class="icon-wrench"></i> Settings</a>
+              <li><a href=""><i class="icon-off"></i> Logout</a>
+  <!-- Main -->
+  <div .row>
+    <div .span12>
+      <div .tabbable.tabs-left>
+        <ul .nav.nav-tabs>
+          <li .active><a href="#menu-account" data-toggle="tab">Account</a>
+          <li><a href="#menu-password" data-toggle="tab">Password</a>
+          <li><a href="#menu-email" data-toggle="tab">Email</a>
+          <li><a href="#menu-profile" data-toggle="tab">Profile</a>
+        <div .tab-content>
+          <div .tab-pane.active #menu-account>
+            <div .page-header>
+              <h3>Account <small>change cutsea110's account</small>
+            <form .form-horizontal>
+              <div .control-group.info>
+                <label .control-label for="#account">Account ID
+                <div .controls>
+                  <input type="text" #email .span2 value="cutsea110">
+                  <span .help-inline>message...
+              <div .control-group>
+                <div .controls.btn-group>
+                  <input type="submit" .btn.btn-primary value="Update">
+                  <input type="submit" .btn value="Cancel">
+
+          <div .tab-pane #menu-password>
+            <div .page-header>
+              <h3>Password <small>change cutsea110's password.</small>
+            <form .form-horizontal>
+              <div .control-group.info>
+                <label .control-label for="#pwd">Current Password
+                <div .controls>
+                  <input type="password" #pwd .span3>
+                  <span .help-inline>message...
+              <div .control-group.warning>
+                <label .control-label for="#new">New Password
+                <div .controls>
+                  <input type="password" #new .span3>
+                  <span .help-inline>message...
+              <div .control-group.warning>
+                <label .control-label for="#confirm">Confirmation
+                <div .controls>
+                  <input type="password" #confirm .span3>
+                  <span .help-inline>message...
+              <div .control-group>
+                <div .controls.btn-group>
+                  <input type="submit" .btn.btn-primary value="Update">
+                  <input type="submit" .btn value="Cancel">
+
+          <div .tab-pane #menu-email>
+            <div .page-header>
+              <h3>Email <small>change cutsea110's email.</small>
+            <form .form-horizontal>
+              <div .control-group.warning>
+                <label .control-label for="#email">Email address
+                <div .controls>
+                  <input type="email" #email .span3 value="cutsea110@gmail.com">
+                  <span .help-block>message...message...message...message...
+              <div .control-group>
+                <div .controls.btn-group>
+                  <input type="submit" .btn.btn-primary value="Update">
+                  <input type="submit" .btn value="Cancel">
+
+          <div .tab-pane #menu-profile>
+            <div .page-header>
+              <h3>Profile <small>cutsea110's avatar & any informations.</small>
+            <div.span4>
+              <div .thumbnail>
+                <img .img-rounded.img-small src=@{StaticR img_avatar_jpg} data-src="holder.js/300x200" alt="cutsea110">
+              <div .caption>
+                <h3>Katsutoshi Itoh
+                <p>I'm a haskell web application developper. I've translated `Real World Haskell'.
+                   I have a cute daughter.
+              <div .btn-group.dropup>
+                <a href="#" .btn.btn-primary>Edit
+                <a href="#" .btn.btn-primary.dropdown-toggle data-toggle="dropdown"><span class="caret"></span>
+                <ul .dropdown-menu>
+                  <li><a href=""><i class="icon-camera"></i> Change Avatar</a>
+                  <li><a href=""><i class="icon-edit"></i> Edit Comment</a>
