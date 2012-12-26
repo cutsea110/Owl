@@ -188,7 +188,7 @@ authHashDB uniq = AuthPlugin "hashdb" dispatch $ \tm -> do
 
   <script>
     if (!("autofocus" in document.createElement("input"))) {
-      documengt.getElementById("##{name}").focus();
+      document.getElementById("#{name}").focus();
     }
 |]
     where
