@@ -1,4 +1,7 @@
 <!-- Home -->
+<div .page-header>
+  <h2>#{userUsername $ entityVal u}'s Home
+
 <div .row>
   <div .span12>
     <div .tabbable.tabs-left>
