@@ -117,6 +117,7 @@ instance Yesod App where
     shouldLog _ _source level =
         development || level == LevelWarn || level == LevelError
 
+-- Utility functions for isAuthorized
 loggedInAuth :: GHandler s App AuthResult
 loggedInAuth = fmap (maybe AuthenticationRequired $ const Authorized) maybeAuthId
 

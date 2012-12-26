@@ -1,4 +1,15 @@
+<!-- Admin tools -->
 <div .page-header>
   <h2>Administrator's Toolbox
 
-<p .danger> Admin Tools
+<div .row>
+  <div .span12>
+    <div .tabbable.tabs-left>
+      <ul .nav.nav-tabs>
+        <li .active><a href="#menu-maint-user" data-toggle="tab">Maint User</a>
+        <li><a href="#menu-maint-client" data-toggle="tab">Maint Client</a>
+      <div .tab-content>
+        <div .tab-pane.active #menu-maint-user>
+          <p> User CRUD
+        <div .tab-pane #menu-maint-client>
+          <p> Client Server CRUD
