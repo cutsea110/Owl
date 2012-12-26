@@ -11,4 +11,4 @@
           <a href="" .dropdown-toggle data-toggle="dropdown">cutsea110<span class="caret"></span>
           <ul .dropdown-menu>
             <li><a href=""><i class="icon-wrench"></i> Settings</a>
-            <li><a href=""><i class="icon-off"></i> Logout</a>
+            <li><a href="@{AuthR LogoutR}"><i class="icon-off"></i> Logout</a>
