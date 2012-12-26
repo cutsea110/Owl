@@ -165,32 +165,29 @@ authHashDB :: ( YesodAuth m, YesodPersist m
               , PersistStore b (GHandler Auth m)
               , PersistUnique b (GHandler Auth m))
            => (Text -> Maybe (Unique user b)) -> AuthPlugin m
-authHashDB uniq = AuthPlugin "hashdb" dispatch $ \tm -> toWidget [hamlet|
-$newline never
-    <div id="header">
-        <h1>Login
+authHashDB uniq = AuthPlugin "hashdb" dispatch $ \tm -> do 
+  name <- lift newIdent
+  pwd  <- lift newIdent
+  toWidget [hamlet|
+<div .page-header>
+  <h3>Login
+<form method="post" action="@{tm login}" .form-horizontal>
+  <div .control-group.info>
+    <label .control-label for="##{name}">Account ID
+    <div .controls>
+      <input type="text" ##{name} name="username" .span3 autofocus="" required>
+  <div .control-group.info>
+    <label .control-label for="##{pwd}">Password
+    <div .controls>
+      <input type="password" ##{pwd} name="password" .span3 required>
+  <div .control-group>
+    <div .controls.btn-group>
+    <input type="submit" .btn.btn-primary value="Login">
 
-    <div id="login">
-        <form method="post" action="@{tm login}">
-            <table>
-                <tr>
-                    <th>Username:
-                    <td>
-                        <input id="x" name="username" autofocus="" required>
-                <tr>
-                    <th>Password:
-                    <td>
-                        <input type="password" name="password" required>
-                <tr>
-                    <td>&nbsp;
-                    <td>
-                        <input type="submit" value="Login">
-
-            <script>
-                if (!("autofocus" in document.createElement("input"))) {
-                    document.getElementById("x").focus();
-                }
-
+  <script>
+    if (!("autofocus" in document.createElement("input"))) {
+      documengt.getElementById("##{name}").focus();
+    }
 |]
     where
         dispatch "POST" ["login"] = postLoginR uniq >>= sendResponse
