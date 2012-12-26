@@ -19,6 +19,7 @@ library
                      Settings
                      Settings.StaticFiles
                      Settings.Development
+                     Handler.AdminTools
                      Handler.Config
                      Handler.Help
                      Handler.Home

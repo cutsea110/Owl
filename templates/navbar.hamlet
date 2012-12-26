@@ -12,5 +12,8 @@
             <a href="" .dropdown-toggle data-toggle="dropdown">#{userUsername u} #
               <span class="caret">
             <ul .dropdown-menu>
+              $if isadmin
+                <li><a href="@{AdminToolsR}"><i class="icon-globe"></i> Admin Tool</a>
+                <li .divider>
               <li><a href="@{ConfigR}"><i class="icon-wrench"></i> Settings</a>
               <li><a href="@{AuthR LogoutR}"><i class="icon-off"></i> Logout</a>

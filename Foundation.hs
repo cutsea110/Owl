@@ -70,6 +70,7 @@ instance Yesod App where
 
     defaultLayout widget = do
         mu <- maybeAuth
+        isadmin <- isAdmin
         master <- getYesod
         mmsg <- getMessage
 
@@ -98,9 +99,10 @@ instance Yesod App where
     authRoute _ = Just $ AuthR LoginR
 
     isAuthorized (AuthR _) _ = return Authorized
-    isAuthorized TopR _ = return Authorized
+    isAuthorized AdminToolsR _ = isAdminAuth
     isAuthorized HelpR _ = return Authorized
-    isAuthorized _ _ = loggedIn    
+    isAuthorized TopR _ = return Authorized
+    isAuthorized _ _ = loggedInAuth
     -- This function creates static content files in the static folder
     -- and names them based on a hash of their content. This allows
     -- expiration dates to be set far in the future without worry of
@@ -115,8 +117,19 @@ instance Yesod App where
     shouldLog _ _source level =
         development || level == LevelWarn || level == LevelError
 
-loggedIn :: GHandler s App AuthResult
-loggedIn = fmap (maybe AuthenticationRequired $ const Authorized) maybeAuthId
+loggedInAuth :: GHandler s App AuthResult
+loggedInAuth = fmap (maybe AuthenticationRequired $ const Authorized) maybeAuthId
+
+isAdmin :: GHandler s App Bool
+isAdmin = fmap (maybe False $ (=="system").userUsername.entityVal) maybeAuth
+
+isAdminAuth :: GHandler s App AuthResult
+isAdminAuth = fmap (maybe AuthenticationRequired isadmin) maybeAuth
+  where
+    isadmin = toAuth.(=="system").userUsername.entityVal
+    toAuth b = if b
+               then Authorized 
+               else Unauthorized "This account doesn't have administrator privileges."
 
 -- How to run database actions.
 instance YesodPersist App where
