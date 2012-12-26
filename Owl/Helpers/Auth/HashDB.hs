@@ -119,7 +119,9 @@ postLoginR uniq = do
     isValid <- fromMaybe (return False) 
                  (validateUser <$> (uniq =<< mu) <*> mp)
     if isValid 
-       then setCreds True $ Creds "hashdb" (fromMaybe "" mu) []
+       then do setCreds True $ Creds "hashdb" (fromMaybe "" mu) []
+               y <- getYesod
+               redirectUltDest $ loginDest y
        else do setMessage "Invalid username/password"
                toMaster <- getRouteToMaster
                redirect $ toMaster LoginR
