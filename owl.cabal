@@ -19,8 +19,10 @@ library
                      Settings
                      Settings.StaticFiles
                      Settings.Development
-                     Handler.Top
+                     Handler.Config
+                     Handler.Help
                      Handler.Home
+                     Handler.Top
                      Owl.Helpers.Auth.HashDB
 
     if flag(dev) || flag(library-only)

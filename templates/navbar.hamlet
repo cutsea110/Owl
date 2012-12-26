@@ -5,12 +5,12 @@
       <a href="@{TopR}" .brand>Owl
       <ul .nav>
         <li .active><a href="@{HomeR}"><i class="icon-home"></i> Home</a>
-        <li><a href="">Help</a>
+        <li><a href="@{HelpR}">Help</a>
       $maybe Entity _ u <- mu
         <ul .nav.pull-right>
           <li .dropdown>
             <a href="" .dropdown-toggle data-toggle="dropdown">#{userUsername u} #
               <span class="caret">
             <ul .dropdown-menu>
-              <li><a href=""><i class="icon-wrench"></i> Settings</a>
+              <li><a href="@{ConfigR}"><i class="icon-wrench"></i> Settings</a>
               <li><a href="@{AuthR LogoutR}"><i class="icon-off"></i> Logout</a>
