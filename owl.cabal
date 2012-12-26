@@ -20,6 +20,7 @@ library
                      Settings.StaticFiles
                      Settings.Development
                      Handler.Home
+                     Owl.Helpers.Auth.HashDB
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
@@ -39,6 +40,8 @@ library
                 FlexibleContexts
                 EmptyDataDecls
                 NoMonomorphismRestriction
+                TypeSynonymInstances
+                FlexibleInstances
 
     build-depends: base                          >= 4          && < 5
                  -- , yesod-platform                >= 1.1        && < 1.2
@@ -68,6 +71,11 @@ library
                  , data-default
                  , aeson
 
+                 , random >= 1.0 && < 1.1
+                 , SHA >= 1.6 && < 1.7
+                 , transformers >= 0.3 && < 0.4
+                 , yesod-persistent >= 1.1 && < 1.2
+
 executable         owl
     if flag(library-only)
         Buildable: False
@@ -93,3 +101,4 @@ test-suite test
                  , yesod-core
                  , persistent
                  , persistent-postgresql
+

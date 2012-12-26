@@ -4,8 +4,7 @@ import Prelude
 import Yesod
 import Yesod.Static
 import Yesod.Auth
-import Yesod.Auth.BrowserId
-import Yesod.Auth.GoogleEmail
+import Owl.Helpers.Auth.HashDB (authHashDB, HashDBUser(..))
 import Yesod.Default.Config
 import Yesod.Default.Util (addStaticContentExternal)
 import Network.HTTP.Conduit (Manager)
@@ -97,6 +96,8 @@ instance Yesod App where
     -- The page to be redirected to when authentication is required.
     authRoute _ = Just $ AuthR LoginR
 
+    isAuthorized (AuthR _) _ = return Authorized
+    isAuthorized _ _ = loggedIn    
     -- This function creates static content files in the static folder
     -- and names them based on a hash of their content. This allows
     -- expiration dates to be set far in the future without worry of
@@ -110,6 +111,13 @@ instance Yesod App where
     -- in development, and warnings and errors in production.
     shouldLog _ _source level =
         development || level == LevelWarn || level == LevelError
+
+loggedIn :: GHandler s App AuthResult
+loggedIn = do
+  mu <- maybeAuthId
+  return $ case mu of
+    Nothing -> AuthenticationRequired
+    Just _  -> Authorized
 
 -- How to run database actions.
 instance YesodPersist App where
@@ -134,10 +142,10 @@ instance YesodAuth App where
         case x of
             Just (Entity uid _) -> return $ Just uid
             Nothing -> do
-                fmap Just $ insert $ User (credsIdent creds) Nothing
+                fmap Just $ insert $ User (credsIdent creds) "" ""
 
     -- You can add other plugins like BrowserID, email or OAuth here
-    authPlugins _ = [authBrowserId, authGoogleEmail]
+    authPlugins _ = [authHashDB (Just . UniqueUser)]
 
     authHttpManager = httpManager
 
@@ -156,3 +164,10 @@ getExtra = fmap (appExtra . settings) getYesod
 -- wiki:
 --
 -- https://github.com/yesodweb/yesod/wiki/Sending-email
+
+instance HashDBUser User where
+  userPasswordHash = Just . userPassword
+  userPasswordSalt = Just . userSalt
+  setSaltAndPasswordHash s h u = u { userSalt     = s
+                                   , userPassword = h
+                                   }
