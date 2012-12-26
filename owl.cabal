@@ -19,6 +19,7 @@ library
                      Settings
                      Settings.StaticFiles
                      Settings.Development
+                     Handler.Top
                      Handler.Home
                      Owl.Helpers.Auth.HashDB
 

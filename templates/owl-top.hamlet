@@ -1,0 +1,9 @@
+<div .page-header>
+  <h2>Owl Authentication System
+
+<p>This is Owl.
+
+$maybe _ <- mu
+$nothing
+  <div>
+    <a href="@{HomeR}" .btn.btn-large.btn-success>Login from here.

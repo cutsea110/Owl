@@ -97,6 +97,7 @@ instance Yesod App where
     authRoute _ = Just $ AuthR LoginR
 
     isAuthorized (AuthR _) _ = return Authorized
+    isAuthorized TopR _ = return Authorized
     isAuthorized _ _ = loggedIn    
     -- This function creates static content files in the static folder
     -- and names them based on a hash of their content. This allows
@@ -135,7 +136,7 @@ instance YesodAuth App where
     -- Where to send a user after successful login
     loginDest _ = HomeR
     -- Where to send a user after logout
-    logoutDest _ = HomeR
+    logoutDest _ = TopR
 
     getAuthId creds = runDB $ do
         x <- getBy $ UniqueUser $ credsIdent creds
