@@ -84,6 +84,7 @@ instance Yesod App where
           addStylesheet $ StaticR css_bootstrap_min_css
 --          addStylesheet $ StaticR css_bootstrap_responsive_min_css
           addScript $ StaticR js_bootstrap_min_js
+          let navbar = $(widgetFile "navbar")
           $(widgetFile "default-layout")
         hamletToRepHtml $(hamletFile "templates/default-layout-wrapper.hamlet")
 

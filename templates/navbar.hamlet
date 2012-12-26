@@ -1,0 +1,14 @@
+<!-- Nav menu -->
+<div .navbar.navbar-inverse.navbar-fixed-top>
+  <div .navbar-inner>
+    <div .container>
+      <a href="" .brand>Owl
+      <ul .nav>
+        <li .active><a href=""><i class="icon-home"></i> Home</a>
+        <li><a href="">Help</a>
+      <ul .nav.pull-right>
+        <li .dropdown>
+          <a href="" .dropdown-toggle data-toggle="dropdown">cutsea110<span class="caret"></span>
+          <ul .dropdown-menu>
+            <li><a href=""><i class="icon-wrench"></i> Settings</a>
+            <li><a href=""><i class="icon-off"></i> Logout</a>

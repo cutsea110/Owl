@@ -1,0 +1,13 @@
+<!-- Email -->
+<div .page-header>
+  <h3>Email <small>change cutsea110's email.</small>
+<form .form-horizontal>
+  <div .control-group.warning>
+    <label .control-label for="#email">Email address
+    <div .controls>
+      <input type="email" #email .span3 value="cutsea110@gmail.com">
+      <span .help-block>message...message...message...message...
+  <div .control-group>
+    <div .controls.btn-group>
+      <input type="submit" .btn.btn-primary value="Update">
+      <input type="submit" .btn value="Cancel">
