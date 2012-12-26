@@ -69,6 +69,7 @@ instance Yesod App where
         return . Just $ clientSessionBackend key 120
 
     defaultLayout widget = do
+        mu <- maybeAuth
         master <- getYesod
         mmsg <- getMessage
 
@@ -114,11 +115,7 @@ instance Yesod App where
         development || level == LevelWarn || level == LevelError
 
 loggedIn :: GHandler s App AuthResult
-loggedIn = do
-  mu <- maybeAuthId
-  return $ case mu of
-    Nothing -> AuthenticationRequired
-    Just _  -> Authorized
+loggedIn = fmap (maybe AuthenticationRequired $ const Authorized) maybeAuthId
 
 -- How to run database actions.
 instance YesodPersist App where
