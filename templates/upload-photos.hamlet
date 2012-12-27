@@ -1,0 +1,9 @@
+<form .form-horizontal method="post" action="" enctype="">
+  <div .control-group>
+    <label .control-label for="#filepath">File Path
+    <div .controls>
+      <input type="file" #filepath>
+
+  <div .control-group>
+    <div .controls.btn-group>
+      <input type="submit" .btn.btn-primary value="Upload">

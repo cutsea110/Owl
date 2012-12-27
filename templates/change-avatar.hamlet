@@ -1,0 +1,32 @@
+<!-- Photo gallery -->
+<div .span3>
+  <div #avatar-carousel .carousel.slide>
+    <div .carousel-inner>
+      $with (p, c) <- avatar
+        <div .item.active>
+          <div .thumbnail>
+            <img src=@{StaticR p} alt>
+          <div .carousel-caption>
+            <p>#{c}
+      $forall (p, c) <- tail photos
+        <div .item>
+          <div .thumbnail>
+            <img src=@{StaticR p} alt>
+          <div .carousel-caption>
+            <p>#{c}
+
+    <a .carousel-control.left.small href="#avatar-carousel" data-slide="prev">&lsaquo;
+    <a .carousel-control.right.small href="#avatar-carousel" data-slide="next">&rsaquo;
+
+<div .span2>
+  $with (p, c) <- avatar
+    <div .thumbnail>
+      <img .img-rounded.img-small src="@{StaticR p}" data-src="holder.js/150x100" alt>
+    <div .btn-group>
+     <a href="#" .btn.btn-success>SET Avatar
+     <a href="#" .btn>Cancel
+     <a href="#" .btn.btn-danger>DELETE
+
+    <span .help-inline>
+      <span .label.label-info>NOTE
+      message...

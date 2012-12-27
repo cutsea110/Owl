@@ -7,9 +7,9 @@
     <div .controls>
       <input type="email" #email .span3 value="cutsea110@gmail.com">
       <span .help-block>
-        <span class="label label-info">NOTE
+        <span .label.label-info>NOTE
         message...message...message...message...
-        <span class="badge badge-important">6
+        <span .badge.badge-important>6
   <div .control-group>
     <div .controls.btn-group>
       <input type="submit" .btn.btn-primary value="Update">

@@ -3,14 +3,16 @@
   <h3>Profile <small>cutsea110's avatar & any informations.</small>
 <div.span4>
   <div .thumbnail>
-    <img .img-rounded.img-small src=@{StaticR img_avatar_jpg} data-src="holder.js/300x200" alt="cutsea110">
+    <img .img-rounded.img-small src="@{StaticR img_avatar_avatar_jpg}" data-src="holder.js/300x200" alt="avatar">
   <div .caption>
     <h3>Katsutoshi Itoh
     <p>I'm a haskell web application developper. I've translated `Real World Haskell'.
        I have a cute daughter.
+
   <div .btn-group.dropup>
     <a href="#" .btn.btn-primary>Edit
     <a href="#" .btn.btn-primary.dropdown-toggle data-toggle="dropdown"><span class="caret"></span>
     <ul .dropdown-menu>
-      <li><a href=""><i class="icon-camera"></i> Change Avatar</a>
+      <li><a href="##{modal1}" data-toggle="modal"><i class="icon-user"></i> Change Avatar</a>
+      <li><a href="##{modal2}" data-toggle="modal"><i class="icon-camera"></i> Upload Photos</a>
       <li><a href=""><i class="icon-edit"></i> Edit Comment</a>

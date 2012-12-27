@@ -19,3 +19,22 @@
           ^{email}
         <div .tab-pane #menu-profile>
           ^{profile}
+
+<!-- Dialog -->
+<div ##{modal1} .modal.hide.fade>
+  <div .modal-header>
+    <a href="#" .close data-dismiss="modal">&times;
+    <h3>Change Avatar
+  <div .modal-body>
+    ^{changeAvatar}
+  <div .modal-footer>
+    <a href="#" .btn.close data-dismiss="modal">Close
+
+<div ##{modal2} .modal.hide.fade>
+  <div .modal-header>
+    <a href="#" .close data-dismiss="modal">&times;
+    <h3>Upload Photos
+  <div .modal-body>
+    ^{uploadPhotos}
+  <div .modal-footer>
+    <a href="#" .btn.close data-dismiss="modal">Close
