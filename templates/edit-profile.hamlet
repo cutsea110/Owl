@@ -1,0 +1,20 @@
+<!-- Edit Profile -->
+<div .span6>
+  <div .control-group.success>
+    <div .controls>
+      <label .control-label.inline for="#family-name">Family Name
+      <input type="text" #family-name name="familyName" value="Itoh" required>
+      <label .control-label.inline for="#given-name">Given Name
+      <input type="text" #given-name name="givenName" value="Katsutoshi" required>
+
+  <div .control-group.info>
+    <div .controls>
+      <label .control-label for="#prof-comment">Profile
+      <textarea .span5 #prof-comment name="comment">I'm a haskell web application developper. I've translated `Real World Haskell'.I have a cute daughter.
+
+  <div .control-group>
+    <div .controls>
+      <span .btn.btn-primary>Update
+      <span .help-block>
+        <span .label.label-info>NOTE
+        <p>message...message...message...message...message...

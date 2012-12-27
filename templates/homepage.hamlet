@@ -42,8 +42,8 @@
 <div ##{modal3} .modal.hide.fade>
   <div .modal-header>
     <a href="#" .close data-dismiss="modal">&times;
-    <h3>Edit Comment
+    <h3>Edit Profile
   <div .modal-body>
-    ^{editComment}
+    ^{editProf}
   <div .modal-footer>
     <a href="#" .btn.close data-dismiss="modal">Close

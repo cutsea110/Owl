@@ -29,6 +29,6 @@ getHomeR = do
         profile = $(widgetFile "profile")
         changeAvatar = $(widgetFile "change-avatar")
         uploadPhotos = $(widgetFile "upload-photos")
-        editComment = $(widgetFile "edit-comment")
+        editProf = $(widgetFile "edit-profile")
     setTitle "Home"
     $(widgetFile "homepage")
