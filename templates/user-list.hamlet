@@ -1,0 +1,29 @@
+<!-- User List -->
+<h4>User List
+
+<form .form-search>
+  <div .input-append>
+    <input type="text" .span2.search-query placeholder="Account ID">
+    <button type="submit" .btn><i class="icon-search"></i>
+
+<div #search-result>
+  <ul .thumbnails>
+    $forall (p, c) <- photos
+      <li .span2>
+        <div .thumbnail>
+          <img src="@{StaticR p}" data-src="holder.js/150x100" alt>
+          <div .caption>
+            <h6>#{c}
+            <p>#{c}
+            <p><a href="#" class="btn btn-primary btn-mini">Edit</a>
+
+  <div .pagination.pagination-centered>
+    <ul>
+      <li .disabled><a href="#">«</a>
+      <li .active><a href="#">1</a>
+      <li><a href="#">2</a>
+      <li><a href="#">3</a>
+      <li><a href="#">4</a>
+      <li><a href="#">5</a>
+      <li .disabled><a href="#">..</a>
+      <li><a href="#">»</a>
