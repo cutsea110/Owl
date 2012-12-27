@@ -1,4 +1,14 @@
 <div .page-header>
   <h2>Help
 
-<p>This is what?
+<div .row>
+  <div .span12>
+    <div .tabbable.tabs-left>
+      <ul .nav.nav-tabs>
+        <li .active><a href="#menu-password-reset" data-toggle="tab">Forget Password?</a>
+        <li><a href="#menu-usage" data-toggle="tab">Usage</a>
+      <div .tab-content>
+        <div .tab-pane.active #menu-password-reset>
+          ^{passreset}
+        <div .tab-pane #menu-usage>
+          ^{usage}
