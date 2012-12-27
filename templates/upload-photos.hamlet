@@ -3,7 +3,7 @@
   <div .control-group>
     <div .controls>
       <input type="file" #filepath .span4>
-      <span .btn.btn-primary><i class="icon-upload"></i> Upload
+      <span .btn.btn-primary><i class="icon-upload icon-white"></i> Upload
     <span .help-block>
       <span .label.label-info>NOTE
       message...message...message...
