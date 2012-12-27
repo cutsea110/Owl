@@ -1,10 +1,9 @@
 <!-- Upload photos -->
-<form .form-horizontal method="post" action="" enctype="">
+<div .span6>
   <div .control-group>
-    <label .control-label for="#filepath">File Path
     <div .controls>
-      <input type="file" #filepath>
-
-  <div .control-group>
-    <div .controls.btn-group>
-      <input type="submit" .btn.btn-primary value="Upload">
+      <input type="file" #filepath .span4>
+      <span .btn.btn-primary><i class="icon-upload"></i> Upload
+    <span .help-block>
+      <span .label.label-info>NOTE
+      message...message...message...

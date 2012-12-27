@@ -19,15 +19,15 @@
     <a .carousel-control.right.small href="#avatar-carousel" data-slide="next">&rsaquo;
 
 <!-- Change avatar/Delete photo -->
-<div .span2>
+<div .span3>
   $with (p, c) <- avatar
     <div .thumbnail>
       <img .img-rounded.img-small src="@{StaticR p}" data-src="holder.js/150x100" alt>
-    <div .btn-group>
-     <a href="#" .btn.btn-success>SET Avatar
-     <a href="#" .btn>Cancel
-     <a href="#" .btn.btn-danger>DELETE
 
-    <span .help-inline>
-      <span .label.label-info>NOTE
-      message...
+  <div .btn-group>
+    <a href="#" .btn.btn-success.btn-mini><i class="icon-star"></i> Choice as Avatar
+    <a href="#" .btn.btn-danger.btn-mini><i class="icon-fire"></i> Fire Photo
+
+  <span .help-inline>
+    <span .label.label-info>NOTE
+    message...
