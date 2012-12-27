@@ -38,3 +38,12 @@
     ^{uploadPhotos}
   <div .modal-footer>
     <a href="#" .btn.close data-dismiss="modal">Close
+
+<div ##{modal3} .modal.hide.fade>
+  <div .modal-header>
+    <a href="#" .close data-dismiss="modal">&times;
+    <h3>Edit Comment
+  <div .modal-body>
+    ^{editComment}
+  <div .modal-footer>
+    <a href="#" .btn.close data-dismiss="modal">Close

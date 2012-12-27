@@ -11,6 +11,7 @@ getHomeR = do
   defaultLayout $ do
     modal1 <- lift newIdent
     modal2 <- lift newIdent
+    modal3 <- lift newIdent
     let photos = [ (img_avatar_avatar_jpg, "Photo 1"::Text)
                  , (img_avatar_avatar2_jpg, "Photo 2")
                  , (img_avatar_avatar3_jpg, "Photo 3")
@@ -28,5 +29,6 @@ getHomeR = do
         profile = $(widgetFile "profile")
         changeAvatar = $(widgetFile "change-avatar")
         uploadPhotos = $(widgetFile "upload-photos")
+        editComment = $(widgetFile "edit-comment")
     setTitle "Home"
     $(widgetFile "homepage")

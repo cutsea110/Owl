@@ -15,4 +15,4 @@
     <ul .dropdown-menu>
       <li><a href="##{modal1}" data-toggle="modal"><i class="icon-user"></i> Change Avatar</a>
       <li><a href="##{modal2}" data-toggle="modal"><i class="icon-camera"></i> Upload Photos</a>
-      <li><a href=""><i class="icon-edit"></i> Edit Comment</a>
+      <li><a href="##{modal3}" data-toggle="modal"><i class="icon-edit"></i> Edit Comment</a>

@@ -1,0 +1,9 @@
+<!-- Edit Comment -->
+<div .span6>
+  <div .control-group>
+    <div .controls>
+      <textarea .span6 name="comment">
+      <span .btn.btn-primary>Update
+      <span .help-inline>
+        <span .label.label-info>NOTE
+        message...

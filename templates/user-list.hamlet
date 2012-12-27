@@ -11,7 +11,7 @@
     $forall (p, c) <- photos
       <li .span2>
         <div .thumbnail>
-          <img src="@{StaticR p}" data-src="holder.js/150x100" alt>
+          <img .img-rounded.img-small src="@{StaticR p}" data-src="holder.js/150x100" alt>
           <div .caption>
             <h6>#{c}
             <p>#{c}
