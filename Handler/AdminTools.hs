@@ -15,6 +15,7 @@ getAdminToolsR = do
                , (img_avatar_avatar9_jpg, "Photo 9")
                ]
   defaultLayout $ do
-    let userCrud = $(widgetFile "user-list")
+    let userlist = $(widgetFile "user-list")
+        importcsv = $(widgetFile "import-users-csv")
     setTitle "Administrator's Tools"
     $(widgetFile "admin-tools")

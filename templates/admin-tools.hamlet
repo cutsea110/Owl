@@ -11,8 +11,8 @@
         <li><a href="#menu-maint-client" data-toggle="tab">Maint Client</a>
       <div .tab-content>
         <div .tab-pane.active #menu-maint-user>
-          ^{userCrud}
+          ^{userlist}
         <div .tab-pane #menu-import-users>
-          <p> Import users from csv file
+          ^{importcsv}
         <div .tab-pane #menu-maint-client>
           <p> Client Server CRUD

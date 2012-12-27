@@ -1,0 +1,23 @@
+<!-- Import Users from CSV -->
+<h3>Import Users list as CSV
+<div .span8>
+ <div .alert.alert-block>
+  <button type="button" .close data-dismiss="alert">&times;
+  <h4>Warning!
+  Best check yourself, you're not...
+
+<form .form-horizontal>
+  <div .control-group>
+    <div .controls>
+      <input type="file" #filepath .span4>
+
+<div .help-block>
+  <span .label.label-info>NOTE</span> CSV format
+  <p>use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.
+  <dl .dl-horizontal>
+    <dt>account id
+    <dd>description for account id...description for account id...description for account id...description for account id...
+    <dt>password
+    <dd>description for password...description for password...description for password...description for password...description for password...
+    <dt>email address
+    <dd>description for email address...

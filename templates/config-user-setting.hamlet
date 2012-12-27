@@ -1,5 +1,10 @@
 <!-- Config user -->
 <div .page-header>
-  <h2>Config user setting
+  <h3>Config user setting
+
+<div .alert.alert-block>
+  <button type="button" .close data-dismiss="alert">&times;
+  <h4>Warning!
+  Best check yourself, you're not...
 
 <p>user setting page.
