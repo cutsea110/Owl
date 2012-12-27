@@ -2,7 +2,7 @@
 <div .span6>
   <div .control-group>
     <div .controls>
-      <textarea .span6 name="comment">
+      <textarea .span6 name="comment">I'm a haskell web application developper. I've translated `Real World Haskell'.I have a cute daughter.
       <span .btn.btn-primary>Update
       <span .help-inline>
         <span .label.label-info>NOTE
