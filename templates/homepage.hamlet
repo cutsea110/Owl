@@ -1,4 +1,4 @@
-<!-- Home -->
+<!-- Home menu and Dialogs -->
 <div .page-header>
   <h2>#{userUsername $ entityVal u}'s Home
 
