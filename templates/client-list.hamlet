@@ -1,0 +1,31 @@
+<!-- Client List -->
+<h3>Client List
+
+<table .table.table-striped.table-hover>
+  <thead>
+    <tr>
+      <th>Client ID
+      <th>Client Name
+      <th>Client Secret
+  <tbody>
+    <tr onclick="setRowdata4Modal($(this))" data-toggle="modal" href="##{modal1}">
+      <td .client_id><span>a7362hd</span>
+      <td .client_name><span>Kestrel</span>
+      <td .client_secret><span>aY/ay7w2hhuqwy9138yihdu_lUSY26hauiehw7a87329yhiUHLUS</span>
+    <tr onclick="setRowdata4Modal($(this))" data-toggle="modal" href="##{modal1}">
+      <td .client_id><span>97asdh2</span>
+      <td .client_name><span>BISocie</span>
+      <td .client_secret><span>9wae/adisae9dcIOSJiidasiIOi42i472hDHjads8HIy98HDU7g9</span>
+    <tr onclick="setRowdata4Modal($(this))" data-toggle="modal" href="##{modal1}">
+      <td .client_id><span>97asdh2</span>
+      <td .client_name><span>BISocie</span>
+      <td .client_secret><span>9wae/adisae9dcIOSJiidasiIOi42i472hDHjads8HIy98HDU7g9</span>
+
+<div ##{modal1} .modal.hide.fade>
+  <div .modal-header>
+    <a href="#" .close data-dismiss="modal">&times;
+    <h3>Edit Profile
+  <div .modal-body>
+    ^{editclient}
+  <div .modal-footer>
+    <a href="#" .btn.close data-dismiss="modal">Close

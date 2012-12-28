@@ -18,7 +18,8 @@
         <button .btn.btn-primary><i class="icon-upload icon-white"></i> Upload
 
 <div .help-block>
-  <span .label.label-info>NOTE</span> CSV format
+  <span .label.label-info>NOTE
+  <h6>CSV format
   <p>use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.
   <dl .dl-horizontal>
     <dt>account id

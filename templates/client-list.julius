@@ -1,0 +1,8 @@
+function setRowdata4Modal(tr){
+  var target_modal = $(tr.attr('href')),
+      ids = ['client_id','client_name','client_secret'];
+  
+  for(var i in ids) {
+    $('#'+ids[i], target_modal).val($('td.'+ids[i]+' span', tr).text());
+  }
+}

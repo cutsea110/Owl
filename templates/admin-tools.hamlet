@@ -15,4 +15,4 @@
         <div .tab-pane #menu-import-users>
           ^{importcsv}
         <div .tab-pane #menu-maint-client>
-          <p> Client Server CRUD
+          ^{clientlist}
