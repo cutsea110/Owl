@@ -1,0 +1,17 @@
+<!-- Edit User by Admin -->
+<form>
+  <div .control-group>
+    <label .control-label for="#account_id">Account ID
+    <div .controls>
+      <input type="text" #account_id .span3 required value="cutsea110">
+  <div .control-group>
+    <label .control-label for="#email">Email address
+    <div .controls>
+      <input type="text" #email .span3 required value="cutsea110@gmail.com">
+  <div .control-group>
+    <div .controls.btn-group>
+      <button type="submit" .btn.btn-primary><i class="icon-edit icon-white"></i> Update
+      <button type="submit" .btn.btn-danger><i class="icon-fire icon-white"></i> DELETE
+    <div .help-inline>
+      <span .label.label-important>Important
+      message...message...

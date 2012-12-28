@@ -9,7 +9,7 @@
 <div #search-result>
   <ul .thumbnails>
     $forall (p, c) <- photos
-      <li .span2>
+      <li .span2 onclick="" data-toggle="modal" href="##{modal2}">
         <div .thumbnail>
           <img .img-rounded.img-small src="@{StaticR p}" data-src="holder.js/150x100" alt>
           <div .caption>
@@ -27,3 +27,13 @@
       <li><a href="#">5</a>
       <li .disabled><a href="#">..</a>
       <li><a href="#">»</a>
+
+<!-- Edit User Dialog -->
+<div ##{modal2} .modal.hide.fade>
+  <div .modal-header>
+    <a href="#" .close data-dismiss="modal">&times;
+    <h3>Edit Profile
+  <div .modal-body>
+    ^{editprofile}
+  <div .modal-footer>
+    <a href="#" .btn.close data-dismiss="modal">Close

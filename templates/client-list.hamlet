@@ -21,10 +21,11 @@
       <td .client_name><span>BISocie</span>
       <td .client_secret><span>9wae/adisae9dcIOSJiidasiIOi42i472hDHjads8HIy98HDU7g9</span>
 
+<!-- Edit Client data Dialog -->
 <div ##{modal1} .modal.hide.fade>
   <div .modal-header>
     <a href="#" .close data-dismiss="modal">&times;
-    <h3>Edit Profile
+    <h3>Edit Client
   <div .modal-body>
     ^{editclient}
   <div .modal-footer>

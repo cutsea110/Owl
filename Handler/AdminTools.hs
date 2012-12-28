@@ -15,8 +15,10 @@ getAdminToolsR = do
                , (img_avatar_avatar9_jpg, "User 9")
                ]
   defaultLayout $ do
-    modal1 <- lift newIdent
+    modal1 <- lift newIdent -- for edit client
+    modal2 <- lift newIdent -- for edit user
     let userlist = $(widgetFile "user-list")
+        editprofile = $(widgetFile "edit-user")
         importcsv = $(widgetFile "import-users-csv")
         clientlist = $(widgetFile "client-list")
         editclient = $(widgetFile "edit-client")

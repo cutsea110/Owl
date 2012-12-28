@@ -1,5 +1,5 @@
 <!-- Edit Client -->
-<form .form-horizontal>
+<form>
   <div .control-group>
     <label .control-label for="#client_id">Client ID
     <div .controls>

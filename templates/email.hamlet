@@ -1,7 +1,7 @@
 <!-- Email -->
 <div .page-header>
   <h3>Email <small>change cutsea110's email.</small>
-<form .form-horizontal>
+<form>
   <div .control-group.warning>
     <label .control-label for="#email">Email address
     <div .controls>

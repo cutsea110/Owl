@@ -1,12 +1,11 @@
 <!-- Import Users from CSV -->
 <h3>Import Users list as CSV
-<div .span8>
- <div .alert.alert-block>
+<div .alert.alert-block>
   <button type="button" .close data-dismiss="alert">&times;
   <h4>Warning!
   Best check yourself, you're not...
 
-<form .form-horizontal>
+<form>
   <div .control-group>
     <div .controls>
       <!-- file my bootstrap -->

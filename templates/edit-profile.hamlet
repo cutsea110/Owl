@@ -1,5 +1,5 @@
 <!-- Edit Profile -->
-<div .span6>
+<form>
   <div .control-group.success>
     <div .controls>
       <label .control-label.inline for="#family-name">Family Name
