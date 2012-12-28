@@ -9,13 +9,15 @@
 <div #search-result>
   <ul .thumbnails>
     $forall (p, c) <- photos
-      <li .span2 onclick="" data-toggle="modal" href="##{modal2}">
+      <li .span2>
         <div .thumbnail>
-          <img .img-rounded.img-small src="@{StaticR p}" data-src="holder.js/150x100" alt>
+          <img .img-rounded src="@{StaticR p}" data-src="holder.js/150x100" alt>
           <div .caption>
             <h6>#{c}
             <p>#{c}
-            <p><a href="#" class="btn btn-primary btn-mini">Edit</a>
+            <div .btn-group>
+              <button href="##{modal2}" data-toggle="modal" onclick="" .btn.btn-primary.btn-mini>Edit
+              <button href="##{modal3}" data-toggle="modal" onclick="" .btn.btn-danger.btn-mini>Kill
 
   <div .pagination.pagination-centered>
     <ul>
@@ -35,5 +37,15 @@
     <h3>Edit Profile
   <div .modal-body>
     ^{editprofile}
+  <div .modal-footer>
+    <a href="#" .btn.close data-dismiss="modal">Close
+
+<!-- Kill User Dialog -->
+<div ##{modal3} .modal.hide.fade>
+  <div .modal-header>
+    <a href="#" .close data-dismiss="modal">&times;
+    <h3>Kill User
+  <div .modal-body>
+    ^{killuser}
   <div .modal-footer>
     <a href="#" .btn.close data-dismiss="modal">Close

@@ -11,7 +11,6 @@
   <div .control-group>
     <div .controls.btn-group>
       <button type="submit" .btn.btn-primary><i class="icon-edit icon-white"></i> Update
-      <button type="submit" .btn.btn-danger><i class="icon-fire icon-white"></i> DELETE
     <div .help-inline>
-      <span .label.label-important>Important
+      <span .label.label-info>NOTE
       message...message...

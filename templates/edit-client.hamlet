@@ -14,7 +14,8 @@
       <input type="text" #client_secret .span3>
   <div .control-group>
     <div .controls.btn-group>
-      <input type="submit" .btn.btn-primary value="Update">
+      <button type="submit" .btn.btn-primary>Update
+      <button type="submit" .btn.btn-danger><i class="icon-fire icon-white"></i> Fire
     <div .help-inline>
       <span .label.label-important>Important
       message...message...

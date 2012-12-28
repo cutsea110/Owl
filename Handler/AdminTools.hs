@@ -16,9 +16,11 @@ getAdminToolsR = do
                ]
   defaultLayout $ do
     modal1 <- lift newIdent -- for edit client
-    modal2 <- lift newIdent -- for edit user
+    modal2 <- lift newIdent -- for edit user profile
+    modal3 <- lift newIdent -- for kill user
     let userlist = $(widgetFile "user-list")
         editprofile = $(widgetFile "edit-user")
+        killuser = $(widgetFile "kill-user")
         importcsv = $(widgetFile "import-users-csv")
         clientlist = $(widgetFile "client-list")
         editclient = $(widgetFile "edit-client")
