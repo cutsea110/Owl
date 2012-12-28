@@ -2,8 +2,14 @@
 <div .span6>
   <div .control-group>
     <div .controls>
-      <input type="file" #filepath .span4>
-      <span .btn.btn-primary><i class="icon-upload icon-white"></i> Upload
+      <!-- file my bootstrap -->
+      <input type="file" #filepath .hide>
+      <div .input-append>
+        <input #file-custom .input-large type="text">
+        <a .btn #file-browse>Browse
+
+        <button .btn.btn-primary><i class="icon-upload icon-white"></i> Upload
+
     <span .help-block>
       <span .label.label-info>NOTE
       message...message...message...

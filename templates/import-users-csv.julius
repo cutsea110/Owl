@@ -1,0 +1,9 @@
+$('#file-browse').click(function(){
+  $('input[id=filepath]').click();
+});
+$('#file-custom').focus(function(){
+  $('input[id=filepath]').click();
+});
+$('input[id=filepath]').change(function(){
+  $('#file-custom').val($(this).val());
+});
