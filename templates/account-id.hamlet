@@ -5,7 +5,7 @@
   <div .control-group.info>
     <label .control-label for="#account">Account ID
     <div .controls>
-      <input type="text" #email .span2 value="cutsea110">
+      <input type="text" #account .span2 value="cutsea110">
       <span .help-inline>message...
   <div .control-group>
     <div .controls.btn-group>

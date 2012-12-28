@@ -5,7 +5,7 @@
   <div .control-group.warning>
     <label .control-label for="#email">Email address
     <div .controls>
-      <input type="email" #email .span3 value="cutsea110@gmail.com">
+      <input type="email" #email .span3 value="cutsea110@gmail.com" required>
       <span .help-block>
         <span .label.label-info>NOTE
         message...message...message...message...

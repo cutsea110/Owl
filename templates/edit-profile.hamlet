@@ -14,7 +14,7 @@
 
   <div .control-group>
     <div .controls>
-      <span .btn.btn-primary>Update
+      <button type="submit" .btn.btn-primary>Update
       <span .help-block>
         <span .label.label-info>NOTE
         <p>message...message...message...message...message...
