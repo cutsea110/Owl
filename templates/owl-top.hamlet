@@ -8,3 +8,11 @@ $maybe _ <- mu
 $nothing
   <div>
     <a href="@{HomeR}" .btn.btn-large.btn-success>Login from here.
+
+<ul .thumbnails>
+  $forall (kls, xy) <- classes
+    <li .span2>
+      <div .thumbnail>
+        <i class="glyphicon-#{kls}"></i>
+        <div .caption>#{kls}
+        <p>(#{show $ fst xy},#{show $ snd xy})

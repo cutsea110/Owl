@@ -17,4 +17,4 @@
           <span .label.label-important>Danger!
           message...message...
         <div .controls.btn-group>
-          <button type="submit" .btn.btn-danger><i class="icon-fire icon-white"></i> Kill
+          <button type="submit" .btn.btn-danger><i class="glyphicon-skull glyphicon-white"></i> Kill

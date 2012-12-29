@@ -15,5 +15,5 @@
               $if isadmin
                 <li><a href="@{AdminToolsR}"><i class="icon-wrench"></i> Admin Tool</a>
                 <li .divider>
-              <li><a href="@{ConfigR}"><i class="icon-briefcase"></i> Settings</a>
+              <li><a href="@{ConfigR}"><i class="glyphicon-settings"></i> Settings</a>
               <li><a href="@{AuthR LogoutR}"><i class="icon-off"></i> Logout</a>
