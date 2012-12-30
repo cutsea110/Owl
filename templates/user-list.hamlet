@@ -1,10 +1,13 @@
 <!-- User List -->
 <h3>User List
 
-<form .form-search>
+<form .form-search.inline>
   <div .input-append>
     <input type="text" .span2.search-query placeholder="Account ID">
     <button type="submit" .btn><i class="icon-search"></i>
+
+<form .inline.pull-right>
+  <button href="##{modal2}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-user_add glyphicon-white"></i> Add new face
 
 <div #search-result>
   <ul .thumbnails>
@@ -30,13 +33,13 @@
       <li .disabled><a href="#">..</a>
       <li><a href="#">»</a>
 
-<!-- Edit User Dialog -->
+<!-- Create/Edit User Dialog -->
 <div ##{modal2} .modal.hide.fade>
   <div .modal-header>
     <a href="#" .close data-dismiss="modal">&times;
-    <h3>Edit Profile
+    <h3>Edit User
   <div .modal-body>
-    ^{editprofile}
+    ^{edituser}
   <div .modal-footer>
     <a href="#" .btn.close data-dismiss="modal">Close
 

@@ -1,3 +1,6 @@
 body {
   padding-top: 40px;
 }
+form.inline {
+  display: inline-block;
+}
