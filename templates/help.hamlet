@@ -6,10 +6,10 @@
   <div .span12>
     <div .tabbable.tabs-left>
       <ul .nav.nav-tabs>
-        <li .active><a href="##{menu1}" data-toggle="tab">Forget Password?</a>
-        <li><a href="##{menu2}" data-toggle="tab">Usage</a>
+        <li :tabIs "password-reset":.active><a href="##{menu1}" data-toggle="tab">Forget Password?</a>
+        <li :tabIs "usage":.active><a href="##{menu2}" data-toggle="tab">Usage</a>
       <div .tab-content>
-        <div .tab-pane.active ##{menu1}>
+        <div .tab-pane :tabIs "password-reset":.active ##{menu1}>
           ^{passreset}
-        <div .tab-pane ##{menu2}>
+        <div .tab-pane :tabIs "usage":.active ##{menu2}>
           ^{usage}

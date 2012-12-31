@@ -4,7 +4,7 @@ module Handler.Help
        ) where
 
 import Import
-import Data.Maybe (isJust)
+import Data.Maybe (isJust, maybe)
 import qualified Data.Text as T
 
 emailForm :: Maybe Text -> Html -> MForm App App (FormResult Text, Widget)
@@ -34,6 +34,7 @@ getHelpR :: Handler RepHtml
 getHelpR = do
   (menu1, menu2) <- (,) <$> newIdent <*> newIdent
   (w, e) <- generateFormPost $ emailForm Nothing
+  tabIs <- fmap (maybe ("password-reset"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
   defaultLayout $ do
     let passreset = $(widgetFile "password-reset")
@@ -48,5 +49,5 @@ postPasswordResetR = do
     FormSuccess x -> do
       liftIO $ putStrLn $ "[TODO] send reminder mail to " ++ T.unpack x
       setMessage "Send reminder mail..."
-      redirect (HELP HelpR)
-    _ -> redirect (HELP HelpR)
+      redirect ((HELP HelpR), [("tab", "password-reset")])
+    _ -> redirect ((HELP HelpR), [("tab", "password-reset")])
