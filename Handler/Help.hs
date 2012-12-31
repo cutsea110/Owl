@@ -3,8 +3,30 @@ module Handler.Help
        ) where
 
 import Import
-import Text.Julius (rawJS)
-import Data.Text (Text)
+import Data.Maybe (isJust)
+
+emailForm :: Maybe Text -> Html -> MForm App App (FormResult Text, Widget)
+emailForm mv fragment = do
+  (res, view) <- mreq emailField fs mv
+  let widget = [whamlet|
+\#{fragment}
+<div .control-group.warning .clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
+  <label .control-label for=#{fvId view}>#{fvLabel view}
+  <div .controls .input>
+    ^{fvInput view}
+    $maybe tt <- fvTooltip view
+      <span .help-block>#{tt}
+    $maybe err <- fvErrors view
+      <span .help-block>#{err}
+|]
+  return (res, widget)
+  where
+    fs = FieldSettings { fsLabel = SomeMessage MsgEmail
+                       , fsTooltip = Nothing
+                       , fsId = Nothing
+                       , fsName = Nothing
+                       , fsAttrs = [("class", "span3")]
+                       }
 
 getHelpR :: Handler RepHtml
 getHelpR = do
@@ -15,17 +37,5 @@ getHelpR = do
 
 passreset :: Widget
 passreset = do
-  ident <- lift newIdent
-  (w, e) <- lift $ generateFormPost $ renderBootstrap $ ef ident
+  (w, e) <- lift $ generateFormPost $ emailForm Nothing
   $(widgetFile "password-reset")
-
-ef :: (RenderMessage master AppMessage, RenderMessage master FormMessage) =>
-      Text -> AForm sub master Text
-ef x = areq emailField fs Nothing
-  where
-    fs = FieldSettings { fsLabel = SomeMessage MsgEmail
-                       , fsTooltip = Nothing
-                       , fsId = Just x
-                       , fsName = Nothing
-                       , fsAttrs = [("class", "span3")]
-                       }
