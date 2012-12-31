@@ -5,7 +5,7 @@
       <a href="@{TopR}" .brand>Owl
       <ul .nav>
         <li .active><a href="@{HomeR}"><i class="icon-home"></i> Home</a>
-        <li><a href="@{HelpR}">Help</a>
+        <li><a href="@{HELP HelpR}">Help</a>
       $maybe Entity _ u <- mu
         <ul .nav.pull-right>
           <li .dropdown>

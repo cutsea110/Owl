@@ -102,7 +102,7 @@ instance Yesod App where
 
     isAuthorized (AuthR _) _ = return Authorized
     isAuthorized AdminToolsR _ = isAdminAuth
-    isAuthorized HelpR _ = return Authorized
+    isAuthorized (HELP _) _ = return Authorized
     isAuthorized TopR _ = return Authorized
     isAuthorized _ _ = loggedInAuth
     -- This function creates static content files in the static folder

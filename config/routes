@@ -6,7 +6,8 @@
 
 /        TopR    GET
 /home    HomeR   GET
-/help    HelpR   GET
+/help HELP:
+  / HelpR GET
 /config  ConfigR GET
 
 /admin-tools AdminToolsR GET
