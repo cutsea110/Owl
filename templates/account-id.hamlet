@@ -1,12 +1,13 @@
 <!-- Account ID -->
-<div .page-header>
-  <h3>Account <small>change cutsea110's account</small>
-<form>
-  <div .control-group.info>
-    <label .control-label for="#account">Account ID
-    <div .controls>
-      <input type="text" #account .span2 value="cutsea110">
-      <span .help-inline>message...
+$maybe msg <- mmsg
+  <div .alert.alert-block>
+    <button type="button" .close data-dismiss="alert">&times;
+    <p>#{msg}
+
+<p>message...message...
+
+<form method=post action=@{HOME AccountIdR} enctype=#{e}>
+  ^{w}
   <div .control-group>
     <div .controls.btn-group>
       <input type="submit" .btn.btn-primary value="Update">

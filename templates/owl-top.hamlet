@@ -7,7 +7,7 @@
 $maybe _ <- mu
 $nothing
   <div>
-    <a href="@{HomeR}" .btn.btn-large.btn-success>Login from here.
+    <a href="@{HOME HomeR}" .btn.btn-large.btn-success>Login from here.
 
 <ul .thumbnails>
   $forall (kls, xy) <- classes

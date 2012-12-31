@@ -6,18 +6,18 @@
   <div .span12>
     <div .tabbable.tabs-left>
       <ul .nav.nav-tabs>
-        <li .active><a href="#menu-account" data-toggle="tab">Account</a>
-        <li><a href="#menu-password" data-toggle="tab">Password</a>
-        <li><a href="#menu-email" data-toggle="tab">Email</a>
-        <li><a href="#menu-profile" data-toggle="tab">Profile</a>
+        <li :tabIs "account-id":.active><a href="##{menu1}" data-toggle="tab">Account</a>
+        <li :tabIs "password":.active><a href="##{menu2}" data-toggle="tab">Password</a>
+        <li :tabIs "email":.active><a href="##{menu3}" data-toggle="tab">Email</a>
+        <li :tabIs "profile":.active><a href="##{menu4}" data-toggle="tab">Profile</a>
       <div .tab-content>
-        <div .tab-pane.active #menu-account>
+        <div .tab-pane :tabIs "account-id":.active ##{menu1}>
           ^{accountId}
-        <div .tab-pane #menu-password>
+        <div .tab-pane :tabIs "password":.active ##{menu2}>
           ^{password}
-        <div .tab-pane #menu-email>
+        <div .tab-pane :tabIs "email":.active ##{menu3}>
           ^{email}
-        <div .tab-pane #menu-profile>
+        <div .tab-pane :tabIs "profile":.active ##{menu4}>
           ^{profile}
 
 <!-- Dialog -->

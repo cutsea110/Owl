@@ -5,7 +5,9 @@
 /auth   AuthR   Auth   getAuth
 
 /        TopR    GET
-/home    HomeR   GET
+/home    HOME:
+  / HomeR GET
+  /account AccountIdR POST
 /help HELP:
   / HelpR GET
   /pwd-reset PasswordResetR POST

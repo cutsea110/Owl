@@ -1,2 +1,2 @@
 Email: メールアドレス
-
+AccountID: アカウントID
