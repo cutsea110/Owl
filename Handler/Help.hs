@@ -32,6 +32,7 @@ emailForm mv fragment = do
 
 getHelpR :: Handler RepHtml
 getHelpR = do
+  (menu1, menu2) <- (,) <$> newIdent <*> newIdent
   (w, e) <- generateFormPost $ emailForm Nothing
   mmsg <- getMessage
   defaultLayout $ do
