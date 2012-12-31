@@ -1,9 +1,11 @@
 module Handler.Help 
        ( getHelpR
+       , postPasswordResetR
        ) where
 
 import Import
 import Data.Maybe (isJust)
+import qualified Data.Text as T
 
 emailForm :: Maybe Text -> Html -> MForm App App (FormResult Text, Widget)
 emailForm mv fragment = do
@@ -30,12 +32,20 @@ emailForm mv fragment = do
 
 getHelpR :: Handler RepHtml
 getHelpR = do
+  (w, e) <- generateFormPost $ emailForm Nothing
+  mmsg <- getMessage
   defaultLayout $ do
-    let usage = $(widgetFile "usage")
+    let passreset = $(widgetFile "password-reset")
+        usage = $(widgetFile "usage")
     setTitle "Help"
     $(widgetFile "help")
 
-passreset :: Widget
-passreset = do
-  (w, e) <- lift $ generateFormPost $ emailForm Nothing
-  $(widgetFile "password-reset")
+postPasswordResetR :: Handler ()
+postPasswordResetR = do
+  ((r, _), _) <- runFormPost $ emailForm Nothing
+  case r of
+    FormSuccess x -> do
+      liftIO $ putStrLn $ "[TODO] send reminder mail to " ++ T.unpack x
+      setMessage "Send reminder mail..."
+      redirect (HELP HelpR)
+    _ -> redirect (HELP HelpR)

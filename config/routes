@@ -8,6 +8,7 @@
 /home    HomeR   GET
 /help HELP:
   / HelpR GET
+  /pwd-reset PasswordResetR POST
 /config  ConfigR GET
 
 /admin-tools AdminToolsR GET
