@@ -11,6 +11,11 @@
         <li :tabIs "email":.active><a href="##{menu3}" data-toggle="tab">Email</a>
         <li :tabIs "profile":.active><a href="##{menu4}" data-toggle="tab">Profile</a>
       <div .tab-content>
+        $maybe msg <- mmsg
+          <div .alert.alert-block>
+            <button type="button" .close data-dismiss="alert">&times;
+            <p>#{msg}
+
         <div .tab-pane :tabIs "account-id":.active ##{menu1}>
           ^{accountId}
         <div .tab-pane :tabIs "password":.active ##{menu2}>

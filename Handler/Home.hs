@@ -10,7 +10,6 @@ import Import
 import Prelude (head, tail)
 import Yesod.Auth
 import Data.Maybe (isJust)
-import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Tuple.HT (fst3, snd3, thd3)
 
@@ -99,7 +98,7 @@ getHomeR = do
   u <- requireAuth
   (menu1, menu2, menu3, menu4) <- (,,,) <$> newIdent <*> newIdent <*> newIdent <*> newIdent
   (modal1, modal2, modal3) <- (,,) <$> newIdent <*> newIdent <*> newIdent
-  (w, e) <- generateFormPost $ accountForm Nothing
+  (wa, ea) <- generateFormPost $ accountForm Nothing
   (wp, ep) <- generateFormPost $ passwordForm Nothing
   (we, ee) <- generateFormPost $ emailForm Nothing
   tabIs <- fmap (maybe ("account-id"==) (==)) $ lookupGetParam "tab"

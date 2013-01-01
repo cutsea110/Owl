@@ -4,7 +4,7 @@ module Handler.Help
        ) where
 
 import Import
-import Data.Maybe (isJust, maybe)
+import Data.Maybe (isJust)
 import qualified Data.Text as T
 
 emailForm :: Maybe Text -> Html -> MForm App App (FormResult Text, Widget)

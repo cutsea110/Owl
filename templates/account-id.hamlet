@@ -1,13 +1,8 @@
 <!-- Account ID -->
-$maybe msg <- mmsg
-  <div .alert.alert-block>
-    <button type="button" .close data-dismiss="alert">&times;
-    <p>#{msg}
-
 <p>message...message...
 
-<form method=post action=@{HOME AccountIdR} enctype=#{e}>
-  ^{w}
+<form method=post action=@{HOME AccountIdR} enctype=#{ea}>
+  ^{wa}
   <div .control-group>
     <div .controls.btn-group>
       <input type="submit" .btn.btn-primary value="Update">

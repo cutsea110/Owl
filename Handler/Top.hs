@@ -2,7 +2,6 @@ module Handler.Top where
 
 import Import
 import Yesod.Auth
-import Data.List (unfoldr)
 
 getTopR :: Handler RepHtml
 getTopR = do
