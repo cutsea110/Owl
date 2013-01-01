@@ -4,14 +4,18 @@
 /static StaticR Static getStatic
 /auth   AuthR   Auth   getAuth
 
-/        TopR    GET
-/home    HOME:
-  / HomeR GET
-  /account AccountIdR POST
-  /password PasswordR POST
-/help HELP:
-  / HelpR GET
-  /pwd-reset PasswordResetR POST
-/config  ConfigR GET
+/            TopR            GET
 
-/admin-tools AdminToolsR GET
+/home        HOME:
+  /          HomeR           GET
+  /account   AccountIdR      POST
+  /password  PasswordR       POST
+  /email     EmailR          POST
+
+/help        HELP:
+  /          HelpR           GET
+  /pwd-reset PasswordResetR  POST
+
+/config      ConfigR         GET
+
+/admin-tools AdminToolsR     GET

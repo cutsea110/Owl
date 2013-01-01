@@ -1,15 +1,16 @@
 <!-- Email -->
-<div .page-header>
-  <h3>Email <small>change cutsea110's email.</small>
-<form>
-  <div .control-group.warning>
-    <label .control-label for="#email">Email address
-    <div .controls>
-      <input type="email" #email .span3 value="cutsea110@gmail.com" required>
-      <span .help-block>
-        <span .label.label-info>NOTE
-        message...message...message...message...
-        <span .badge.badge-important>6
+$maybe msg <- mmsg
+  <div .alert.alert-block>
+    <button type="button" .close data-dismiss="alert">&times;
+    <p>#{msg}
+
+<form method=post action=@{HOME EmailR} enctype=#{ee}>
+  ^{we}
   <div .control-group>
     <div .controls.btn-group>
-      <input type="submit" .btn.btn-primary value="Update">
+      <button type="submit" .btn.btn-primary><i class="icon-envelope icon-white"></i> Send reminder mail
+  <div .control-group>
+      <span .help-block>
+        <span .label.label-info>NOTE
+        <p>message...message...message...message... #
+          <span .badge.badge-important>6</span>

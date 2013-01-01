@@ -1,5 +1,10 @@
 {-# LANGUAGE TupleSections, OverloadedStrings #-}
-module Handler.Home where
+module Handler.Home 
+       ( getHomeR
+       , postAccountIdR
+       , postPasswordR
+       , postEmailR
+       ) where
 
 import Import
 import Prelude (head, tail)
@@ -66,6 +71,29 @@ $forall (v, k) <- vks
                          , fsAttrs = []
                          }
 
+emailForm :: Maybe Text -> Html -> MForm App App (FormResult Text, Widget)
+emailForm mv fragment = do
+  (res, view) <- mreq emailField fs mv
+  let widget = [whamlet|
+\#{fragment}
+<div .control-group.warning .clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
+  <label .control-label for=#{fvId view}>#{fvLabel view}
+  <div .controls .input>
+    ^{fvInput view}
+    $maybe tt <- fvTooltip view
+      <span .help-block>#{tt}
+    $maybe err <- fvErrors view
+      <span .help-block>#{err}
+|]
+  return (res, widget)
+  where
+    fs = FieldSettings { fsLabel = SomeMessage MsgEmail
+                       , fsTooltip = Nothing
+                       , fsId = Nothing
+                       , fsName = Nothing
+                       , fsAttrs = [("class", "span3"),("placeholder","cutsea110@gmail.com")]
+                       }
+
 getHomeR :: Handler RepHtml
 getHomeR = do
   u <- requireAuth
@@ -73,6 +101,7 @@ getHomeR = do
   (modal1, modal2, modal3) <- (,,) <$> newIdent <*> newIdent <*> newIdent
   (w, e) <- generateFormPost $ accountForm Nothing
   (wp, ep) <- generateFormPost $ passwordForm Nothing
+  (we, ee) <- generateFormPost $ emailForm Nothing
   tabIs <- fmap (maybe ("account-id"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
   let photos = [ (img_avatar_avatar_jpg, "Photo 1"::Text)
@@ -104,8 +133,8 @@ postAccountIdR = do
     FormSuccess x -> do
       liftIO $ putStrLn $ "[TODO] update user account " ++ T.unpack x
       setMessage "Update account..."
-      redirect ((HOME HomeR), [("tab", "account-id")])
-    _ -> redirect ((HOME HomeR), [("tab", "account-id")])
+    _ -> setMessage "Fail to update"
+  redirect ((HOME HomeR), [("tab", "account-id")])
 
 postPasswordR :: Handler ()
 postPasswordR = do
@@ -114,7 +143,17 @@ postPasswordR = do
     FormSuccess x -> do
       liftIO $ putStrLn $ "[TODO] update password " ++ T.unpack x
       setMessage "Update password..."
-      redirect ((HOME HomeR), [("tab", "password")])
-    FormFailure (x:_) -> do
-      setMessage $ toHtml x
-      redirect ((HOME HomeR), [("tab", "password")])
+    FormFailure (x:_) -> setMessage $ toHtml x
+    _ -> setMessage "Fail to Update"
+  redirect ((HOME HomeR), [("tab", "password")])
+
+postEmailR :: Handler ()
+postEmailR = do
+  ((r, _), _) <- runFormPost $ emailForm Nothing
+  case r of
+    FormSuccess x -> do
+      liftIO $ putStrLn $ "[TODO] send email reminder " ++ T.unpack x
+      setMessage "Send email reminder"
+    FormFailure (x:_) -> setMessage $ toHtml x
+    _ -> setMessage "Fail to send"
+  redirect ((HOME HomeR), [("tab", "email")])
