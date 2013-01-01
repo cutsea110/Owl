@@ -8,6 +8,7 @@
 /home    HOME:
   / HomeR GET
   /account AccountIdR POST
+  /password PasswordR POST
 /help HELP:
   / HelpR GET
   /pwd-reset PasswordResetR POST
