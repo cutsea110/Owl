@@ -5,6 +5,7 @@ import Import
 import Prelude (head, tail)
 import Yesod.Auth
 import Data.Maybe (isJust)
+import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Tuple.HT (fst3, snd3, thd3)
 
@@ -42,35 +43,19 @@ passwordForm mv fragment = do
           then FormSuccess y
           else FormFailure ["don't match between new password and confirmation"]
         _ -> FormFailure ["fail to password update!!"]
+      vks = [(view0,"info"::Text),(view1,"warning"),(view2,"warning")]
   liftIO $ putStrLn $ show (res0, res1, res2)
   let widget = [whamlet|
 \#{fragment}
-<div .control-group.info .clearfix :fvRequired view0:.required :not $ fvRequired view0:.optional :isJust $ fvErrors view0:.error>
-  <label .control-label for=#{fvId view0}>#{fvLabel view0}
-  <div .controls .input>
-    ^{fvInput view0}
-    $maybe tt <- fvTooltip view0
-      <span .help-block>#{tt}
-    $maybe err <- fvErrors view0
-      <span .help-block>#{err}
-
-<div .control-group.warning .clearfix :fvRequired view1:.required :not $ fvRequired view1:.optional :isJust $ fvErrors view1:.error>
-  <label .control-label for=#{fvId view1}>#{fvLabel view1}
-  <div .controls .input>
-    ^{fvInput view1}
-    $maybe tt <- fvTooltip view1
-      <span .help-block>#{tt}
-    $maybe err <- fvErrors view1
-      <span .help-block>#{err}
-
-<div .control-group.warning .clearfix :fvRequired view2:.required :not $ fvRequired view2:.optional :isJust $ fvErrors view2:.error>
-  <label .control-label for=#{fvId view2}>#{fvLabel view2}
-  <div .controls .input>
-    ^{fvInput view2}
-    $maybe tt <- fvTooltip view2
-      <span .help-block>#{tt}
-    $maybe err <- fvErrors view2
-      <span .help-block>#{err}
+$forall (v, k) <- vks
+  <div .control-group.#{k} .clearfix :fvRequired v:.required :not $ fvRequired v:.optional :isJust $ fvErrors v:.error>
+    <label .control-label for=#{fvId v}>#{fvLabel v}
+    <div .controls .input>
+      ^{fvInput v}
+      $maybe tt <- fvTooltip v
+        <span .help-block>#{tt}
+      $maybe err <- fvErrors v
+        <span .help-block>#{err}
 |]
   return (res, widget)
   where
@@ -131,5 +116,5 @@ postPasswordR = do
       setMessage "Update password..."
       redirect ((HOME HomeR), [("tab", "password")])
     FormFailure (x:_) -> do
-      setMessage x
+      setMessage $ toHtml x
       redirect ((HOME HomeR), [("tab", "password")])
