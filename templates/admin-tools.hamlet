@@ -6,13 +6,13 @@
   <div .span12>
     <div .tabbable.tabs-left>
       <ul .nav.nav-tabs>
-        <li .active><a href="#menu-maint-user" data-toggle="tab">_{MsgMaintUser}</a>
-        <li><a href="#menu-import-users" data-toggle="tab">_{MsgImportUser}</a>
-        <li><a href="#menu-maint-client" data-toggle="tab">_{MsgMaintClient}</a>
+        <li :tabIs "maint-user":.active><a href="##{menu1}" data-toggle="tab">_{MsgMaintUser}</a>
+        <li :tabIs "import-users":.active><a href="##{menu2}" data-toggle="tab">_{MsgImportUser}</a>
+        <li :tabIs "maint-client":.active><a href="##{menu3}" data-toggle="tab">_{MsgMaintClient}</a>
       <div .tab-content>
-        <div .tab-pane.active #menu-maint-user>
+        <div .tab-pane :tabIs "maint-user":.active ##{menu1}>
           ^{userlist}
-        <div .tab-pane #menu-import-users>
+        <div .tab-pane :tabIs "import-users":.active ##{menu2}>
           ^{importcsv}
-        <div .tab-pane #menu-maint-client>
+        <div .tab-pane :tabIs "maint-client":.active ##{menu3}>
           ^{clientlist}

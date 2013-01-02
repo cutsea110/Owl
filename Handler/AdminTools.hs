@@ -4,6 +4,9 @@ import Import
 
 getAdminToolsR :: Handler RepHtml
 getAdminToolsR = do
+  (modal1, modal2, modal3) <- (,,) <$> newIdent <*> newIdent <*> newIdent
+  (menu1, menu2, menu3) <- (,,) <$> newIdent <*> newIdent <*> newIdent
+  tabIs <- fmap (maybe ("account-id"==) (==)) $ lookupGetParam "tab"
   let photos = [ (img_avatar_avatar_jpg, "User 1"::Text)
                , (img_avatar_avatar2_jpg, "User 2")
                , (img_avatar_avatar3_jpg, "User 3")
@@ -15,9 +18,6 @@ getAdminToolsR = do
                , (img_avatar_avatar9_jpg, "User 9")
                ]
   defaultLayout $ do
-    modal1 <- lift newIdent -- for edit client
-    modal2 <- lift newIdent -- for edit user profile
-    modal3 <- lift newIdent -- for kill user
     let userlist = $(widgetFile "user-list")
         edituser = $(widgetFile "edit-user")
         killuser = $(widgetFile "kill-user")
