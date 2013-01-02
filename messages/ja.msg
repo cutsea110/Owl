@@ -10,3 +10,6 @@ Help: ヘルプ
 AdminTool: システム管理
 Settings: 設定
 Logout: ログアウト
+
+ForgetPassword: パスワードを忘れた?
+Usage: 使用方法

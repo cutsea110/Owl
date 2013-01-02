@@ -10,3 +10,6 @@ Help: Help
 AdminTool: Admin Tool
 Settings: Settings
 Logout: Logout
+
+ForgetPassword: Forget Password?
+Usage: Usage

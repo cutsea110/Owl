@@ -1,13 +1,13 @@
 <!-- Help menu -->
 <div .page-header>
-  <h2>Help
+  <h2>_{MsgHelp}
 
 <div .row>
   <div .span12>
     <div .tabbable.tabs-left>
       <ul .nav.nav-tabs>
-        <li :tabIs "password-reset":.active><a href="##{menu1}" data-toggle="tab">Forget Password?</a>
-        <li :tabIs "usage":.active><a href="##{menu2}" data-toggle="tab">Usage</a>
+        <li :tabIs "password-reset":.active><a href="##{menu1}" data-toggle="tab">_{MsgForgetPassword}</a>
+        <li :tabIs "usage":.active><a href="##{menu2}" data-toggle="tab">_{MsgUsage}</a>
       <div .tab-content>
         $maybe msg <- mmsg
           <div .alert.alert-block>
