@@ -20,14 +20,15 @@
 
 <!-- Change avatar/Delete photo -->
 <div .span3>
-  $with (p, c) <- avatar
-    <div .thumbnail>
-      <img .img-rounded src="@{StaticR p}" data-src="holder.js/150x100" alt>
+  <form>
+    $with (p, c) <- avatar
+      <div .thumbnail>
+        <img .img-rounded src="@{StaticR p}" data-src="holder.js/150x100" alt>
 
-  <div .btn-group>
-    <a href="#" .btn.btn-success.btn-mini><i class="icon-star icon-white"></i> Choice as Avatar
-    <a href="#" .btn.btn-danger.btn-mini><i class="icon-fire icon-white"></i> Fire Photo
+    <div .btn-group>
+      <a href="#" .btn.btn-success.btn-mini><i class="icon-star icon-white"></i> Choice as Avatar
+      <a href="#" .btn.btn-danger.btn-mini><i class="icon-fire icon-white"></i> Fire Photo
 
-  <span .help-inline>
-    <span .label.label-info>NOTE
-    message...
+    <span .help-inline>
+      <span .label.label-info>NOTE
+      message...
