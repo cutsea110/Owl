@@ -1,15 +1,15 @@
 <!-- Home menu and Dialogs -->
 <div .page-header>
-  <h2>#{userUsername $ entityVal u}'s Home
+  <h2>#{userUsername $ entityVal u}
 
 <div .row>
   <div .span12>
     <div .tabbable.tabs-left>
       <ul .nav.nav-tabs>
-        <li :tabIs "account-id":.active><a href="##{menu1}" data-toggle="tab">Account</a>
-        <li :tabIs "password":.active><a href="##{menu2}" data-toggle="tab">Password</a>
-        <li :tabIs "email":.active><a href="##{menu3}" data-toggle="tab">Email</a>
-        <li :tabIs "profile":.active><a href="##{menu4}" data-toggle="tab">Profile</a>
+        <li :tabIs "account-id":.active><a href="##{menu1}" data-toggle="tab">_{MsgAccount}</a>
+        <li :tabIs "password":.active><a href="##{menu2}" data-toggle="tab">_{MsgPassword}</a>
+        <li :tabIs "email":.active><a href="##{menu3}" data-toggle="tab">_{MsgEmail}</a>
+        <li :tabIs "profile":.active><a href="##{menu4}" data-toggle="tab">_{MsgProfile}</a>
       <div .tab-content>
         $maybe msg <- mmsg
           <div .alert.alert-block>
@@ -29,26 +29,26 @@
 <div ##{modal1} .modal.hide.fade>
   <div .modal-header>
     <a href="#" .close data-dismiss="modal">&times;
-    <h3>Change Avatar
+    <h3>_{MsgChangeAvatar}
   <div .modal-body>
     ^{changeAvatar}
   <div .modal-footer>
-    <a href="#" .btn.close data-dismiss="modal">Close
+    <a href="#" .btn.close data-dismiss="modal">_{MsgClose}
 
 <div ##{modal2} .modal.hide.fade>
   <div .modal-header>
     <a href="#" .close data-dismiss="modal">&times;
-    <h3>Upload Photos
+    <h3>_{MsgUploadPhotos}
   <div .modal-body>
     ^{uploadPhotos}
   <div .modal-footer>
-    <a href="#" .btn.close data-dismiss="modal">Close
+    <a href="#" .btn.close data-dismiss="modal">_{MsgClose}
 
 <div ##{modal3} .modal.hide.fade>
   <div .modal-header>
     <a href="#" .close data-dismiss="modal">&times;
-    <h3>Edit Profile
+    <h3>_{MsgEditProfile}
   <div .modal-body>
     ^{editProf}
   <div .modal-footer>
-    <a href="#" .btn.close data-dismiss="modal">Close
+    <a href="#" .btn.close data-dismiss="modal">_{MsgClose}

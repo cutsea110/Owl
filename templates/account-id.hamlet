@@ -5,4 +5,4 @@
   ^{wa}
   <div .control-group>
     <div .controls.btn-group>
-      <input type="submit" .btn.btn-primary value="Update">
+      <input type="submit" .btn.btn-primary value="_{MsgUpdate}">

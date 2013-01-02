@@ -1,4 +1,4 @@
-Email: メールアドレス
+Emailaddress: メールアドレス
 AccountID: アカウントID
 CurrentPassword: パスワード
 NewPassword: 新しいパスワード
@@ -17,3 +17,26 @@ Usage: 使用方法
 SendReminderMail: リマインダメール送信
 
 NOTE: NOTE
+
+Account: アカウント
+Password: パスワード
+Email: メール
+Profile: プロフィール
+
+Update: 更新する
+Edit: 編集する
+ChangeAvatar: アバターの変更
+UploadPhotos: 写真をアップロードする
+EditProfile: プロフィールの編集
+EditComment: コメントの編集
+
+ChoiceAsAvatar: アバターにする
+FirePhoto: 写真を削除する
+
+Browse: 参照
+Upload: アップロード
+
+FamilyName: 姓
+GivenName: 名
+
+Close: 閉じる

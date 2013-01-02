@@ -23,7 +23,7 @@ emailForm mv fragment = do
 |]
   return (res, widget)
   where
-    fs = FieldSettings { fsLabel = SomeMessage MsgEmail
+    fs = FieldSettings { fsLabel = SomeMessage MsgEmailaddress
                        , fsTooltip = Nothing
                        , fsId = Nothing
                        , fsName = Nothing

@@ -1,6 +1,4 @@
 <!-- Profile -->
-<div .page-header>
-  <h3>Profile <small>cutsea110's avatar & any informations.</small>
 <div.span4>
   <div .thumbnail>
     <img .img-rounded src="@{StaticR img_avatar_avatar_jpg}" data-src="holder.js/180x120" alt="avatar">
@@ -10,9 +8,9 @@
        I have a cute daughter.
 
   <div .btn-group.dropup>
-    <a href="#" .btn.btn-primary>Edit
+    <a href="#" .btn.btn-primary>_{MsgEdit}
     <a href="#" .btn.btn-primary.dropdown-toggle data-toggle="dropdown"><span class="caret"></span>
     <ul .dropdown-menu>
-      <li><a href="##{modal1}" data-toggle="modal"><i class="icon-user"></i> Change Avatar</a>
-      <li><a href="##{modal2}" data-toggle="modal"><i class="icon-camera"></i> Upload Photos</a>
-      <li><a href="##{modal3}" data-toggle="modal"><i class="icon-edit"></i> Edit Comment</a>
+      <li><a href="##{modal1}" data-toggle="modal"><i class="icon-user"></i> _{MsgChangeAvatar}</a>
+      <li><a href="##{modal2}" data-toggle="modal"><i class="icon-camera"></i> _{MsgUploadPhotos}</a>
+      <li><a href="##{modal3}" data-toggle="modal"><i class="icon-edit"></i> _{MsgEditComment}</a>
