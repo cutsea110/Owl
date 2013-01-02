@@ -13,3 +13,7 @@ Logout: Logout
 
 ForgetPassword: Forget Password?
 Usage: Usage
+
+SendReminderMail: Send reminder mail
+
+NOTE: NOTE

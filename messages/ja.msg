@@ -13,3 +13,7 @@ Logout: ログアウト
 
 ForgetPassword: パスワードを忘れた?
 Usage: 使用方法
+
+SendReminderMail: リマインダメール送信
+
+NOTE: NOTE
