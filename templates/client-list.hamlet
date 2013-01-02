@@ -1,6 +1,9 @@
 <!-- Client List -->
 <h3>Client List
 
+<form .pull-right>
+  <button href="##{modal1}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-circle_plus glyphicon-white"></i> Add new client
+
 <table .table.table-striped.table-hover>
   <thead>
     <tr>
@@ -17,9 +20,9 @@
       <td .client_name><span>BISocie</span>
       <td .client_secret><span>9wae/adisae9dcIOSJiidasiIOi42i472hDHjads8HIy98HDU7g9</span>
     <tr onclick="setRowdata4Modal($(this))" data-toggle="modal" href="##{modal1}">
-      <td .client_id><span>97asdh2</span>
-      <td .client_name><span>BISocie</span>
-      <td .client_secret><span>9wae/adisae9dcIOSJiidasiIOi42i472hDHjads8HIy98HDU7g9</span>
+      <td .client_id><span>8asASxp<span>
+      <td .client_name><span>Owl</span>
+      <td .client_secret><span>SI8weddUH.DHIDU-sdahsid/HDHUAIDdsuasdhuiasiad924422h</span>
 
 <!-- Edit Client data Dialog -->
 <div ##{modal1} .modal.hide.fade>
