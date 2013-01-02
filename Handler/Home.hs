@@ -93,6 +93,37 @@ emailForm mv fragment = do
                        , fsAttrs = [("class", "span3"),("placeholder","cutsea110@gmail.com")]
                        }
 
+profileForm :: Maybe (Text, Text, Maybe Textarea) -> Html -> MForm App App (FormResult (Text, Text, Maybe Textarea), Widget)
+profileForm mv fragment = do
+  (res0, view0) <- mreq textField (fs MsgFamilyName) (fst3 <$> mv)
+  (res1, view1) <- mreq textField (fs MsgGivenName) (snd3 <$> mv)
+  (res2, view2) <- mopt textareaField (fs MsgProfile) (thd3 <$> mv)
+  let res = case (res0, res1, res2) of
+        (FormSuccess x, FormSuccess y, FormSuccess z) -> FormSuccess (x, y, z)
+        _ -> FormFailure ["fail to profile update!"]
+      vks = [(view0, "success"::Text), (view1, "success"), (view2, "info")]
+  liftIO $ putStrLn "[TODO] Update profile!"
+  let widget = [whamlet|
+\#{fragment}
+$forall (v, k) <- vks
+  <div .control-group.#{k}.clearfix :fvRequired v:.required :not $ fvRequired v:.optional :isJust $ fvErrors v:.error>
+    <label .control-label for=#{fvId v}>#{fvLabel v}
+    <div .controls .input>
+      ^{fvInput v}
+      $maybe tt <- fvTooltip v
+        <span .help-block>#{tt}
+      $maybe err <- fvErrors v
+        <span .help-block>#{err}
+|]
+  return (res, widget)
+  where
+    fs l = FieldSettings { fsLabel = SomeMessage l
+                         , fsTooltip = Nothing
+                         , fsId = Nothing
+                         , fsName = Nothing
+                         , fsAttrs = []
+                         }
+
 getHomeR :: Handler RepHtml
 getHomeR = do
   u <- requireAuth
@@ -101,6 +132,7 @@ getHomeR = do
   (wa, ea) <- generateFormPost $ accountForm Nothing
   (wp, ep) <- generateFormPost $ passwordForm Nothing
   (we, ee) <- generateFormPost $ emailForm Nothing
+  (wi, ei) <- generateFormPost $ profileForm Nothing
   tabIs <- fmap (maybe ("account-id"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
   let photos = [ (img_avatar_avatar_jpg, "Photo 1"::Text)
