@@ -1,13 +1,11 @@
 <!-- User List -->
-<h3>User List
-
 <form .form-search.inline>
   <div .input-append>
-    <input type="text" .span2.search-query placeholder="Account ID">
+    <input type="text" .span2.search-query placeholder="_{MsgAccountID}">
     <button type="submit" .btn><i class="icon-search"></i>
 
 <form .inline.pull-right>
-  <button href="##{modal2}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-user_add glyphicon-white"></i> Add new face
+  <button href="##{modal2}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-user_add glyphicon-white"></i> _{MsgAddNewFace}
 
 <div #search-result>
   <ul .thumbnails>
@@ -19,8 +17,8 @@
             <h6>#{c}
             <p>#{c}
             <div .btn-group>
-              <button href="##{modal2}" data-toggle="modal" onclick="" .btn.btn-primary.btn-mini>Edit
-              <button href="##{modal3}" data-toggle="modal" onclick="" .btn.btn-danger.btn-mini>Kill
+              <button href="##{modal2}" data-toggle="modal" onclick="" .btn.btn-primary.btn-mini>_{MsgEditUser}
+              <button href="##{modal3}" data-toggle="modal" onclick="" .btn.btn-danger.btn-mini>_{MsgKillUser}
 
   <div .pagination.pagination-centered>
     <ul>
@@ -37,18 +35,18 @@
 <div ##{modal2} .modal.hide.fade>
   <div .modal-header>
     <a href="#" .close data-dismiss="modal">&times;
-    <h3>Edit User
+    <h3>_{MsgEditUser}
   <div .modal-body>
     ^{edituser}
   <div .modal-footer>
-    <a href="#" .btn.close data-dismiss="modal">Close
+    <a href="#" .btn.close data-dismiss="modal">_{MsgClose}
 
 <!-- Kill User Dialog -->
 <div ##{modal3} .modal.hide.fade>
   <div .modal-header>
     <a href="#" .close data-dismiss="modal">&times;
-    <h3>Kill User
+    <h3>_{MsgKillUser}
   <div .modal-body>
     ^{killuser}
   <div .modal-footer>
-    <a href="#" .btn.close data-dismiss="modal">Close
+    <a href="#" .btn.close data-dismiss="modal">_{MsgClose}

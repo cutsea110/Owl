@@ -1,21 +1,21 @@
 <!-- Edit Client -->
 <form>
   <div .control-group>
-    <label .control-label for="#client_id">Client ID
+    <label .control-label for="#client_id">_{MsgClientID}
     <div .controls>
       <input type="text" #client_id .span3>
   <div .control-group>
-    <label .control-label for="#client_name">Client Name
+    <label .control-label for="#client_name">_{MsgClientName}
     <div .controls>
       <input type="text" #client_name .span3>
   <div .control-group>
-    <label .control-label for="#client_secret">Client ID
+    <label .control-label for="#client_secret">_{MsgClientID}
     <div .controls>
       <input type="text" #client_secret .span3>
   <div .control-group>
     <div .controls.btn-group>
-      <button type="submit" .btn.btn-primary>Update
-      <button type="submit" .btn.btn-danger><i class="icon-fire icon-white"></i> Fire
+      <button type="submit" .btn.btn-primary>_{MsgUpdate}
+      <button type="submit" .btn.btn-danger><i class="icon-fire icon-white"></i> _{MsgFire}
     <div .help-inline>
-      <span .label.label-important>Important
+      <span .label.label-important>_{MsgImportant}
       message...message...

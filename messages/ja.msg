@@ -40,3 +40,23 @@ FamilyName: 姓
 GivenName: 名
 
 Close: 閉じる
+
+AdministratorsToolbox: 管理ツール
+MaintUser: ユーザ管理
+ImportUser: ユーザインポート
+MaintClient: クライアント管理
+
+AddNewFace: 新規ユーザ追加
+EditUser: 編集
+KillUser: 削除
+
+Warning: 警告!
+Danger: 危険!
+Important: 重要!
+
+AddNewClient: 新規クライアント追加
+ClientID: クライアントID
+ClientName: クライアント名
+ClientSecret: クライアント秘密キー
+EditClient: クライアント編集
+Fire: 削除

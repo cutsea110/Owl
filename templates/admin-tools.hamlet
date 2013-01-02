@@ -1,14 +1,14 @@
 <!-- Admin tools menu -->
 <div .page-header>
-  <h2>Administrator's Toolbox
+  <h2>_{MsgAdministratorsToolbox}
 
 <div .row>
   <div .span12>
     <div .tabbable.tabs-left>
       <ul .nav.nav-tabs>
-        <li .active><a href="#menu-maint-user" data-toggle="tab">Maint User</a>
-        <li><a href="#menu-import-users" data-toggle="tab">Import User</a>
-        <li><a href="#menu-maint-client" data-toggle="tab">Maint Client</a>
+        <li .active><a href="#menu-maint-user" data-toggle="tab">_{MsgMaintUser}</a>
+        <li><a href="#menu-import-users" data-toggle="tab">_{MsgImportUser}</a>
+        <li><a href="#menu-maint-client" data-toggle="tab">_{MsgMaintClient}</a>
       <div .tab-content>
         <div .tab-pane.active #menu-maint-user>
           ^{userlist}

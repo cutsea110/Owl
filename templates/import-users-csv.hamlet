@@ -1,8 +1,7 @@
 <!-- Import Users from CSV -->
-<h3>Import Users list as CSV
 <div .alert.alert-block>
   <button type="button" .close data-dismiss="alert">&times;
-  <h4>Warning!
+  <h4>_{MsgWarning}
   Best check yourself, you're not...
 
 <form>
@@ -12,12 +11,12 @@
       <input type="file" #filepath .hide>
       <div .input-append>
         <span #file-custom .input-large.uneditable-input>
-        <a .btn #file-browse>Browse
+        <a .btn #file-browse>_{MsgBrowse}
 
-        <button .btn.btn-primary><i class="icon-upload icon-white"></i> Upload
+        <button .btn.btn-primary><i class="icon-upload icon-white"></i> _{MsgUpload}
 
 <div .help-block>
-  <span .label.label-info>NOTE
+  <span .label.label-info>_{MsgNOTE}
   <h6>CSV format
   <p>use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.
   <dl .dl-horizontal>

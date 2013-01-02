@@ -40,3 +40,23 @@ FamilyName: Family Name
 GivenName: Given Name
 
 Close: Close
+
+AdministratorsToolbox: Administrator's Toolbox
+MaintUser: Maint user
+ImportUser: Import user
+MaintClient: Maint client
+
+AddNewFace: Add new face
+EditUser: Edit
+KillUser: Kill
+
+Warning: Warning!
+Danger: Danger!
+Important: Important!
+
+AddNewClient: Add new client
+ClientID: Client ID
+ClientName: Client Name
+ClientSecret: Client Secret
+EditClient: Edit Client
+Fire: Fire
