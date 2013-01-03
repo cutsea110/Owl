@@ -6,34 +6,12 @@ module Handler.Help
 import Import
 import Data.Maybe (isJust)
 import qualified Data.Text as T
-
-emailForm :: Maybe Text -> Html -> MForm App App (FormResult Text, Widget)
-emailForm mv fragment = do
-  (res, view) <- mreq emailField fs mv
-  let widget = [whamlet|
-\#{fragment}
-<div .control-group.warning .clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
-  <label .control-label for=#{fvId view}>#{fvLabel view}
-  <div .controls .input>
-    ^{fvInput view}
-    $maybe tt <- fvTooltip view
-      <span .help-block>#{tt}
-    $maybe err <- fvErrors view
-      <span .help-block>#{err}
-|]
-  return (res, widget)
-  where
-    fs = FieldSettings { fsLabel = SomeMessage MsgEmailaddress
-                       , fsTooltip = Nothing
-                       , fsId = Nothing
-                       , fsName = Nothing
-                       , fsAttrs = [("class", "span3")]
-                       }
+import Owl.Helpers.Form (emailForm)
 
 getHelpR :: Handler RepHtml
 getHelpR = do
   (menu1, menu2) <- (,) <$> newIdent <*> newIdent
-  (w, e) <- generateFormPost $ emailForm Nothing
+  (w, e) <- generateFormPost $ emailForm [("class", "span3")] Nothing
   tabIs <- fmap (maybe ("password-reset"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
   defaultLayout $ do
@@ -44,7 +22,7 @@ getHelpR = do
 
 postPasswordResetR :: Handler ()
 postPasswordResetR = do
-  ((r, _), _) <- runFormPost $ emailForm Nothing
+  ((r, _), _) <- runFormPost $ emailForm [] Nothing
   case r of
     FormSuccess x -> do
       liftIO $ putStrLn $ "[TODO] send reminder mail to " ++ T.unpack x

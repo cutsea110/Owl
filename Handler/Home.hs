@@ -13,161 +13,7 @@ import Data.Maybe (isJust)
 import qualified Data.Text as T
 import Data.Tuple.HT (fst3, snd3, thd3)
 import Text.Julius (rawJS)
-
-accountForm :: Maybe Text -> Html -> MForm App App (FormResult Text, Widget)
-accountForm mv fragment = do
-  (res, view) <- mreq textField fs mv
-  let widget = [whamlet|
-\#{fragment}
-<div .control-group.info .clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
-  <label .control-label for=#{fvId view}>#{fvLabel view}
-  <div .controls .input>
-    ^{fvInput view}
-    $maybe tt <- fvTooltip view
-      <span .help-block>#{tt}
-    $maybe err <- fvErrors view
-      <span .help-block>#{err}
-|]
-  return (res, widget)
-  where
-    fs = FieldSettings { fsLabel = SomeMessage MsgAccountID
-                       , fsTooltip = Nothing
-                       , fsId = Nothing
-                       , fsName = Nothing
-                       , fsAttrs = [("class", "span2")]
-                       }
-
-passwordForm :: Maybe (Text,Text,Text) -> Html -> MForm App App (FormResult Text, Widget)
-passwordForm mv fragment = do
-  (res0, view0) <- mreq passwordField (fs MsgCurrentPassword) (fst3 <$> mv)
-  (res1, view1) <- mreq passwordField (fs MsgNewPassword) (snd3 <$> mv)
-  (res2, view2) <- mreq passwordField (fs MsgConfirmPassword) (thd3 <$> mv)
-  let res = case (res0, res1, res2) of
-        (FormSuccess x, FormSuccess y, FormSuccess z) ->
-          if y == z
-          then FormSuccess y
-          else FormFailure ["don't match between new password and confirmation"]
-        _ -> FormFailure ["fail to password update!!"]
-      vks = [(view0,"info"::Text),(view1,"warning"),(view2,"warning")]
-  liftIO $ putStrLn $ show (res0, res1, res2)
-  let widget = [whamlet|
-\#{fragment}
-$forall (v, k) <- vks
-  <div .control-group.#{k} .clearfix :fvRequired v:.required :not $ fvRequired v:.optional :isJust $ fvErrors v:.error>
-    <label .control-label for=#{fvId v}>#{fvLabel v}
-    <div .controls .input>
-      ^{fvInput v}
-      $maybe tt <- fvTooltip v
-        <span .help-block>#{tt}
-      $maybe err <- fvErrors v
-        <span .help-block>#{err}
-|]
-  return (res, widget)
-  where
-    fs l = FieldSettings { fsLabel = SomeMessage l
-                         , fsTooltip = Nothing
-                         , fsId = Nothing
-                         , fsName = Nothing
-                         , fsAttrs = []
-                         }
-
-emailForm :: Maybe Text -> Html -> MForm App App (FormResult Text, Widget)
-emailForm mv fragment = do
-  (res, view) <- mreq emailField fs mv
-  let widget = [whamlet|
-\#{fragment}
-<div .control-group.warning .clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
-  <label .control-label for=#{fvId view}>#{fvLabel view}
-  <div .controls .input>
-    ^{fvInput view}
-    $maybe tt <- fvTooltip view
-      <span .help-block>#{tt}
-    $maybe err <- fvErrors view
-      <span .help-block>#{err}
-|]
-  return (res, widget)
-  where
-    fs = FieldSettings { fsLabel = SomeMessage MsgEmail
-                       , fsTooltip = Nothing
-                       , fsId = Nothing
-                       , fsName = Nothing
-                       , fsAttrs = [("class", "span3"),("placeholder","cutsea110@gmail.com")]
-                       }
-
-profileForm :: Maybe (Text, Text, Maybe Textarea) -> Html -> MForm App App (FormResult (Text, Text, Maybe Textarea), Widget)
-profileForm mv fragment = do
-  (res0, view0) <- mreq textField (fs MsgFamilyName) (fst3 <$> mv)
-  (res1, view1) <- mreq textField (fs MsgGivenName) (snd3 <$> mv)
-  (res2, view2) <- mopt textareaField (fs MsgProfile) (thd3 <$> mv)
-  let res = case (res0, res1, res2) of
-        (FormSuccess x, FormSuccess y, FormSuccess z) -> FormSuccess (x, y, z)
-        _ -> FormFailure ["fail to profile update!"]
-      vks = [(view0, "success"::Text), (view1, "success"), (view2, "info")]
-  liftIO $ putStrLn "[TODO] Update profile!"
-  let widget = [whamlet|
-\#{fragment}
-$forall (v, k) <- vks
-  <div .control-group.#{k}.clearfix :fvRequired v:.required :not $ fvRequired v:.optional :isJust $ fvErrors v:.error>
-    <label .control-label for=#{fvId v}>#{fvLabel v}
-    <div .controls .input>
-      ^{fvInput v}
-      $maybe tt <- fvTooltip v
-        <span .help-block>#{tt}
-      $maybe err <- fvErrors v
-        <span .help-block>#{err}
-|]
-  return (res, widget)
-  where
-    fs l = FieldSettings { fsLabel = SomeMessage l
-                         , fsTooltip = Nothing
-                         , fsId = Nothing
-                         , fsName = Nothing
-                         , fsAttrs = []
-                         }
-
-uploadForm :: Maybe FileInfo -> Html -> MForm App App (FormResult FileInfo, Widget)
-uploadForm mv fragment = do
-  (res, view) <- mreq fileField' fs mv
-  liftIO $ putStrLn "[TODO] Upload photo!"
-  let widget = [whamlet|
-\#{fragment}
-<div .control-group.clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
-  <label .control-label for=#{fvId view}>#{fvLabel view}
-  <div .controls .input>
-    ^{fvInput view}
-    $maybe tt <- fvTooltip view
-      <span .help-block>#{tt}
-    $maybe err <- fvErrors view
-      <span .help-block>#{err}
-|]
-  return (res, widget)
-  where
-    fs = FieldSettings { fsLabel = SomeMessage MsgPhotoPath
-                       , fsTooltip = Nothing
-                       , fsId = Nothing
-                       , fsName = Nothing
-                       , fsAttrs = []
-                       }
-
-fileField' :: Field App App FileInfo
-fileField' = fileField
-    { fieldView = \id' name attrs _ isReq -> do
-       toWidget [julius|
-$("##{rawJS id'}-browse, ##{rawJS id'}-custom").click(function(){
-  $("##{rawJS id'}").click();
-});
-$("##{rawJS id'}").change(function(){
-  $("##{rawJS id'}-custom").text($(this).val());
-});
-|]
-       [whamlet|
-<div .input-append>
-  <span id=#{id'}-custom .input-large.uneditable-input>
-  <input id=#{id'} name=#{name} .hide *{attrs} type=file :isReq:required>
-  <a .btn id=#{id'}-browse>_{MsgBrowse}
-  <button .btn.btn-primary><i class="icon-upload icon-white"></i> _{MsgUpload}
-|]
-    }
+import Owl.Helpers.Form
 
 getHomeR :: Handler RepHtml
 getHomeR = do
@@ -176,9 +22,9 @@ getHomeR = do
   (modal1, modal2, modal3) <- (,,) <$> newIdent <*> newIdent <*> newIdent
   (wa, ea) <- generateFormPost $ accountForm Nothing
   (wp, ep) <- generateFormPost $ passwordForm Nothing
-  (we, ee) <- generateFormPost $ emailForm Nothing
+  (we, ee) <- generateFormPost $ emailForm  [("class", "span3"),("placeholder","cutsea110@gmail.com")] Nothing
   (wi, ei) <- generateFormPost $ profileForm Nothing
-  (wu, eu) <- generateFormPost $ uploadForm Nothing
+  (wu, eu) <- generateFormPost $ fileForm Nothing
   tabIs <- fmap (maybe ("account-id"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
   let photos = [ (img_avatar_avatar_jpg, "Photo 1"::Text)
@@ -226,7 +72,7 @@ postPasswordR = do
 
 postEmailR :: Handler ()
 postEmailR = do
-  ((r, _), _) <- runFormPost $ emailForm Nothing
+  ((r, _), _) <- runFormPost $ emailForm [] Nothing
   case r of
     FormSuccess x -> do
       liftIO $ putStrLn $ "[TODO] send email reminder " ++ T.unpack x
