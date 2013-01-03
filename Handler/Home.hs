@@ -130,14 +130,15 @@ uploadForm mv fragment = do
   (res, view) <- mreq fileField' fs mv
   liftIO $ putStrLn "[TODO] Upload photo!"
   let widget = [whamlet|
-  <div .control-group.clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
-    <label .control-label for=#{fvId view}>#{fvLabel view}
-    <div .controls .input>
-      ^{fvInput view}
-      $maybe tt <- fvTooltip view
-        <span .help-block>#{tt}
-      $maybe err <- fvErrors view
-        <span .help-block>#{err}
+\#{fragment}
+<div .control-group.clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
+  <label .control-label for=#{fvId view}>#{fvLabel view}
+  <div .controls .input>
+    ^{fvInput view}
+    $maybe tt <- fvTooltip view
+      <span .help-block>#{tt}
+    $maybe err <- fvErrors view
+      <span .help-block>#{err}
 |]
   return (res, widget)
   where
@@ -160,9 +161,9 @@ $("##{rawJS id'}").change(function(){
 });
 |]
        [whamlet|
-<input id=#{id'} name=#{name} .hide *{attrs} type=file :isReq:required>
 <div .input-append>
   <span id=#{id'}-custom .input-large.uneditable-input>
+  <input id=#{id'} name=#{name} .hide *{attrs} type=file :isReq:required>
   <a .btn id=#{id'}-browse>_{MsgBrowse}
   <button .btn.btn-primary><i class="icon-upload icon-white"></i> _{MsgUpload}
 |]

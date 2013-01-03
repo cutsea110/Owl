@@ -7,7 +7,7 @@
 <form .inline.pull-right>
   <button href="##{modal2}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-user_add glyphicon-white"></i> _{MsgAddNewFace}
 
-<div #search-result>
+<div>
   <ul .thumbnails>
     $forall (p, c) <- photos
       <li .span2>
