@@ -1,6 +1,6 @@
 <!-- Upload photos -->
 <div .span6>
-  <form>
+  <form enctype="#{eu}">
     <div .control-group>
       <div .controls>
         ^{wu}
