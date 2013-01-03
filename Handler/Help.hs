@@ -4,7 +4,6 @@ module Handler.Help
        ) where
 
 import Import
-import Data.Maybe (isJust)
 import qualified Data.Text as T
 import Owl.Helpers.Form (emailForm)
 

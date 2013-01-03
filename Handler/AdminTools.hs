@@ -3,8 +3,6 @@ module Handler.AdminTools
        ) where
 
 import Import
-import Data.Maybe (isJust)
-import Text.Julius (rawJS)
 import Owl.Helpers.Form (fileForm)
 
 getAdminToolsR :: Handler RepHtml

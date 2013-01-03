@@ -9,10 +9,7 @@ module Handler.Home
 import Import
 import Prelude (head, tail)
 import Yesod.Auth
-import Data.Maybe (isJust)
 import qualified Data.Text as T
-import Data.Tuple.HT (fst3, snd3, thd3)
-import Text.Julius (rawJS)
 import Owl.Helpers.Form
 
 getHomeR :: Handler RepHtml
