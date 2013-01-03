@@ -3,14 +3,7 @@
   <form>
     <div .control-group>
       <div .controls>
-        <!-- file my bootstrap -->
-        <input type="file" #filepath .hide>
-        <div .input-append>
-          <span #file-custom .input-large.uneditable-input>
-          <a .btn #file-browse>_{MsgBrowse}
-
-          <button .btn.btn-primary><i class="icon-upload icon-white"></i> _{MsgUpload}
-
+        ^{wu}
       <span .help-block>
         <span .label.label-info>_{MsgNOTE}
         message...message...message...

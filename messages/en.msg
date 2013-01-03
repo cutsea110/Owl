@@ -60,3 +60,5 @@ ClientName: Client Name
 ClientSecret: Client Secret
 EditClient: Edit Client
 Fire: Fire
+
+PhotoPath: Photo Path

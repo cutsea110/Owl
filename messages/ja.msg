@@ -60,3 +60,5 @@ ClientName: クライアント名
 ClientSecret: クライアント秘密キー
 EditClient: クライアント編集
 Fire: 削除
+
+PhotoPath: ファイルパス

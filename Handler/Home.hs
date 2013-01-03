@@ -12,6 +12,7 @@ import Yesod.Auth
 import Data.Maybe (isJust)
 import qualified Data.Text as T
 import Data.Tuple.HT (fst3, snd3, thd3)
+import Text.Julius (rawJS)
 
 accountForm :: Maybe Text -> Html -> MForm App App (FormResult Text, Widget)
 accountForm mv fragment = do
@@ -124,6 +125,49 @@ $forall (v, k) <- vks
                          , fsAttrs = []
                          }
 
+uploadForm :: Maybe FileInfo -> Html -> MForm App App (FormResult FileInfo, Widget)
+uploadForm mv fragment = do
+  (res, view) <- mreq fileField' fs mv
+  liftIO $ putStrLn "[TODO] Upload photo!"
+  let widget = [whamlet|
+  <div .control-group.clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
+    <label .control-label for=#{fvId view}>#{fvLabel view}
+    <div .controls .input>
+      ^{fvInput view}
+      $maybe tt <- fvTooltip view
+        <span .help-block>#{tt}
+      $maybe err <- fvErrors view
+        <span .help-block>#{err}
+|]
+  return (res, widget)
+  where
+    fs = FieldSettings { fsLabel = SomeMessage MsgPhotoPath
+                       , fsTooltip = Nothing
+                       , fsId = Nothing
+                       , fsName = Nothing
+                       , fsAttrs = []
+                       }
+
+fileField' :: Field App App FileInfo
+fileField' = fileField
+    { fieldView = \id' name attrs _ isReq -> do
+       toWidget [julius|
+$("##{rawJS id'}-browse, ##{rawJS id'}-custom").click(function(){
+  $("##{rawJS id'}").click();
+});
+$("##{rawJS id'}").change(function(){
+  $("##{rawJS id'}-custom").text($(this).val());
+});
+|]
+       [whamlet|
+<input id=#{id'} name=#{name} .hide *{attrs} type=file :isReq:required>
+<div .input-append>
+  <span id=#{id'}-custom .input-large.uneditable-input>
+  <a .btn id=#{id'}-browse>_{MsgBrowse}
+  <button .btn.btn-primary><i class="icon-upload icon-white"></i> _{MsgUpload}
+|]
+    }
+
 getHomeR :: Handler RepHtml
 getHomeR = do
   u <- requireAuth
@@ -133,6 +177,7 @@ getHomeR = do
   (wp, ep) <- generateFormPost $ passwordForm Nothing
   (we, ee) <- generateFormPost $ emailForm Nothing
   (wi, ei) <- generateFormPost $ profileForm Nothing
+  (wu, eu) <- generateFormPost $ uploadForm Nothing
   tabIs <- fmap (maybe ("account-id"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
   let photos = [ (img_avatar_avatar_jpg, "Photo 1"::Text)
