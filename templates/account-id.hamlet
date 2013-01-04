@@ -1,8 +1,8 @@
 <!-- Account ID -->
 <p>message...message...
 
-<form method=post action=@{HOME AccountIdR} enctype=#{ea}>
-  ^{wa}
+<form method=post action=@{HOME AccountIdR} enctype=#{e}>
+  ^{w}
   <div .control-group>
     <div .controls.btn-group>
       <input type="submit" .btn.btn-primary value="_{MsgUpdate}">

@@ -14,3 +14,32 @@
       <li><a href="##{modal1}" data-toggle="modal"><i class="icon-user"></i> _{MsgChangeAvatar}</a>
       <li><a href="##{modal2}" data-toggle="modal"><i class="icon-camera"></i> _{MsgUploadPhotos}</a>
       <li><a href="##{modal3}" data-toggle="modal"><i class="icon-edit"></i> _{MsgEditComment}</a>
+
+
+<!-- Dialog -->
+<div ##{modal1} .modal.hide.fade>
+  <div .modal-header>
+    <a href="#" .close data-dismiss="modal">&times;
+    <h3>_{MsgChangeAvatar}
+  <div .modal-body>
+    ^{changeAvatarWidget}
+  <div .modal-footer>
+    <a href="#" .btn.close data-dismiss="modal">_{MsgClose}
+
+<div ##{modal2} .modal.hide.fade>
+  <div .modal-header>
+    <a href="#" .close data-dismiss="modal">&times;
+    <h3>_{MsgUploadPhotos}
+  <div .modal-body>
+    ^{uploadPhotoWidget}
+  <div .modal-footer>
+    <a href="#" .btn.close data-dismiss="modal">_{MsgClose}
+
+<div ##{modal3} .modal.hide.fade>
+  <div .modal-header>
+    <a href="#" .close data-dismiss="modal">&times;
+    <h3>_{MsgEditProfile}
+  <div .modal-body>
+    ^{editProfileWidget}
+  <div .modal-footer>
+    <a href="#" .btn.close data-dismiss="modal">_{MsgClose}

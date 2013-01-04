@@ -16,14 +16,29 @@ getHomeR :: Handler RepHtml
 getHomeR = do
   u <- requireAuth
   (menu1, menu2, menu3, menu4) <- (,,,) <$> newIdent <*> newIdent <*> newIdent <*> newIdent
-  (modal1, modal2, modal3) <- (,,) <$> newIdent <*> newIdent <*> newIdent
-  (wa, ea) <- generateFormPost $ accountForm Nothing
-  (wp, ep) <- generateFormPost $ passwordForm Nothing
-  (we, ee) <- generateFormPost $ emailForm  [("class", "span3"),("placeholder","cutsea110@gmail.com")] Nothing
-  (wi, ei) <- generateFormPost $ profileForm Nothing
-  (wu, eu) <- generateFormPost $ fileForm Nothing
   tabIs <- fmap (maybe ("account-id"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
+  defaultLayout $ do
+    setTitle "Home"
+    $(widgetFile "homepage")
+
+accountWidget :: Widget
+accountWidget = do
+  (w, e) <- lift $ generateFormPost $ accountForm Nothing
+  $(widgetFile "account-id")
+  
+passwordWidget :: Widget
+passwordWidget = do
+  (w, e) <- lift $ generateFormPost $ passwordForm Nothing
+  $(widgetFile "password")
+
+emailWidget :: Widget
+emailWidget = do
+  (w, e) <- lift $ generateFormPost $ emailForm [("class", "span3"),("placeholder","cutsea110@gmail.com")] Nothing
+  $(widgetFile "email")
+
+changeAvatarWidget :: Widget
+changeAvatarWidget = do
   let photos = [ (img_avatar_avatar_jpg, "Photo 1"::Text)
                , (img_avatar_avatar2_jpg, "Photo 2")
                , (img_avatar_avatar3_jpg, "Photo 3")
@@ -35,16 +50,22 @@ getHomeR = do
                , (img_avatar_avatar9_jpg, "Photo 9")
                ]
       avatar = head photos
-  defaultLayout $ do
-    let accountId = $(widgetFile "account-id")
-        password = $(widgetFile "password")
-        email = $(widgetFile "email")
-        profile = $(widgetFile "profile")
-        changeAvatar = $(widgetFile "change-avatar")
-        uploadPhotos = $(widgetFile "upload-photos")
-        editProf = $(widgetFile "edit-profile")
-    setTitle "Home"
-    $(widgetFile "homepage")
+  $(widgetFile "change-avatar")
+
+uploadPhotoWidget :: Widget
+uploadPhotoWidget = do
+  (w, e) <- lift $ generateFormPost $ fileForm Nothing
+  $(widgetFile "upload-photos")
+
+editProfileWidget :: Widget
+editProfileWidget = do
+  (w, e) <- lift $ generateFormPost $ profileForm Nothing
+  $(widgetFile "edit-profile")
+
+profileWidget :: Widget
+profileWidget= do
+  (modal1, modal2, modal3) <- lift $ (,,) <$> newIdent <*> newIdent <*> newIdent
+  $(widgetFile "profile")
 
 postAccountIdR :: Handler ()
 postAccountIdR = do

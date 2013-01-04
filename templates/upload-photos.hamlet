@@ -1,9 +1,9 @@
 <!-- Upload photos -->
 <div .span6>
-  <form enctype="#{eu}">
+  <form enctype="#{e}">
     <div .control-group>
       <div .controls>
-        ^{wu}
+        ^{w}
       <span .help-block>
         <span .label.label-info>_{MsgNOTE}
         message...message...message...

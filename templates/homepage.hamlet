@@ -17,38 +17,10 @@
             <p>#{msg}
 
         <div .tab-pane :tabIs "account-id":.active ##{menu1}>
-          ^{accountId}
+          ^{accountWidget}
         <div .tab-pane :tabIs "password":.active ##{menu2}>
-          ^{password}
+          ^{passwordWidget}
         <div .tab-pane :tabIs "email":.active ##{menu3}>
-          ^{email}
+          ^{emailWidget}
         <div .tab-pane :tabIs "profile":.active ##{menu4}>
-          ^{profile}
-
-<!-- Dialog -->
-<div ##{modal1} .modal.hide.fade>
-  <div .modal-header>
-    <a href="#" .close data-dismiss="modal">&times;
-    <h3>_{MsgChangeAvatar}
-  <div .modal-body>
-    ^{changeAvatar}
-  <div .modal-footer>
-    <a href="#" .btn.close data-dismiss="modal">_{MsgClose}
-
-<div ##{modal2} .modal.hide.fade>
-  <div .modal-header>
-    <a href="#" .close data-dismiss="modal">&times;
-    <h3>_{MsgUploadPhotos}
-  <div .modal-body>
-    ^{uploadPhotos}
-  <div .modal-footer>
-    <a href="#" .btn.close data-dismiss="modal">_{MsgClose}
-
-<div ##{modal3} .modal.hide.fade>
-  <div .modal-header>
-    <a href="#" .close data-dismiss="modal">&times;
-    <h3>_{MsgEditProfile}
-  <div .modal-body>
-    ^{editProf}
-  <div .modal-footer>
-    <a href="#" .btn.close data-dismiss="modal">_{MsgClose}
+          ^{profileWidget}

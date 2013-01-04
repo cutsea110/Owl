@@ -1,6 +1,6 @@
 <!-- Edit Profile -->
-<form>
-  ^{wi}
+<form enctype=#{e}>
+  ^{w}
   <div .control-group>
     <div .controls>
       <button type="submit" .btn.btn-primary>_{MsgUpdate}
