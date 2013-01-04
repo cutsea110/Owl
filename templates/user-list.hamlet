@@ -37,7 +37,7 @@
     <a href="#" .close data-dismiss="modal">&times;
     <h3>_{MsgEditUser}
   <div .modal-body>
-    ^{edituser}
+    ^{editUserWidget}
   <div .modal-footer>
     <a href="#" .btn.close data-dismiss="modal">_{MsgClose}
 

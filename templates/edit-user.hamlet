@@ -1,12 +1,12 @@
 <!-- Edit User by Admin -->
 <div .tabbable.tabs-left>
   <ul .nav.nav-tabs>
-    <li .active><a href="#menu-account" data-toggle="tab">_{MsgAccount}</a>
-    <li><a href="#menu-password" data-toggle="tab">_{MsgPassword}</a>
-    <li><a href="#menu-email" data-toggle="tab">_{MsgEmail}</a>
-    <li><a href="#menu-profile" data-toggle="tab">_{MsgProfile}</a>
+    <li .active><a href="##{menu1}" data-toggle="tab">_{MsgAccount}</a>
+    <li><a href="##{menu2}" data-toggle="tab">_{MsgPassword}</a>
+    <li><a href="##{menu3}" data-toggle="tab">_{MsgEmail}</a>
+    <li><a href="##{menu4}" data-toggle="tab">_{MsgProfile}</a>
   <div .tab-content>
-    <div .tab-pane.active #menu-account>
+    <div .tab-pane.active ##{menu1}>
       <form>
         <div .control-group>
           <label .control-label for="#account_id">_{MsgAccountID}
@@ -18,7 +18,7 @@
           <div .help-inline>
             <span .label.label-info>_{MsgNOTE}
             message...message...
-    <div .tab-pane #menu-password>
+    <div .tab-pane ##{menu2}>
       <form>
         <div .control-group.warning>
           <label .control-label for="#new">_{MsgNewPassword}
@@ -36,7 +36,7 @@
           <div .help-inline>
             <span .label.label-info>_{MsgNOTE}
             message...message...
-    <div .tab-pane #menu-email>
+    <div .tab-pane ##{menu3}>
       <form>
         <div .control-group>
           <label .control-label for="#email">_{MsgEmailaddress}
@@ -48,7 +48,7 @@
           <div .help-inline>
             <span .label.label-info>_{MsgNOTE}
             message...message...
-    <div .tab-pane #menu-profile>
+    <div .tab-pane ##{menu4}>
       <form>
         <div .control-group.success>
           <div .controls>

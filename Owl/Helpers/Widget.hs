@@ -3,7 +3,7 @@ module Owl.Helpers.Widget where
 import Import
 import Prelude (head, tail)
 import Owl.Helpers.Form
-import Owl.Helpers.Util (newIdent2, newIdent3)
+import Owl.Helpers.Util (newIdent2, newIdent3, newIdent4)
 
 accountWidget :: Widget
 accountWidget = do
@@ -68,8 +68,12 @@ userListWidget = do
                , (img_avatar_avatar8_jpg, "User 8")
                , (img_avatar_avatar9_jpg, "User 9")
                ]
-  let edituser = $(widgetFile "edit-user")
   $(widgetFile "user-list")
+  
+editUserWidget :: Widget
+editUserWidget = do
+  (menu1, menu2, menu3, menu4) <- lift newIdent4
+  $(widgetFile "edit-user")
 
 killUserWidget :: Widget
 killUserWidget = do
