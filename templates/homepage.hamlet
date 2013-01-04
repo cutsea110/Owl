@@ -20,6 +20,7 @@
           <p> message...message...message...message...
           ^{accountWidget}
         <div .tab-pane :tabIs "password":.active ##{menu2}>
+          <p> message...message...message...message...
           ^{passwordWidget}
         <div .tab-pane :tabIs "email":.active ##{menu3}>
           ^{emailWidget}
