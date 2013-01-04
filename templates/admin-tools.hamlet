@@ -11,7 +11,7 @@
         <li :tabIs "maint-client":.active><a href="##{menu3}" data-toggle="tab">_{MsgMaintClient}</a>
       <div .tab-content>
         <div .tab-pane :tabIs "maint-user":.active ##{menu1}>
-          ^{userlist}
+          ^{userListWidget}
         <div .tab-pane :tabIs "import-users":.active ##{menu2}>
           ^{importCsvWidget}
         <div .tab-pane :tabIs "maint-client":.active ##{menu3}>

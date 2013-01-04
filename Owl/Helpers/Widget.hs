@@ -3,7 +3,7 @@ module Owl.Helpers.Widget where
 import Import
 import Prelude (head, tail)
 import Owl.Helpers.Form
-import Owl.Helpers.Util (newIdent3)
+import Owl.Helpers.Util (newIdent2, newIdent3)
 
 accountWidget :: Widget
 accountWidget = do
@@ -54,3 +54,20 @@ profileWidget :: Widget
 profileWidget= do
   (modal1, modal2, modal3) <- lift newIdent3
   $(widgetFile "profile")
+
+userListWidget :: Widget
+userListWidget = do
+  (modal2, modal3) <- lift newIdent2
+  let photos = [ (img_avatar_avatar_jpg, "User 1"::Text)
+               , (img_avatar_avatar2_jpg, "User 2")
+               , (img_avatar_avatar3_jpg, "User 3")
+               , (img_avatar_avatar4_jpg, "User 4")
+               , (img_avatar_avatar5_jpg, "User 5")
+               , (img_avatar_avatar6_jpg, "User 6")
+               , (img_avatar_avatar7_jpg, "User 7")
+               , (img_avatar_avatar8_jpg, "User 8")
+               , (img_avatar_avatar9_jpg, "User 9")
+               ]
+  let edituser = $(widgetFile "edit-user")
+      killuser = $(widgetFile "kill-user")
+  $(widgetFile "user-list")
