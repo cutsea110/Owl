@@ -22,7 +22,17 @@
         <div .tab-pane :tabIs "password":.active ##{menu2}>
           <p> message...message...message...message...
           ^{passwordWidget}
+          <div .control-group>
+            <span .help-block>
+              <span .label.label-info>_{MsgNOTE}
+              <p>message...message...message...message...
         <div .tab-pane :tabIs "email":.active ##{menu3}>
+          <p> message...message...message...message...
           ^{emailWidget}
+          <div .control-group>
+            <span .help-block>
+              <span .label.label-info>_{MsgNOTE}
+              <p>message...message...message...message... #
+                <span .badge.badge-important>6</span>
         <div .tab-pane :tabIs "profile":.active ##{menu4}>
           ^{profileWidget}

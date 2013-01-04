@@ -1,13 +1,6 @@
 <!-- Email -->
-<p>message...message...
-
 <form method=post action=@{HOME EmailR} enctype=#{e}>
   ^{w}
   <div .control-group>
     <div .controls.btn-group>
       <button type="submit" .btn.btn-primary><i class="icon-envelope icon-white"></i> _{MsgSendReminderMail}
-  <div .control-group>
-      <span .help-block>
-        <span .label.label-info>_{MsgNOTE}
-        <p>message...message...message...message... #
-          <span .badge.badge-important>6</span>

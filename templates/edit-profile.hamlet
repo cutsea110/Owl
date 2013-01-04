@@ -4,6 +4,3 @@
   <div .control-group>
     <div .controls>
       <button type="submit" .btn.btn-primary>_{MsgUpdate}
-      <span .help-block>
-        <span .label.label-info>_{MsgNOTE}
-        <p>message...message...message...message...message...
