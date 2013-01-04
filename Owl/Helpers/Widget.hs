@@ -71,3 +71,9 @@ userListWidget = do
   let edituser = $(widgetFile "edit-user")
       killuser = $(widgetFile "kill-user")
   $(widgetFile "user-list")
+
+clientListWidget :: Widget
+clientListWidget = do
+  modal1 <- lift newIdent
+  let editclient = $(widgetFile "edit-client")
+  $(widgetFile "client-list")

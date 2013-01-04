@@ -15,4 +15,4 @@
         <div .tab-pane :tabIs "import-users":.active ##{menu2}>
           ^{importCsvWidget}
         <div .tab-pane :tabIs "maint-client":.active ##{menu3}>
-          ^{clientlist}
+          ^{clientListWidget}
