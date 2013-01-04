@@ -9,7 +9,7 @@ accountWidget :: Widget
 accountWidget = do
   (w, e) <- lift $ generateFormPost $ accountForm Nothing
   $(widgetFile "account-id")
-  
+
 passwordWidget :: Widget
 passwordWidget = do
   (w, e) <- lift $ generateFormPost $ passwordForm Nothing

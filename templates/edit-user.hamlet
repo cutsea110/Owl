@@ -7,17 +7,10 @@
     <li><a href="##{menu4}" data-toggle="tab">_{MsgProfile}</a>
   <div .tab-content>
     <div .tab-pane.active ##{menu1}>
-      <form>
-        <div .control-group>
-          <label .control-label for="#account_id">_{MsgAccountID}
-          <div .controls>
-            <input type="text" #account_id .span3 required value="cutsea110">
-        <div .control-group>
-          <div .controls.btn-group>
-            <button type="submit" .btn.btn-primary>_{MsgUpdate}
-          <div .help-inline>
-            <span .label.label-info>_{MsgNOTE}
-            message...message...
+      ^{accountWidget}
+      <div .help-inline>
+        <span .label.label-info>_{MsgNOTE}
+        message...message...
     <div .tab-pane ##{menu2}>
       <form>
         <div .control-group.warning>

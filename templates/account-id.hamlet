@@ -1,6 +1,4 @@
 <!-- Account ID -->
-<p>message...message...
-
 <form method=post action=@{HOME AccountIdR} enctype=#{e}>
   ^{w}
   <div .control-group>

@@ -17,6 +17,7 @@
             <p>#{msg}
 
         <div .tab-pane :tabIs "account-id":.active ##{menu1}>
+          <p> message...message...message...message...
           ^{accountWidget}
         <div .tab-pane :tabIs "password":.active ##{menu2}>
           ^{passwordWidget}
