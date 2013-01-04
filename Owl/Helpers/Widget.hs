@@ -69,8 +69,11 @@ userListWidget = do
                , (img_avatar_avatar9_jpg, "User 9")
                ]
   let edituser = $(widgetFile "edit-user")
-      killuser = $(widgetFile "kill-user")
   $(widgetFile "user-list")
+
+killUserWidget :: Widget
+killUserWidget = do
+  $(widgetFile "kill-user")
 
 clientListWidget :: Widget
 clientListWidget = do

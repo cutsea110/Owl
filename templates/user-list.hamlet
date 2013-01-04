@@ -47,6 +47,6 @@
     <a href="#" .close data-dismiss="modal">&times;
     <h3>_{MsgKillUser}
   <div .modal-body>
-    ^{killuser}
+    ^{killUserWidget}
   <div .modal-footer>
     <a href="#" .btn.close data-dismiss="modal">_{MsgClose}
