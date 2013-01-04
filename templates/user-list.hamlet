@@ -5,7 +5,7 @@
     <button type="submit" .btn><i class="icon-search"></i>
 
 <form .inline.pull-right>
-  <button href="##{modal2}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-user_add glyphicon-white"></i> _{MsgAddNewFace}
+  <button href="##{modal1}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-user_add glyphicon-white"></i> _{MsgAddNewFace}
 
 <div>
   <ul .thumbnails>
@@ -17,8 +17,8 @@
             <h6>#{c}
             <p>#{c}
             <div .btn-group>
-              <button href="##{modal2}" data-toggle="modal" onclick="" .btn.btn-primary.btn-mini>_{MsgEditUser}
-              <button href="##{modal3}" data-toggle="modal" onclick="" .btn.btn-danger.btn-mini>_{MsgKillUser}
+              <button href="##{modal1}" data-toggle="modal" onclick="" .btn.btn-primary.btn-mini>_{MsgEditUser}
+              <button href="##{modal2}" data-toggle="modal" onclick="" .btn.btn-danger.btn-mini>_{MsgKillUser}
 
   <div .pagination.pagination-centered>
     <ul>
@@ -32,7 +32,7 @@
       <li><a href="#">»</a>
 
 <!-- Create/Edit User Dialog -->
-<div ##{modal2} .modal.hide.fade>
+<div ##{modal1} .modal.hide.fade>
   <div .modal-header>
     <a href="#" .close data-dismiss="modal">&times;
     <h3>_{MsgEditUser}
@@ -42,7 +42,7 @@
     <a href="#" .btn.close data-dismiss="modal">_{MsgClose}
 
 <!-- Kill User Dialog -->
-<div ##{modal3} .modal.hide.fade>
+<div ##{modal2} .modal.hide.fade>
   <div .modal-header>
     <a href="#" .close data-dismiss="modal">&times;
     <h3>_{MsgKillUser}

@@ -57,7 +57,7 @@ profileWidget= do
 
 userListWidget :: Widget
 userListWidget = do
-  (modal2, modal3) <- lift newIdent2
+  (modal1, modal2) <- lift newIdent2
   let photos = [ (img_avatar_avatar_jpg, "User 1"::Text)
                , (img_avatar_avatar2_jpg, "User 2")
                , (img_avatar_avatar3_jpg, "User 3")
