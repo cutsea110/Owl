@@ -27,6 +27,7 @@ library
                      Owl.Helpers.Auth.HashDB
                      Owl.Helpers.Form
                      Owl.Helpers.Util
+                     Owl.Helpers.Widget
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
