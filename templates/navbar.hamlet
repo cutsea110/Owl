@@ -13,7 +13,7 @@
               <span class="caret">
             <ul .dropdown-menu>
               $if isadmin
-                <li><a href="@{AdminToolsR}"><i class="glyphicon-claw_hammer"></i> _{MsgAdminTool}</a>
+                <li><a href="@{AdminTool AdminToolsR}"><i class="glyphicon-claw_hammer"></i> _{MsgAdminTool}</a>
                 <li .divider>
               <li><a href="@{ConfigR}"><i class="glyphicon-settings"></i> _{MsgSettings}</a>
               <li><a href="@{AuthR LogoutR}"><i class="glyphicon-power"></i> _{MsgLogout}</a>

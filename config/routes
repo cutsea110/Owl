@@ -18,4 +18,5 @@
 
 /config      ConfigR         GET
 
-/admin-tools AdminToolsR     GET
+/admin-tools AdminTool:
+  / AdminToolsR     GET

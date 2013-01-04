@@ -101,7 +101,7 @@ instance Yesod App where
     authRoute _ = Just $ AuthR LoginR
 
     isAuthorized (AuthR _) _ = return Authorized
-    isAuthorized AdminToolsR _ = isAdminAuth
+    isAuthorized (AdminTool _) _ = isAdminAuth
     isAuthorized (HELP _) _ = return Authorized
     isAuthorized TopR _ = return Authorized
     isAuthorized _ _ = loggedInAuth
