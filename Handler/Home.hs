@@ -11,11 +11,12 @@ import Prelude (head, tail)
 import Yesod.Auth
 import qualified Data.Text as T
 import Owl.Helpers.Form
+import Owl.Helpers.Util (newIdent3, newIdent4)
 
 getHomeR :: Handler RepHtml
 getHomeR = do
   u <- requireAuth
-  (menu1, menu2, menu3, menu4) <- (,,,) <$> newIdent <*> newIdent <*> newIdent <*> newIdent
+  (menu1, menu2, menu3, menu4) <- newIdent4
   tabIs <- fmap (maybe ("account-id"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
   defaultLayout $ do
@@ -64,7 +65,7 @@ editProfileWidget = do
 
 profileWidget :: Widget
 profileWidget= do
-  (modal1, modal2, modal3) <- lift $ (,,) <$> newIdent <*> newIdent <*> newIdent
+  (modal1, modal2, modal3) <- lift newIdent3
   $(widgetFile "profile")
 
 postAccountIdR :: Handler ()
