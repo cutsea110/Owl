@@ -3,13 +3,13 @@ module Handler.AdminTools
        ) where
 
 import Import
-import Owl.Helpers.Form (fileForm)
+import Owl.Helpers.Widget
+import Owl.Helpers.Util (newIdent3)
 
 getAdminToolsR :: Handler RepHtml
 getAdminToolsR = do
-  (modal1, modal2, modal3) <- (,,) <$> newIdent <*> newIdent <*> newIdent
-  (menu1, menu2, menu3) <- (,,) <$> newIdent <*> newIdent <*> newIdent
-  (w, e) <- generateFormPost $ fileForm Nothing
+  (modal1, modal2, modal3) <- newIdent3
+  (menu1, menu2, menu3) <- newIdent3
   tabIs <- fmap (maybe ("maint-user"==) (==)) $ lookupGetParam "tab"
   let photos = [ (img_avatar_avatar_jpg, "User 1"::Text)
                , (img_avatar_avatar2_jpg, "User 2")
@@ -25,7 +25,6 @@ getAdminToolsR = do
     let userlist = $(widgetFile "user-list")
         edituser = $(widgetFile "edit-user")
         killuser = $(widgetFile "kill-user")
-        importcsv = $(widgetFile "import-users-csv")
         clientlist = $(widgetFile "client-list")
         editclient = $(widgetFile "edit-client")
     setTitle "Administrator's Tools"
