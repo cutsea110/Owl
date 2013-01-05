@@ -46,7 +46,6 @@ passwordForm mv fragment = do
           else FormFailure ["don't match between new password and confirmation"]
         _ -> FormFailure ["fail to password update!!"]
       vks = [(view0,"info"::Text),(view1,"warning"),(view2,"warning")]
-  liftIO $ putStrLn $ show (res0, res1, res2)
   let widget = [whamlet|
 \#{fragment}
 $forall (v, k) <- vks
@@ -100,7 +99,6 @@ profileForm mv fragment = do
         (FormSuccess x, FormSuccess y, FormSuccess z) -> FormSuccess (x, y, z)
         _ -> FormFailure ["fail to profile update!"]
       vks = [(view0, "success"::Text), (view1, "success"), (view2, "info")]
-  liftIO $ putStrLn "[TODO] Update profile!"
   let widget = [whamlet|
 \#{fragment}
 $forall (v, k) <- vks
@@ -125,7 +123,6 @@ $forall (v, k) <- vks
 fileForm :: Maybe FileInfo -> Html -> MForm App App (FormResult FileInfo, Widget)
 fileForm mv fragment = do
   (res, view) <- mreq fileField' fs mv
-  liftIO $ putStrLn "[TODO] Upload photo!"
   let widget = [whamlet|
 \#{fragment}
 <div .control-group.clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
