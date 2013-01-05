@@ -4,10 +4,12 @@ import Import
 import Prelude (head, tail)
 import Owl.Helpers.Form
 import Owl.Helpers.Util (newIdent2, newIdent3, newIdent4)
+import Yesod.Routes.Class (Route)
 
-accountWidget :: Widget
-accountWidget = do
+accountWidget :: Route App -> Widget
+accountWidget toPost = do
   (w, e) <- lift $ generateFormPost $ accountForm Nothing
+  r <- lift getUrlRender
   $(widgetFile "account-id")
 
 passwordWidget :: Widget

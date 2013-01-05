@@ -7,7 +7,7 @@
     <li><a href="##{menu4}" data-toggle="tab">_{MsgProfile}</a>
   <div .tab-content>
     <div .tab-pane.active ##{menu1}>
-      ^{accountWidget}
+      ^{accountWidget $ HOME AccountIdR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}
         message...message...

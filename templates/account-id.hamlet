@@ -1,5 +1,5 @@
 <!-- Account ID -->
-<form method=post action=@{HOME AccountIdR} enctype=#{e}>
+<form method=post action=#{r toPost} enctype=#{e}>
   ^{w}
   <div .control-group>
     <div .controls.btn-group>

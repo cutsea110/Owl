@@ -18,7 +18,7 @@
 
         <div .tab-pane :tabIs "account-id":.active ##{menu1}>
           <p> message...message...message...message...
-          ^{accountWidget}
+          ^{accountWidget $ HOME AccountIdR}
         <div .tab-pane :tabIs "password":.active ##{menu2}>
           <p> message...message...message...message...
           ^{passwordWidget}

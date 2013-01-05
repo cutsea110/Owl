@@ -83,6 +83,7 @@ library
                  , transformers >= 0.3 && < 0.4
                  , yesod-persistent >= 1.1 && < 1.2
                  , utility-ht >= 0.0.8 && < 0.0.9
+                 , yesod-routes >= 1.1 && < 1.2
 
 executable         owl
     if flag(library-only)
