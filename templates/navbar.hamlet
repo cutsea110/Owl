@@ -6,10 +6,10 @@
       <ul .nav>
         <li .active><a href="@{HOME HomeR}"><i class="icon-home"></i> _{MsgHome}</a>
         <li><a href="@{HELP HelpR}">_{MsgHelp}</a>
-      $maybe Entity _ u <- mu
+      $maybe Entity _ usr <- mu
         <ul .nav.pull-right>
           <li .dropdown>
-            <a href="" .dropdown-toggle data-toggle="dropdown">#{userUsername u} #
+            <a href="" .dropdown-toggle data-toggle="dropdown">#{userUsername usr} #
               <span class="caret">
             <ul .dropdown-menu>
               $if isadmin

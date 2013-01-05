@@ -9,7 +9,7 @@ import Owl.Helpers.Form (emailForm)
 
 getHelpR :: Handler RepHtml
 getHelpR = do
-  (menu1, menu2) <- (,) <$> newIdent <*> newIdent
+  (menuSendReminderMail, menuUsage) <- (,) <$> newIdent <*> newIdent
   (w, e) <- generateFormPost $ emailForm [("class", "span3")] Nothing
   tabIs <- fmap (maybe ("password-reset"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
