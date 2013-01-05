@@ -22,7 +22,7 @@
         <span .label.label-info>_{MsgNOTE}
         message...message...
     <div .tab-pane ##{menu4}>
-      ^{editProfileWidget}
+      ^{editProfileWidget $ HOME ProfileR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}
         message...message...

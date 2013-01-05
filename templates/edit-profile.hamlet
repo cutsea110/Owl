@@ -1,5 +1,5 @@
 <!-- Edit Profile -->
-<form enctype=#{e}>
+<form method=post action=#{r toPost} enctype=#{e}>
   ^{w}
   <div .control-group>
     <div .controls>

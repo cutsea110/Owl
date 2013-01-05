@@ -4,6 +4,7 @@ module Handler.Home
        , postAccountIdR
        , postPasswordR
        , postEmailR
+       , postProfileR
        ) where
 
 import Import
@@ -54,3 +55,14 @@ postEmailR = do
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessage "Fail to send"
   redirect ((HOME HomeR), [("tab", "email")])
+
+postProfileR :: Handler ()
+postProfileR = do
+  ((r, _), _) <- runFormPost $ profileForm Nothing
+  case r of
+    FormSuccess x -> do
+      liftIO $ putStrLn $ "[TODO] Update profile! " ++ show x
+      setMessage "Update profile"
+    FormFailure (x:_) -> setMessage $ toHtml x
+    _ -> setMessage "fail to update profile"
+  redirect ((HOME HomeR), [("tab", "profile")])

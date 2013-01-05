@@ -49,9 +49,10 @@ importCsvWidget = do
   (w, e) <- lift $ generateFormPost $ fileForm Nothing
   $(widgetFile "import-users-csv")
 
-editProfileWidget :: Widget
-editProfileWidget = do
+editProfileWidget :: Route App -> Widget
+editProfileWidget toPost = do
   (w, e) <- lift $ generateFormPost $ profileForm Nothing
+  r <- lift getUrlRender
   $(widgetFile "edit-profile")
 
 profileWidget :: Widget

@@ -40,6 +40,6 @@
     <a href="#" .close data-dismiss="modal">&times;
     <h3>_{MsgEditProfile}
   <div .modal-body>
-    ^{editProfileWidget}
+    ^{editProfileWidget $ HOME ProfileR}
   <div .modal-footer>
     <a href="#" .btn.close data-dismiss="modal">_{MsgClose}

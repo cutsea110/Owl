@@ -11,6 +11,7 @@
   /account   AccountIdR      POST
   /password  PasswordR       POST
   /email     EmailR          POST
+  /profile   ProfileR        POST
 
 /help        HELP:
   /          HelpR           GET
