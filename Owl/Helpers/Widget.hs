@@ -12,9 +12,10 @@ accountWidget toPost = do
   r <- lift getUrlRender
   $(widgetFile "account-id")
 
-passwordWidget :: Widget
-passwordWidget = do
+passwordWidget :: Route App -> Widget
+passwordWidget toPost = do
   (w, e) <- lift $ generateFormPost $ passwordForm Nothing
+  r <- lift getUrlRender
   $(widgetFile "password")
 
 emailWidget :: Widget

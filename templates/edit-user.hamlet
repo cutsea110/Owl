@@ -12,7 +12,7 @@
         <span .label.label-info>_{MsgNOTE}
         message...message...
     <div .tab-pane ##{menu2}>
-      ^{passwordWidget}
+      ^{passwordWidget $ HOME PasswordR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}
         message...message...

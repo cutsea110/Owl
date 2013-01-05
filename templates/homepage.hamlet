@@ -21,7 +21,7 @@
           ^{accountWidget $ HOME AccountIdR}
         <div .tab-pane :tabIs "password":.active ##{menu2}>
           <p> message...message...message...message...
-          ^{passwordWidget}
+          ^{passwordWidget $ HOME PasswordR}
           <div .control-group>
             <span .help-block>
               <span .label.label-info>_{MsgNOTE}
