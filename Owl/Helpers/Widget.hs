@@ -18,9 +18,10 @@ passwordWidget toPost = do
   r <- lift getUrlRender
   $(widgetFile "password")
 
-emailWidget :: Widget
-emailWidget = do
+emailWidget :: Route App -> Widget
+emailWidget toPost = do
   (w, e) <- lift $ generateFormPost $ emailForm [("class", "span3"),("placeholder","cutsea110@gmail.com")] Nothing
+  r <- lift getUrlRender
   $(widgetFile "email")
 
 changeAvatarWidget :: Widget

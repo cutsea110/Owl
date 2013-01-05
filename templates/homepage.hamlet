@@ -28,7 +28,7 @@
               <p>message...message...message...message...
         <div .tab-pane :tabIs "email":.active ##{menu3}>
           <p> message...message...message...message...
-          ^{emailWidget}
+          ^{emailWidget $ HOME EmailR}
           <div .control-group>
             <span .help-block>
               <span .label.label-info>_{MsgNOTE}

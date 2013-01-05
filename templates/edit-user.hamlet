@@ -17,7 +17,7 @@
         <span .label.label-info>_{MsgNOTE}
         message...message...
     <div .tab-pane ##{menu3}>
-      ^{emailWidget}
+      ^{emailWidget $ HOME EmailR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}
         message...message...
