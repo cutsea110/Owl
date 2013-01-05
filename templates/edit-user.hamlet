@@ -1,27 +1,27 @@
 <!-- Edit User by Admin -->
 <div .tabbable.tabs-left>
   <ul .nav.nav-tabs>
-    <li .active><a href="##{menu1}" data-toggle="tab">_{MsgAccount}</a>
-    <li><a href="##{menu2}" data-toggle="tab">_{MsgPassword}</a>
-    <li><a href="##{menu3}" data-toggle="tab">_{MsgEmail}</a>
-    <li><a href="##{menu4}" data-toggle="tab">_{MsgProfile}</a>
+    <li .active><a href="##{menuAccount}" data-toggle="tab">_{MsgAccount}</a>
+    <li><a href="##{menuPassword}" data-toggle="tab">_{MsgPassword}</a>
+    <li><a href="##{menuEmail}" data-toggle="tab">_{MsgEmail}</a>
+    <li><a href="##{menuProfile}" data-toggle="tab">_{MsgProfile}</a>
   <div .tab-content>
-    <div .tab-pane.active ##{menu1}>
+    <div .tab-pane.active ##{menuAccount}>
       ^{accountWidget $ HOME AccountIdR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}
         message...message...
-    <div .tab-pane ##{menu2}>
+    <div .tab-pane ##{menuPassword}>
       ^{passwordWidget $ HOME PasswordR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}
         message...message...
-    <div .tab-pane ##{menu3}>
+    <div .tab-pane ##{menuEmail}>
       ^{emailWidget $ HOME EmailR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}
         message...message...
-    <div .tab-pane ##{menu4}>
+    <div .tab-pane ##{menuProfile}>
       ^{editProfileWidget $ HOME ProfileR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}

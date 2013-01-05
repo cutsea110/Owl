@@ -17,7 +17,7 @@ import Owl.Helpers.Widget
 getHomeR :: Handler RepHtml
 getHomeR = do
   u <- requireAuth
-  (menu1, menu2, menu3, menu4) <- newIdent4
+  (menuAccount, menuPassword, menuEmail, menuProfile) <- newIdent4
   tabIs <- fmap (maybe ("account-id"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
   defaultLayout $ do

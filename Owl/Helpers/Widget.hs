@@ -57,12 +57,12 @@ editProfileWidget toPost = do
 
 profileWidget :: Widget
 profileWidget= do
-  (modal1, modal2, modal3) <- lift newIdent3
+  (modalChangeAvatar, modalUploadPhotos, modalEditComment) <- lift newIdent3
   $(widgetFile "profile")
 
 userListWidget :: Widget
 userListWidget = do
-  (modal1, modal2) <- lift newIdent2
+  (modalEditUser, modalKillUser) <- lift newIdent2
   let photos = [ (img_avatar_avatar_jpg, "User 1"::Text)
                , (img_avatar_avatar2_jpg, "User 2")
                , (img_avatar_avatar3_jpg, "User 3")
@@ -77,7 +77,7 @@ userListWidget = do
   
 editUserWidget :: Widget
 editUserWidget = do
-  (menu1, menu2, menu3, menu4) <- lift newIdent4
+  (menuAccount, menuPassword, menuEmail, menuProfile) <- lift newIdent4
   $(widgetFile "edit-user")
 
 killUserWidget :: Widget

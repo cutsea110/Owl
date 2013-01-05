@@ -8,7 +8,7 @@ import Owl.Helpers.Util (newIdent3)
 
 getAdminToolsR :: Handler RepHtml
 getAdminToolsR = do
-  (menu1, menu2, menu3) <- newIdent3
+  (menuMaintUser, menuImportUsers, menuMaintClient) <- newIdent3
   tabIs <- fmap (maybe ("maint-user"==) (==)) $ lookupGetParam "tab"
   defaultLayout $ do
     setTitle "Administrator's Tools"

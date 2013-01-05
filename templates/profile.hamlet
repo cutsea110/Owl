@@ -11,13 +11,13 @@
     <a href="#" .btn.btn-primary>_{MsgEdit}
     <a href="#" .btn.btn-primary.dropdown-toggle data-toggle="dropdown"><span class="caret"></span>
     <ul .dropdown-menu>
-      <li><a href="##{modal1}" data-toggle="modal"><i class="icon-user"></i> _{MsgChangeAvatar}</a>
-      <li><a href="##{modal2}" data-toggle="modal"><i class="icon-camera"></i> _{MsgUploadPhotos}</a>
-      <li><a href="##{modal3}" data-toggle="modal"><i class="icon-edit"></i> _{MsgEditComment}</a>
+      <li><a href="##{modalChangeAvatar}" data-toggle="modal"><i class="icon-user"></i> _{MsgChangeAvatar}</a>
+      <li><a href="##{modalUploadPhotos}" data-toggle="modal"><i class="icon-camera"></i> _{MsgUploadPhotos}</a>
+      <li><a href="##{modalEditComment}" data-toggle="modal"><i class="icon-edit"></i> _{MsgEditComment}</a>
 
 
 <!-- Dialog -->
-<div ##{modal1} .modal.hide.fade>
+<div ##{modalChangeAvatar} .modal.hide.fade>
   <div .modal-header>
     <a href="#" .close data-dismiss="modal">&times;
     <h3>_{MsgChangeAvatar}
@@ -26,7 +26,7 @@
   <div .modal-footer>
     <a href="#" .btn.close data-dismiss="modal">_{MsgClose}
 
-<div ##{modal2} .modal.hide.fade>
+<div ##{modalUploadPhotos} .modal.hide.fade>
   <div .modal-header>
     <a href="#" .close data-dismiss="modal">&times;
     <h3>_{MsgUploadPhotos}
@@ -35,7 +35,7 @@
   <div .modal-footer>
     <a href="#" .btn.close data-dismiss="modal">_{MsgClose}
 
-<div ##{modal3} .modal.hide.fade>
+<div ##{modalEditComment} .modal.hide.fade>
   <div .modal-header>
     <a href="#" .close data-dismiss="modal">&times;
     <h3>_{MsgEditProfile}
