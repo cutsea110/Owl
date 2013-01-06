@@ -40,7 +40,7 @@ passwordForm mv fragment = do
   (res1, view1) <- mreq passwordField (fs MsgNewPassword) (snd3 <$> mv)
   (res2, view2) <- mreq passwordField (fs MsgConfirmPassword) (thd3 <$> mv)
   let res = case (res0, res1, res2) of
-        (FormSuccess x, FormSuccess y, FormSuccess z) ->
+        (FormSuccess _, FormSuccess y, FormSuccess z) ->
           if y == z
           then FormSuccess y
           else FormFailure ["don't match between new password and confirmation"]

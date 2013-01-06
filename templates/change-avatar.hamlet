@@ -21,7 +21,7 @@
 <!-- Change avatar/Delete photo -->
 <div .span3>
   <form>
-    $with (p, c) <- avatar
+    $with (p, _) <- avatar
       <div .thumbnail>
         <img .img-rounded src="@{StaticR p}" data-src="holder.js/150x100" alt>
 
