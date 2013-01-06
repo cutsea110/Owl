@@ -146,6 +146,10 @@ fileForm mv fragment = do
 fileField' :: Field App App FileInfo
 fileField' = fileField
     { fieldView = \id' name attrs _ isReq -> do
+       toWidget [lucius|##{id'}-custom:hover {
+  cursor: pointer;
+}
+|]
        toWidget [julius|
 $("##{rawJS id'}-browse, ##{rawJS id'}-custom").click(function(){
   $("##{rawJS id'}").click();

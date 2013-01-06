@@ -26,6 +26,7 @@ emailWidget toPost = do
 
 changeAvatarWidget :: Widget
 changeAvatarWidget = do
+  avatarCarousel <- lift newIdent
   let photos = [ (img_avatar_avatar_jpg, "Photo 1"::Text)
                , (img_avatar_avatar2_jpg, "Photo 2")
                , (img_avatar_avatar3_jpg, "Photo 3")

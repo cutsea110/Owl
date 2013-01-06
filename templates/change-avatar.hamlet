@@ -1,6 +1,6 @@
 <!-- Photo gallery -->
 <div .span3>
-  <div #avatar-carousel .carousel.slide>
+  <div ##{avatarCarousel} .carousel.slide>
     <div .carousel-inner>
       $with (p, c) <- avatar
         <div .item.active>
@@ -15,8 +15,8 @@
           <div .carousel-caption>
             <p>#{c}
 
-    <a .carousel-control.left.small href="#avatar-carousel" data-slide="prev">&lsaquo;
-    <a .carousel-control.right.small href="#avatar-carousel" data-slide="next">&rsaquo;
+    <a .carousel-control.left.small href="##{avatarCarousel}" data-slide="prev">&lsaquo;
+    <a .carousel-control.right.small href="##{avatarCarousel}" data-slide="next">&rsaquo;
 
 <!-- Change avatar/Delete photo -->
 <div .span3>
