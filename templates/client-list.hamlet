@@ -1,6 +1,6 @@
 <!-- Client List -->
 <form .pull-right>
-  <button href="##{modal1}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-circle_plus glyphicon-white"></i> _{MsgAddNewClient}
+  <button href="##{modalEditClient}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-circle_plus glyphicon-white"></i> _{MsgAddNewClient}
 
 <table .table.table-striped.table-hover>
   <thead>
@@ -9,25 +9,18 @@
       <th>_{MsgClientName}
       <th>_{MsgClientSecret}
   <tbody>
-    <tr onclick="setRowdata4Modal($(this))" data-toggle="modal" href="##{modal1}">
-      <td .client_id><span>a7362hd</span>
-      <td .client_name><span>Kestrel</span>
-      <td .client_secret><span>aY/ay7w2hhuqwy9138yihdu_lUSY26hauiehw7a87329yhiUHLUS</span>
-    <tr onclick="setRowdata4Modal($(this))" data-toggle="modal" href="##{modal1}">
-      <td .client_id><span>97asdh2</span>
-      <td .client_name><span>BISocie</span>
-      <td .client_secret><span>9wae/adisae9dcIOSJiidasiIOi42i472hDHjads8HIy98HDU7g9</span>
-    <tr onclick="setRowdata4Modal($(this))" data-toggle="modal" href="##{modal1}">
-      <td .client_id><span>8asASxp<span>
-      <td .client_name><span>Owl</span>
-      <td .client_secret><span>SI8weddUH.DHIDU-sdahsid/HDHUAIDdsuasdhuiasiad924422h</span>
+    $forall c <- clients
+      <tr onclick="setRowdata4Modal($(this))" data-toggle="modal" href="##{modalEditClient}">
+        <td .client_id><span>#{fst3 c}</span>
+        <td .client_name><span>#{snd3 c}</span>
+        <td .client_secret><span>#{thd3 c}</span>
 
 <!-- Edit Client data Dialog -->
-<div ##{modal1} .modal.hide.fade>
+<div ##{modalEditClient} .modal.hide.fade>
   <div .modal-header>
     <a href="#" .close data-dismiss="modal">&times;
     <h3>_{MsgEditClient}
   <div .modal-body>
-    ^{editclient}
+    ^{editClientWidget}
   <div .modal-footer>
     <a href="#" .btn.close data-dismiss="modal">_{MsgClose}

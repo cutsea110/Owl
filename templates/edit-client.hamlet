@@ -1,17 +1,17 @@
 <!-- Edit Client -->
 <form>
   <div .control-group>
-    <label .control-label for="#client_id">_{MsgClientID}
+    <label .control-label for="##{clientId}">_{MsgClientID}
     <div .controls>
-      <input type="text" #client_id .span3>
+      <input type="text" ##{clientId} .span3>
   <div .control-group>
-    <label .control-label for="#client_name">_{MsgClientName}
+    <label .control-label for="##{clientName}">_{MsgClientName}
     <div .controls>
-      <input type="text" #client_name .span3>
+      <input type="text" ##{clientName} .span3>
   <div .control-group>
-    <label .control-label for="#client_secret">_{MsgClientID}
+    <label .control-label for="##{clientSecret}">_{MsgClientSecret}
     <div .controls>
-      <input type="text" #client_secret .span3>
+      <input type="text" ##{clientSecret} .span3>
   <div .control-group>
     <div .controls.btn-group>
       <button type="submit" .btn.btn-primary>_{MsgUpdate}

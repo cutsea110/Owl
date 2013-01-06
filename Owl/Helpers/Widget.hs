@@ -2,8 +2,10 @@ module Owl.Helpers.Widget where
 
 import Import
 import Prelude (head, tail)
+import Data.Tuple.HT (fst3, snd3, thd3)
 import Owl.Helpers.Form
 import Owl.Helpers.Util (newIdent2, newIdent3, newIdent4)
+import Text.Julius (rawJS)
 import Yesod.Routes.Class (Route)
 
 accountWidget :: Route App -> Widget
@@ -87,6 +89,14 @@ killUserWidget = do
 
 clientListWidget :: Widget
 clientListWidget = do
-  modal1 <- lift newIdent
-  let editclient = $(widgetFile "edit-client")
+  modalEditClient <- lift newIdent
+  let clients = [ ("a7362hd", "Kestrel", "aY/ay7w2hhuqwy9138yihdu_lUSY26hauiehw7a87329yhiUHLUS")
+                , ("97asdh2", "BISocie", "9wae/adisae9dcIOSJiidasiIOi42i472hDHjads8HIy98HDU7g9")
+                , ("8asASxp", "Owl", "SI8weddUH.DHIDU-sdahsid/HDHUAIDdsuasdhuiasiad924422h")
+                ]::[(Text, Text, Text)]
   $(widgetFile "client-list")
+
+editClientWidget :: Widget
+editClientWidget = do
+  (clientId, clientName, clientSecret) <- lift newIdent3
+  $(widgetFile "edit-client")
