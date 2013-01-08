@@ -81,7 +81,7 @@ instance Yesod App where
         -- you to use normal widget features in default-layout.
 
         pc <- widgetToPageContent $ do
-          addScriptRemote "http://code.jquery.com/jquery-1.8.0.min.js"
+          addScriptRemote "https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"
           addStylesheet $ StaticR css_bootstrap_min_css
 --          addStylesheet $ StaticR css_bootstrap_responsive_min_css
           addScript $ StaticR js_bootstrap_min_js
