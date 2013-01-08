@@ -1,0 +1,8 @@
+$('.navbar-inner .nav > li').hover(
+ function(){
+  $(this).find('i[class^="icon-"]').addClass('icon-white');
+ },
+ function(){
+  $(this).find('i[class^="icon-"]').removeClass('icon-white');
+ }
+);

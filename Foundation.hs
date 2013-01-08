@@ -5,7 +5,6 @@ import Prelude
 import Yesod
 import Yesod.Static
 import Yesod.Auth
-import Owl.Helpers.Auth.HashDB (authHashDB, HashDBUser(..))
 import Yesod.Default.Config
 import Yesod.Default.Util (addStaticContentExternal)
 import Network.HTTP.Conduit (Manager)
@@ -19,6 +18,8 @@ import Model
 import Text.Jasmine (minifym)
 import Web.ClientSession (getKey)
 import Text.Hamlet (hamletFile)
+import Owl.Helpers.Auth.HashDB (authHashDB, HashDBUser(..))
+import Owl.Helpers.Util (getCurrentRoute')
 
 -- | The site argument for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
@@ -73,6 +74,7 @@ instance Yesod App where
         mu <- maybeAuth
         isadmin <- isAdmin
         master <- getYesod
+        mcr <- getCurrentRoute'
 
         -- We break up the default layout into two components:
         -- default-layout is the contents of the body tag, and

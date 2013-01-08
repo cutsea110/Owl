@@ -2,10 +2,14 @@
 <div .navbar.navbar-inverse.navbar-fixed-top>
   <div .navbar-inner>
     <div .container>
-      <a href="@{TopR}" .brand>_{MsgOwl}
+      <a href="@{TopR}" .brand>_{MsgOwl}</a>
       <ul .nav>
-        <li .active><a href="@{HOME HomeR}"><i class="icon-home"></i> _{MsgHome}</a>
-        <li><a href="@{HELP HelpR}">_{MsgHelp}</a>
+        $maybe cr <- mcr
+          <li :cr == HOME HomeR:.active><a href="@{HOME HomeR}"><i class="icon-home"></i> _{MsgHome}</a>
+          <li :cr == HELP HelpR:.active><a href="@{HELP HelpR}">_{MsgHelp}</a>
+        $nothing
+          <li><a href="@{HOME HomeR}"><i class="icon-home"></i> _{MsgHome}</a>
+          <li><a href="@{HELP HelpR}">_{MsgHelp}</a>
       $maybe Entity _ usr <- mu
         <ul .nav.pull-right>
           <li .dropdown>
