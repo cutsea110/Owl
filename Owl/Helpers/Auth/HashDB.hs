@@ -77,13 +77,12 @@ setPassword pwd u = do salt <- randomSalt
 --   the database values.
 validateUser :: ( YesodPersist yesod
                 , b ~ YesodPersistBackend yesod
-                , b ~ PersistEntityBackend user
-                , PersistStore b (GHandler sub yesod)
-                , PersistUnique b (GHandler sub yesod)
+                , PersistMonadBackend (b (GHandler sub yesod)) ~ PersistEntityBackend user
+                , PersistUnique (b (GHandler sub yesod))
                 , PersistEntity user
                 , HashDBUser    user
                 ) => 
-                Unique user b   -- ^ User unique identifier
+                Unique user     -- ^ User unique identifier
              -> Text            -- ^ Password in plaint-text
              -> GHandler sub yesod Bool
 validateUser userID passwd = do
@@ -105,11 +104,10 @@ login = PluginR "hashdb" ["login"]
 postLoginR :: ( YesodAuth y, YesodPersist y
               , HashDBUser user, PersistEntity user
               , b ~ YesodPersistBackend y
-              , b ~ PersistEntityBackend user
-              , PersistStore b (GHandler Auth y)
-              , PersistUnique b (GHandler Auth y)
+              , PersistMonadBackend (b (GHandler Auth y)) ~ PersistEntityBackend user
+              , PersistUnique (b (GHandler Auth y))
               )
-           => (Text -> Maybe (Unique user b))
+           => (Text -> Maybe (Unique user))
            -> GHandler Auth y ()
 postLoginR uniq = do
     (mu,mp) <- runInputPost $ (,)
@@ -131,14 +129,13 @@ postLoginR uniq = do
 --   can be used if authHashDB is the only plugin in use.
 getAuthIdHashDB :: ( YesodAuth master, YesodPersist master
                    , HashDBUser user, PersistEntity user
-                   , Key b user ~ AuthId master
+                   , Key user ~ AuthId master
                    , b ~ YesodPersistBackend master
-                   , b ~ PersistEntityBackend user
-                   , PersistUnique b (GHandler sub master)
-                   , PersistStore b (GHandler sub master)
+                   , PersistMonadBackend (b (GHandler sub master)) ~ PersistEntityBackend user
+                   , PersistUnique (b (GHandler sub master))
                    )
                 => (AuthRoute -> Route master)   -- ^ your site's Auth Route
-                -> (Text -> Maybe (Unique user b)) -- ^ gets user ID
+                -> (Text -> Maybe (Unique user)) -- ^ gets user ID
                 -> Creds master                  -- ^ the creds argument
                 -> GHandler sub master (Maybe (AuthId master))
 getAuthIdHashDB authR uniq creds = do
@@ -163,10 +160,9 @@ authHashDB :: ( YesodAuth m, YesodPersist m
               , HashDBUser user
               , PersistEntity user
               , b ~ YesodPersistBackend m
-              , b ~ PersistEntityBackend user
-              , PersistStore b (GHandler Auth m)
-              , PersistUnique b (GHandler Auth m))
-           => (Text -> Maybe (Unique user b)) -> AuthPlugin m
+              , PersistMonadBackend (b (GHandler Auth m)) ~ PersistEntityBackend user
+              , PersistUnique (b (GHandler Auth m)))
+           => (Text -> Maybe (Unique user)) -> AuthPlugin m
 authHashDB uniq = AuthPlugin "hashdb" dispatch $ \tm -> do 
   name <- lift newIdent
   pwd  <- lift newIdent
