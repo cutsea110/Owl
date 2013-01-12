@@ -10,6 +10,7 @@ module Handler.Home
 import Import
 import Yesod.Auth
 import qualified Data.Text as T
+import Owl.Helpers.Auth.HashDB (setPassword)
 import Owl.Helpers.Form
 import Owl.Helpers.Util (newIdent4)
 import Owl.Helpers.Widget
@@ -36,10 +37,11 @@ postAccountIdR = do
 
 postPasswordR :: Handler ()
 postPasswordR = do
-  ((r, _), _) <- runFormPost $ passwordForm Nothing
+  u <- requireAuth
+  ((r, _), _) <- runFormPost $ passwordForm (entityVal u) Nothing
   case r of
-    FormSuccess x -> do
-      liftIO $ putStrLn $ "[TODO] update password " ++ T.unpack x
+    FormSuccess newPass -> do
+      runDB . replace (entityKey u) =<< setPassword newPass (entityVal u)
       setMessage "Update password..."
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessage "Fail to Update"

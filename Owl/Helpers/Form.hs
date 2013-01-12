@@ -9,6 +9,7 @@ module Owl.Helpers.Form
 import Import
 import Data.Maybe (isJust)
 import Data.Tuple.HT (fst3, snd3, thd3)
+import Owl.Helpers.Auth.HashDB (validateUser)
 import Text.Julius (rawJS)
 
 accountForm :: Maybe Text -> Html -> MForm App App (FormResult Text, Widget)
@@ -34,19 +35,23 @@ accountForm mv fragment = do
                        , fsAttrs = [("class", "span2")]
                        }
 
-passwordForm :: Maybe (Text,Text,Text) -> Html -> MForm App App (FormResult Text, Widget)
-passwordForm mv fragment = do
+passwordForm :: User -> Maybe (Text,Text,Text) -> Html -> MForm App App (FormResult Text, Widget)
+passwordForm u mv fragment = do
   (res0, view0) <- mreq passwordField (fs MsgCurrentPassword) (fst3 <$> mv)
   (res1, view1) <- mreq passwordField (fs MsgNewPassword) (snd3 <$> mv)
   (res2, view2) <- mreq passwordField (fs MsgConfirmPassword) (thd3 <$> mv)
-  let res = case (res0, res1, res2) of
-        (FormSuccess _, FormSuccess y, FormSuccess z) ->
-          if y == z
-          then FormSuccess y
-          else FormFailure ["don't match between new password and confirmation"]
-        _ -> FormFailure ["fail to password update!!"]
-      vks = [(view0,"info"::Text),(view1,"warning"),(view2,"warning")]
-  let widget = [whamlet|
+  res <- lift $ case (res0, res1, res2) of
+        (FormSuccess curPass, FormSuccess newPass, FormSuccess newPass') -> do
+          checkedPass <- validateUser (mkUnique u) curPass
+          return $
+            if checkedPass
+            then if newPass == newPass'
+                 then FormSuccess newPass
+                 else FormFailure ["don't match between new password and confirmation."]
+            else FormFailure ["incorrect current password."]
+        _ -> return $ FormFailure ["fail to password update."]
+  let vks = [(view0,"info"::Text),(view1,"warning"),(view2,"warning")]
+      widget = [whamlet|
 \#{fragment}
 $forall (v, k) <- vks
   <div .control-group.#{k} .clearfix :fvRequired v:.required :not $ fvRequired v:.optional :isJust $ fvErrors v:.error>
@@ -60,6 +65,7 @@ $forall (v, k) <- vks
 |]
   return (res, widget)
   where
+    mkUnique = UniqueUser . userUsername
     fs l = FieldSettings { fsLabel = SomeMessage l
                          , fsTooltip = Nothing
                          , fsId = Nothing

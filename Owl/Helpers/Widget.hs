@@ -6,6 +6,7 @@ import Data.Tuple.HT (fst3, snd3, thd3)
 import Owl.Helpers.Form
 import Owl.Helpers.Util (newIdent2, newIdent3, newIdent4)
 import Text.Julius (rawJS)
+import Yesod.Auth (requireAuth)
 import Yesod.Routes.Class (Route)
 
 accountWidget :: Route App -> Widget
@@ -16,7 +17,8 @@ accountWidget toPost = do
 
 passwordWidget :: Route App -> Widget
 passwordWidget toPost = do
-  (w, e) <- lift $ generateFormPost $ passwordForm Nothing
+  u <- lift requireAuth
+  (w, e) <- lift $ generateFormPost $ passwordForm (entityVal u) Nothing
   r <- lift getUrlRender
   $(widgetFile "password")
 
