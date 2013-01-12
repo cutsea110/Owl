@@ -1,13 +1,12 @@
 User
-    username Text Eq
-    password Text
-    salt     Text
+    username  Text Eq
+    password  Text
+    salt      Text
+
+    email     Text Maybe
+    verkey    Text Maybe
+    verstatus VerStatus Maybe
+
     UniqueUser username
-Email
-    email Text
-    user UserId
-    verkey Text Maybe
-    verstatus VerStatus
-    UniqueEmail user email
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)
