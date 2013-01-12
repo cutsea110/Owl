@@ -5,8 +5,9 @@ User
     UniqueUser username
 Email
     email Text
-    user UserId Maybe
+    user UserId
     verkey Text Maybe
-    UniqueEmail email
+    verstatus VerStatus
+    UniqueEmail user email
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)
