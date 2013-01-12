@@ -2,18 +2,19 @@
 <form .pull-right>
   <button href="##{modalEditClient}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-circle_plus glyphicon-white"></i> _{MsgAddNewClient}
 
-<table .table.table-striped.table-hover>
-  <thead>
-    <tr>
-      <th>_{MsgClientID}
-      <th>_{MsgClientName}
-      <th>_{MsgClientSecret}
-  <tbody>
-    $forall c <- clients
-      <tr onclick="setRowdata4Modal($(this))" data-toggle="modal" href="##{modalEditClient}">
-        <td .client_id><span>#{fst3 c}</span>
-        <td .client_name><span>#{snd3 c}</span>
-        <td .client_secret><span>#{thd3 c}</span>
+<div .row>
+  <table .table.table-striped.table-hover>
+    <thead>
+      <tr>
+        <th>_{MsgClientID}
+        <th>_{MsgClientName}
+        <th>_{MsgClientSecret}
+    <tbody>
+      $forall c <- clients
+        <tr onclick="setRowdata4Modal($(this))" data-toggle="modal" href="##{modalEditClient}">
+          <td .client_id><span>#{fst3 c}</span>
+          <td .client_name><span>#{snd3 c}</span>
+          <td .client_secret><span>#{thd3 c}</span>
 
 <!-- Edit Client data Dialog -->
 <div ##{modalEditClient} .modal.hide.fade>
