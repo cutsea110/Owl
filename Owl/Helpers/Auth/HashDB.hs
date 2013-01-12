@@ -210,5 +210,5 @@ instance HashDBUser (UserGeneric backend) where
   userPasswordHash = Just . userPassword
   userPasswordSalt = Just . userSalt
   setSaltAndPasswordHash s h u = u { userSalt     = s
-                               , userPassword = h
-                               }
+                                   , userPassword = h
+                                   }
