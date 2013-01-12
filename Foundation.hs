@@ -87,7 +87,7 @@ instance Yesod App where
         pc <- widgetToPageContent $ do
           addScriptRemote "https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"
           addStylesheet $ StaticR css_bootstrap_min_css
---          addStylesheet $ StaticR css_bootstrap_responsive_min_css
+          addStylesheet $ StaticR css_bootstrap_responsive_min_css
           addScript $ StaticR js_bootstrap_min_js
           addStylesheet $ StaticR css_glyphicons_css
           
