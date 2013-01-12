@@ -17,6 +17,7 @@ import Control.Applicative
 import Settings.Development
 import Data.Default (def)
 import Text.Hamlet
+import Network.Mail.Mime (Address(..))
 
 -- | Which Persistent backend this site is using.
 type PersistConfig = PostgresConf
@@ -70,3 +71,8 @@ parseExtra :: DefaultEnv -> Object -> Parser Extra
 parseExtra _ o = Extra
     <$> o .:  "copyright"
     <*> o .:? "analytics"
+
+owlEmailAddress :: Address
+owlEmailAddress = Address { addressName = Just "Owl system"
+                          , addressEmail = "cutsea110@gmail.com"
+                          }

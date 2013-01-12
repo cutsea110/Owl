@@ -10,6 +10,10 @@ module Handler.Home
 import Import
 import Yesod.Auth
 import qualified Data.Text as T
+import qualified Data.Text.Lazy as LT
+import Network.Mail.Mime (randomString, simpleMail, renderSendMail, Address(..))
+import qualified Settings (owlEmailAddress)
+import System.Random (newStdGen)
 import Owl.Helpers.Auth.HashDB (setPassword)
 import Owl.Helpers.Form
 import Owl.Helpers.Util (newIdent4)
@@ -49,14 +53,41 @@ postPasswordR = do
 
 postEmailR :: Handler ()
 postEmailR = do
+  uid <- requireAuthId
   ((r, _), _) <- runFormPost $ emailForm [] Nothing
   case r of
-    FormSuccess x -> do
-      liftIO $ putStrLn $ "[TODO] send email reminder " ++ T.unpack x
+    FormSuccess email -> do
+      register uid email
       setMessage "Send email reminder"
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessage "Fail to send"
   redirect ((HOME HomeR), [("tab", "email")])
+
+register :: UserId -> Text -> Handler ()
+register uid email = do
+  verKey <- liftIO randomKey
+  runDB $ update uid [ UserEmail =. Just email
+                     , UserVerkey =. Just verKey
+                     , UserVerstatus =. Just Unverified
+                     ]
+  liftIO $ sendRegister email verKey
+  where
+    randomKey :: IO Text
+    randomKey = do
+      stdgen <- newStdGen
+      return $ T.pack $ fst $ randomString 10 stdgen
+
+sendRegister :: Text -> Text -> IO ()
+sendRegister addr key = do
+  mail <- simpleMail (to addr) Settings.owlEmailAddress sbj body html []
+  renderSendMail mail
+  where
+    to = Address Nothing
+    key' = LT.pack $ T.unpack key
+    (sbj, body, html) = 
+      ("Confirm mail", "Confirmation mail <br>key: " `LT.append` key', htmlize body)
+    htmlize id = id
+
 
 postProfileR :: Handler ()
 postProfileR = do
