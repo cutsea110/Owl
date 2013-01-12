@@ -62,3 +62,6 @@ EditClient: Edit Client
 Fire: Fire
 
 PhotoPath: Photo Path
+
+PasswordUpdated: password updated.
+FailToUpdatePassword: fail to updated password.

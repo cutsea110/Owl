@@ -42,9 +42,9 @@ postPasswordR = do
   case r of
     FormSuccess newPass -> do
       runDB . replace (entityKey u) =<< setPassword newPass (entityVal u)
-      setMessage "Update password..."
+      setMessageI MsgPasswordUpdated
     FormFailure (x:_) -> setMessage $ toHtml x
-    _ -> setMessage "Fail to Update"
+    _ -> setMessageI MsgFailToUpdatePassword
   redirect ((HOME HomeR), [("tab", "password")])
 
 postEmailR :: Handler ()

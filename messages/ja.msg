@@ -62,3 +62,6 @@ EditClient: クライアント編集
 Fire: 削除
 
 PhotoPath: ファイルパス
+
+PasswordUpdated: パスワードを変更しました.
+FailToUpdatePassword: パスワードの変更に失敗しました.
