@@ -11,6 +11,7 @@
   /account   AccountIdR      POST
   /password  PasswordR       POST
   /email     EmailR          POST
+  /verify/#UserId/#Text VerifyR GET
   /profile   ProfileR        POST
 
 /help        HELP:

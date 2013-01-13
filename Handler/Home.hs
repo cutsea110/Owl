@@ -4,20 +4,24 @@ module Handler.Home
        , postAccountIdR
        , postPasswordR
        , postEmailR
+       , getVerifyR
        , postProfileR
        ) where
 
 import Import
 import Yesod.Auth
 import qualified Data.Text as T
-import qualified Data.Text.Lazy as LT
-import Network.Mail.Mime (randomString, simpleMail, renderSendMail, Address(..))
-import qualified Settings (owlEmailAddress)
-import System.Random (newStdGen)
+import qualified Data.Text.Lazy.Encoding as TLE
+import Network.Mail.Mime
 import Owl.Helpers.Auth.HashDB (setPassword)
 import Owl.Helpers.Form
 import Owl.Helpers.Util (newIdent4)
 import Owl.Helpers.Widget
+import qualified Settings (owlEmailAddress)
+import System.Random (newStdGen)
+import Text.Shakespeare.Text (stext)
+import Text.Blaze.Html.Renderer.Utf8 (renderHtml)
+import Text.Hamlet (shamlet)
 
 getHomeR :: Handler RepHtml
 getHomeR = do
@@ -66,11 +70,15 @@ postEmailR = do
 register :: UserId -> Text -> Handler ()
 register uid email = do
   verKey <- liftIO randomKey
+  verUrl <- do
+    render <- getUrlRender
+    tm <- getRouteToMaster
+    return $ render $ tm $ HOME $ VerifyR uid verKey
   runDB $ update uid [ UserEmail =. Just email
                      , UserVerkey =. Just verKey
                      , UserVerstatus =. Just Unverified
                      ]
-  liftIO $ sendRegister email verKey
+  liftIO $ sendRegister email verUrl
   where
     randomKey :: IO Text
     randomKey = do
@@ -78,16 +86,28 @@ register uid email = do
       return $ T.pack $ fst $ randomString 10 stdgen
 
 sendRegister :: Text -> Text -> IO ()
-sendRegister addr key = do
-  mail <- simpleMail (to addr) Settings.owlEmailAddress sbj body html []
+sendRegister addr verurl = do
+  mail <- simpleMail (to addr) Settings.owlEmailAddress sbj textPart htmlPart []
   renderSendMail mail
   where
     to = Address Nothing
-    key' = LT.pack $ T.unpack key
-    (sbj, body, html) = 
-      ("Confirm mail", "Confirmation mail <br>key: " `LT.append` key', htmlize body)
-    htmlize id = id
+    sbj = "Verify your email address"
+    textPart = [stext|
+Please confirm your email address by clicking on the link below.
 
+\#{verurl}
+
+Thank you
+|]
+    htmlPart = TLE.decodeUtf8 $ renderHtml [shamlet|
+<p>Please confirm your email address by clicking on the link below.
+<p>
+  <a href=#{verurl}>#{verurl}
+<p>Thank you
+|]
+
+getVerifyR :: UserId -> Text -> Handler RepHtml
+getVerifyR uid verKey = undefined
 
 postProfileR :: Handler ()
 postProfileR = do

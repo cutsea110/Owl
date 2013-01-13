@@ -84,7 +84,8 @@ library
                  , yesod-persistent >= 1.1 && < 1.2
                  , utility-ht >= 0.0.8 && < 0.0.9
                  , yesod-routes >= 1.1 && < 1.2
-                 , mime-mail >=0.4 && < 0.5
+                 , mime-mail >= 0.4 && < 0.5
+                 , blaze-html >= 0.5 && < 0.6
 
 executable         owl
     if flag(library-only)

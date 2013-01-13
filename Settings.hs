@@ -74,5 +74,5 @@ parseExtra _ o = Extra
 
 owlEmailAddress :: Address
 owlEmailAddress = Address { addressName = Just "Owl system"
-                          , addressEmail = "cutsea110@gmail.com"
+                          , addressEmail = "noreply"
                           }
