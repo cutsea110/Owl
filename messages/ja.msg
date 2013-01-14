@@ -71,3 +71,5 @@ VerifyKey: 認証キー
 VerifyYourEmail: メールアドレスを認証してください.
 YourVerifyingEmail: メールアドレス
 NotSetAnyEmail: メールアドレスが登録されていません.
+SuccessVerifyEmail: メールアドレスの認証に成功しました.
+FailVerifyEmail: メールアドレスの認証に失敗しました.

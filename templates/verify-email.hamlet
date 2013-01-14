@@ -6,6 +6,6 @@ $maybe email <- memail
     <dd>#{email}
     <dt>_{MsgVerifyKey}
     <dd>#{verKey}
-  ^{verifyWidget (Just verKey) $ HOME (VerifyR uid verKey)}
+  ^{verifyWidget (Just verKey) (HOME VerifyR) params}
 $nothing
   <p> _{MsgNotSetAnyEmail}

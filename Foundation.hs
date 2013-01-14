@@ -18,7 +18,6 @@ import Model
 import Text.Jasmine (minifym)
 import Web.ClientSession (getKey)
 import Text.Hamlet (hamletFile)
-import Data.Text (Text)
 import Owl.Helpers.Auth.HashDB (authHashDB, HashDBUser(..))
 import Owl.Helpers.Util (getCurrentRoute')
 

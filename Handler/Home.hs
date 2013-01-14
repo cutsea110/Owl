@@ -72,9 +72,9 @@ register :: UserId -> Text -> Handler ()
 register uid email = do
   verKey <- liftIO randomKey
   verUrl <- do
-    render <- getUrlRender
+    render <- getUrlRenderParams
     tm <- getRouteToMaster
-    return $ render $ tm $ HOME $ VerifyR uid verKey
+    return $ render (tm (HOME VerifyR)) [("key", verKey)]
   runDB $ update uid [ UserEmail =. Just email
                      , UserVerkey =. Just verKey
                      , UserVerstatus =. Just Unverified
@@ -107,24 +107,36 @@ Thank you
 <p>Thank you
 |]
 
-getVerifyR :: UserId -> Text -> Handler RepHtml
-getVerifyR uid verKey = do
+getVerifyR :: Handler RepHtml
+getVerifyR = do
+  uid <- requireAuthId
   memail <- runDB $ do
     u <- get404 uid
     return $ userEmail u
+  Just verKey <- lookupGetParam "key"
+  let params = [("key", verKey)]
   defaultLayout $ do
     setTitle "Verify email"
     $(widgetFile "verify-email")
 
-postVerifyR :: UserId -> Text -> Handler ()
-postVerifyR uid verKey = do
+postVerifyR :: Handler ()
+postVerifyR = do
+  uid <- requireAuthId
   ((r, _), _) <- runFormPost $ verifyForm Nothing
   case r of
-    FormSuccess x -> do
-      liftIO $ putStrLn "[TODO] Verifying!!!"
-      setMessage "Verify your email"
-    _ -> setMessage "failt to verify your email"
-  redirect $ HOME (VerifyR uid verKey)
+    FormSuccess verKey -> do
+      runDB $ do
+        u <- get404 uid
+        if userVerkey u == Just verKey
+          then do
+          lift $ setMessageI MsgSuccessVerifyEmail
+          update uid [UserVerkey =.Nothing, UserVerstatus =. Just Verified]
+          else do
+          lift $ setMessageI MsgFailVerifyEmail
+          return ()
+    _ -> do
+      setMessage "fail to verify your email address"
+  redirect ((HOME HomeR), [("tab", "email")])
 
 postProfileR :: Handler ()
 postProfileR = do

@@ -1,5 +1,5 @@
 <!-- Verify email -->
-<form method=post action=#{r toPost} enctype=#{e}>
+<form method=post action=#{r toPost params} enctype=#{e}>
   ^{w}
   <div .control-group>
     <div .controls.btn-group>

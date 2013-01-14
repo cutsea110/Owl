@@ -71,3 +71,5 @@ VerifyKey: Verify key
 VerifyYourEmail: Please verify your email address by using this verify key.
 YourVerifyingEmail: Your verifying email address
 NotSetAnyEmail: You've not set any verifying email address.
+SuccessVerifyEmail: success to verify your email address.
+FailVerifyEmail: fail to verify your email address.

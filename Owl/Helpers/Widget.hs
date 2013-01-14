@@ -28,10 +28,10 @@ emailWidget toPost = do
   r <- lift getUrlRender
   $(widgetFile "email")
 
-verifyWidget :: Maybe Text -> Route App -> Widget
-verifyWidget mv toPost = do
+verifyWidget :: Maybe Text -> Route App -> [(Text, Text)] -> Widget
+verifyWidget mv toPost params = do
   (w, e) <- lift $ generateFormPost $ verifyForm mv
-  r <- lift getUrlRender
+  r <- lift getUrlRenderParams
   $(widgetFile "verify")
 
 changeAvatarWidget :: Widget
