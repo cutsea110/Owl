@@ -63,7 +63,7 @@ postEmailR = do
   case r of
     FormSuccess email -> do
       register uid email
-      setMessage "Send email reminder"
+      setMessageI MsgSendVerifyMail
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessage "Fail to send"
   redirect ((HOME HomeR), [("tab", "email")])
@@ -135,7 +135,7 @@ postVerifyR = do
           lift $ setMessageI MsgFailVerifyEmail
           return ()
     _ -> do
-      setMessage "fail to verify your email address"
+      setMessageI MsgFailVerifyEmail
   redirect ((HOME HomeR), [("tab", "email")])
 
 postProfileR :: Handler ()

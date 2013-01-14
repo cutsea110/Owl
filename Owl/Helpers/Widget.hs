@@ -24,7 +24,8 @@ passwordWidget toPost = do
 
 emailWidget :: Route App -> Widget
 emailWidget toPost = do
-  (w, e) <- lift $ generateFormPost $ emailForm [("class", "span3"),("placeholder","cutsea110@gmail.com")] Nothing
+  memail <- fmap (userEmail.entityVal) $ lift requireAuth
+  (w, e) <- lift $ generateFormPost $ emailForm [("class", "span3"),("placeholder","cutsea110@gmail.com")] memail
   r <- lift getUrlRender
   $(widgetFile "email")
 

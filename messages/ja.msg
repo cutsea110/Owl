@@ -73,3 +73,4 @@ YourVerifyingEmail: メールアドレス
 NotSetAnyEmail: メールアドレスが登録されていません.
 SuccessVerifyEmail: メールアドレスの認証に成功しました.
 FailVerifyEmail: メールアドレスの認証に失敗しました.
+SendVerifyMail: 確認メールを送信しました.

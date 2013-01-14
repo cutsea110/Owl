@@ -79,7 +79,7 @@ emailForm attrs mv fragment = do
   (res, view) <- mreq emailField fs mv
   let widget = [whamlet|
 \#{fragment}
-<div .control-group.warning .clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
+<div .control-group .clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
   <label .control-label for=#{fvId view}>#{fvLabel view}
   <div .controls .input>
     ^{fvInput view}
