@@ -11,7 +11,8 @@ import Yesod.Routes.Class (Route)
 
 accountWidget :: Route App -> Widget
 accountWidget toPost = do
-  (w, e) <- lift $ generateFormPost $ accountForm Nothing
+  account <- fmap (userUsername.entityVal) $ lift requireAuth
+  (w, e) <- lift $ generateFormPost $ accountForm (Just account)
   r <- lift getUrlRender
   $(widgetFile "account-id")
 
@@ -22,10 +23,10 @@ passwordWidget toPost = do
   r <- lift getUrlRender
   $(widgetFile "password")
 
-emailWidget :: Route App -> Widget
-emailWidget toPost = do
+emailWidget :: Maybe VerStatus -> Route App -> Widget
+emailWidget vs toPost = do
   memail <- fmap (userEmail.entityVal) $ lift requireAuth
-  (w, e) <- lift $ generateFormPost $ emailForm [("class", "span3"),("placeholder","cutsea110@gmail.com")] memail
+  (w, e) <- lift $ generateFormPost $ emailForm vs [("class", "span3"),("placeholder","you@example.com")] memail
   r <- lift getUrlRender
   $(widgetFile "email")
 
@@ -86,9 +87,10 @@ userListWidget = do
                , (img_avatar_avatar9_jpg, "User 9")
                ]
   $(widgetFile "user-list")
-  
+
 editUserWidget :: Widget
 editUserWidget = do
+  u <- lift requireAuth
   (menuAccount, menuPassword, menuEmail, menuProfile) <- lift newIdent4
   $(widgetFile "edit-user")
 

@@ -59,13 +59,13 @@ postPasswordR = do
 postEmailR :: Handler ()
 postEmailR = do
   uid <- requireAuthId
-  ((r, _), _) <- runFormPost $ emailForm [] Nothing
+  ((r, _), _) <- runFormPost $ emailForm Nothing [] Nothing
   case r of
     FormSuccess email -> do
       register uid email
-      setMessageI MsgSendVerifyMail
+      setMessageI MsgSentVerifyMail
     FormFailure (x:_) -> setMessage $ toHtml x
-    _ -> setMessage "Fail to send"
+    _ -> setMessageI MsgFailSentVerifyMail
   redirect ((HOME HomeR), [("tab", "email")])
 
 register :: UserId -> Text -> Handler ()

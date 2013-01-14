@@ -74,13 +74,15 @@ $forall (v, k) <- vks
                          , fsAttrs = []
                          }
 
-emailForm :: [(Text, Text)] -> Maybe Text -> Html -> MForm App App (FormResult Text, Widget)
-emailForm attrs mv fragment = do
+emailForm :: Maybe VerStatus -> [(Text, Text)] -> Maybe Text -> Html -> MForm App App (FormResult Text, Widget)
+emailForm vs attrs mv fragment = do
   (res, view) <- mreq emailField fs mv
   let widget = [whamlet|
 \#{fragment}
-<div .control-group .clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
-  <label .control-label for=#{fvId view}>#{fvLabel view}
+<div .control-group.warning .clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
+  <label .control-label for=#{fvId view}>#{fvLabel view} #
+    $maybe s <- vs
+      <span .badge :s == Verified:.badge-success :s == Unverified:.badge-warning >#{show s}
   <div .controls .input>
     ^{fvInput view}
     $maybe tt <- fvTooltip view

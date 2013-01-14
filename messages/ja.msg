@@ -15,6 +15,10 @@ ForgetPassword: パスワードを忘れた?
 Usage: 使用方法
 
 SendReminderMail: リマインダメール送信
+FailSentReminderMail: リマインダメールの送信に失敗しました
+
+SendVerifyMail: 認証確認メール送信
+FailSentVerifyMail: 確認メールの送信に失敗しました
 
 NOTE: NOTE
 
@@ -71,6 +75,6 @@ VerifyKey: 認証キー
 VerifyYourEmail: メールアドレスを認証してください.
 YourVerifyingEmail: メールアドレス
 NotSetAnyEmail: メールアドレスが登録されていません.
-SuccessVerifyEmail: メールアドレスの認証に成功しました.
-FailVerifyEmail: メールアドレスの認証に失敗しました.
-SendVerifyMail: 確認メールを送信しました.
+SuccessVerifyEmail: メールアドレスの確認に成功しました.
+FailVerifyEmail: メールアドレスの確認に失敗しました.
+SentVerifyMail: 確認メールを送信しました.

@@ -15,6 +15,10 @@ ForgetPassword: Forget Password?
 Usage: Usage
 
 SendReminderMail: Send reminder mail
+FailSentReminderMail: Fail to send reminder mail
+
+SendVerifyMail: Send verify mail
+FailSentVerifyMail: Fail to send verify mail
 
 NOTE: NOTE
 
@@ -73,4 +77,4 @@ YourVerifyingEmail: Your verifying email address
 NotSetAnyEmail: You've not set any verifying email address.
 SuccessVerifyEmail: success to verify your email address.
 FailVerifyEmail: fail to verify your email address.
-SendVerifyMail: Send verify mail
+SentVerifyMail: Send verify mail
