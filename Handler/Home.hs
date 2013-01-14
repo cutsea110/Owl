@@ -5,6 +5,7 @@ module Handler.Home
        , postPasswordR
        , postEmailR
        , getVerifyR
+       , postVerifyR
        , postProfileR
        ) where
 
@@ -107,7 +108,12 @@ Thank you
 |]
 
 getVerifyR :: UserId -> Text -> Handler RepHtml
-getVerifyR uid verKey = undefined
+getVerifyR uid verKey = defaultLayout $ do
+    setTitle "Verify email"
+    $(widgetFile "verify-email")
+
+postVerifyR :: UserId -> Text -> Handler ()
+postVerifyR uid verKey = undefined
 
 postProfileR :: Handler ()
 postProfileR = do

@@ -65,3 +65,6 @@ PhotoPath: Photo Path
 
 PasswordUpdated: password updated.
 FailToUpdatePassword: fail to updated password.
+
+Verify: Verify
+VerifyKey: Verify key

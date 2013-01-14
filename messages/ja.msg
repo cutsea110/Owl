@@ -65,3 +65,6 @@ PhotoPath: ファイルパス
 
 PasswordUpdated: パスワードを変更しました.
 FailToUpdatePassword: パスワードの変更に失敗しました.
+
+Verify: 認証する
+VerifyKey: 認証キー

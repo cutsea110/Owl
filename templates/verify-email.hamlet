@@ -1,0 +1,4 @@
+<!-- Verify email -->
+<p> Please verify your email address by using this verify key
+
+^{verifyWidget (Just verKey) $ HOME (VerifyR uid verKey)}
