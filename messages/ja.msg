@@ -68,3 +68,6 @@ FailToUpdatePassword: パスワードの変更に失敗しました.
 
 Verify: 認証する
 VerifyKey: 認証キー
+VerifyYourEmail: メールアドレスを認証してください.
+YourVerifyingEmail: メールアドレス
+NotSetAnyEmail: メールアドレスが登録されていません.

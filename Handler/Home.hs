@@ -108,12 +108,23 @@ Thank you
 |]
 
 getVerifyR :: UserId -> Text -> Handler RepHtml
-getVerifyR uid verKey = defaultLayout $ do
+getVerifyR uid verKey = do
+  memail <- runDB $ do
+    u <- get404 uid
+    return $ userEmail u
+  defaultLayout $ do
     setTitle "Verify email"
     $(widgetFile "verify-email")
 
 postVerifyR :: UserId -> Text -> Handler ()
-postVerifyR uid verKey = undefined
+postVerifyR uid verKey = do
+  ((r, _), _) <- runFormPost $ verifyForm Nothing
+  case r of
+    FormSuccess x -> do
+      liftIO $ putStrLn "[TODO] Verifying!!!"
+      setMessage "Verify your email"
+    _ -> setMessage "failt to verify your email"
+  redirect $ HOME (VerifyR uid verKey)
 
 postProfileR :: Handler ()
 postProfileR = do

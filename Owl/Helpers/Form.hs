@@ -99,11 +99,10 @@ emailForm attrs mv fragment = do
 
 verifyForm :: Maybe Text -> Html -> MForm App App (FormResult Text, Widget)
 verifyForm mv fragment = do
-  (res, view) <- mreq textField fs mv
+  (res, view) <- mreq hiddenField "verkey" mv
   let widget = [whamlet|
 \#{fragment}
 <div .control-group .clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
-  <label .control-label for=#{fvId view}>#{fvLabel view}
   <div .controls .input>
     ^{fvInput view}
     $maybe tt <- fvTooltip view
@@ -112,13 +111,6 @@ verifyForm mv fragment = do
       <span .help-block>#{err}
 |]
   return (res, widget)
-  where
-    fs = FieldSettings{ fsLabel = SomeMessage MsgVerifyKey
-                      , fsTooltip = Nothing
-                      , fsId = Nothing
-                      , fsName = Nothing
-                      , fsAttrs = []
-                      }
 
 profileForm :: Maybe (Text, Text, Maybe Textarea) -> Html -> MForm App App (FormResult (Text, Text, Maybe Textarea), Widget)
 profileForm mv fragment = do
