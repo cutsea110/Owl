@@ -1,9 +1,5 @@
 <!-- Upload photos -->
-<div .span6>
-  <form enctype="#{e}">
-    <div .control-group>
-      <div .controls>
-        ^{w}
-      <span .help-block>
-        <span .label.label-info>_{MsgNOTE}
-        message...message...message...
+<form method=post action=@{UploadR} enctype="#{e}">
+  <div .control-group>
+    <div .controls>
+      ^{w}

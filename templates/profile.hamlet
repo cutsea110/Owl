@@ -32,6 +32,9 @@
     <h3>_{MsgUploadPhotos}
   <div .modal-body>
     ^{uploadPhotoWidget}
+    <span .help-block>
+      <span .label.label-info>_{MsgNOTE}
+      message...message...message...
   <div .modal-footer>
     <a href="#" .btn.close data-dismiss="modal">_{MsgClose}
 

@@ -14,6 +14,8 @@
   /verify    VerifyR         GET POST
   /profile   ProfileR        POST
 
+/file-upload UploadR         POST
+
 /help        HELP:
   /          HelpR           GET
   /pwd-reset PasswordResetR  POST

@@ -7,6 +7,7 @@ module Handler.Home
        , getVerifyR
        , postVerifyR
        , postProfileR
+       , postUploadR
        ) where
 
 import Import
@@ -19,6 +20,7 @@ import Owl.Helpers.Form
 import Owl.Helpers.Util (newIdent4)
 import Owl.Helpers.Widget
 import qualified Settings (owlEmailAddress)
+import System.FilePath
 import System.Random (newStdGen)
 import Text.Shakespeare.Text (stext)
 import Text.Blaze.Html.Renderer.Utf8 (renderHtml)
@@ -148,3 +150,29 @@ postProfileR = do
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessage "fail to update profile"
   redirect ((HOME HomeR), [("tab", "profile")])
+
+postUploadR :: Handler ()
+postUploadR = do
+  ((r,_), _) <- runFormPost $ fileForm Nothing
+  case r of
+    FormSuccess fi -> do
+      filename <- writeToServer fi
+      _ <- runDB $ insert $ Image filename
+      setMessage "Image saved"
+      redirect $ HOME ProfileR
+    _ -> do
+      setMessage "Something went wrong"
+      redirect $ HOME ProfileR
+
+writeToServer :: FileInfo -> Handler FilePath
+writeToServer fi = do
+  let fname = T.unpack $ fileName fi
+      path = imageFilePath fname
+  liftIO $ fileMove fi path
+  return fname
+
+imageFilePath :: String -> FilePath
+imageFilePath f = uploadDirectory </> f
+
+uploadDirectory :: FilePath
+uploadDirectory = "uploaded-images"
