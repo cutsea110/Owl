@@ -29,14 +29,10 @@ Profile: プロフィール
 
 Update: 更新する
 Edit: 編集する
-ChangeAvatar: アバターの変更
-UploadPhotos: 写真をアップロードする
 EditProfile: プロフィールの編集
 EditComment: コメントの編集
 
-ChoiceAsAvatar: アバターにする
-FirePhoto: 写真を削除する
-
+UploadFilePath: ファイルパス
 Browse: 参照
 Upload: アップロード
 
@@ -64,8 +60,6 @@ ClientName: クライアント名
 ClientSecret: クライアント秘密キー
 EditClient: クライアント編集
 Fire: 削除
-
-PhotoPath: ファイルパス
 
 PasswordUpdated: パスワードを変更しました.
 FailToUpdatePassword: パスワードの変更に失敗しました.

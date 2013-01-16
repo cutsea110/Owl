@@ -160,7 +160,7 @@ fileForm mv fragment = do
 |]
   return (res, widget)
   where
-    fs = FieldSettings { fsLabel = SomeMessage MsgPhotoPath
+    fs = FieldSettings { fsLabel = SomeMessage MsgUploadFilePath
                        , fsTooltip = Nothing
                        , fsId = Nothing
                        , fsName = Nothing
