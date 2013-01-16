@@ -16,7 +16,7 @@ import qualified Data.Text.Lazy.Encoding as TLE
 import Network.Mail.Mime
 import Owl.Helpers.Auth.HashDB (setPassword)
 import Owl.Helpers.Form
-import Owl.Helpers.Util (newIdent4)
+import Owl.Helpers.Util (newIdent4, toGravatarHash)
 import Owl.Helpers.Widget
 import qualified Settings (owlEmailAddress)
 import System.Random (newStdGen)
@@ -130,7 +130,8 @@ postVerifyR = do
         if userVerkey u == Just verKey
           then do
           lift $ setMessageI MsgSuccessVerifyEmail
-          update uid [UserVerkey =.Nothing, UserVerstatus =. Just Verified]
+          let hash = fmap toGravatarHash $ userEmail u
+          update uid [UserVerkey =.Nothing, UserVerstatus =. Just Verified, UserMd5hash =. hash]
           else do
           lift $ setMessageI MsgFailVerifyEmail
           return ()

@@ -6,6 +6,7 @@ User
     email     Text Maybe
     verkey    Text Maybe
     verstatus VerStatus Maybe
+    md5hash   Text Maybe
 
     UniqueUser username
 

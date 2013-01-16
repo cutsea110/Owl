@@ -14,7 +14,8 @@
         <ul .nav.pull-right>
           <li .dropdown>
             <a href="" .dropdown-toggle data-toggle="dropdown">
-              <img src="https://secure.gravatar.com/avatar/c101739af7d3c676e34049bea4f72aa2?s=30" alt=Gravatar">
+              $maybe h <- userMd5hash usr
+                <img src="#{gravatarUrl 30 h}" alt=Gravatar">
               #{userUsername usr} #
               <span class="caret">
             <ul .dropdown-menu>

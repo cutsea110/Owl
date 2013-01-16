@@ -19,7 +19,7 @@ import Text.Jasmine (minifym)
 import Web.ClientSession (getKey)
 import Text.Hamlet (hamletFile)
 import Owl.Helpers.Auth.HashDB (authHashDB, HashDBUser(..))
-import Owl.Helpers.Util (getCurrentRoute')
+import Owl.Helpers.Util (getCurrentRoute', gravatarUrl)
 
 -- | The site argument for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
@@ -161,7 +161,7 @@ instance YesodAuth App where
         case x of
             Just (Entity uid _) -> return $ Just uid
             Nothing -> do
-                fmap Just $ insert $ User (credsIdent creds) "" "" Nothing Nothing Nothing
+                fmap Just $ insert $ User (credsIdent creds) "" "" Nothing Nothing Nothing Nothing
 
     -- You can add other plugins like BrowserID, email or OAuth here
     authPlugins _ = [authHashDB (Just . UniqueUser)]
