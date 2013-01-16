@@ -8,11 +8,10 @@
 
 /home        HOME:
   /          HomeR           GET
-  /account   AccountIdR      POST
+  /profile   ProfileR        POST
   /password  PasswordR       POST
   /email     EmailR          POST
   /verify    VerifyR         GET POST
-  /profile   ProfileR        POST
 
 /help        HELP:
   /          HelpR           GET

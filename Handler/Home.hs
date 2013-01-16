@@ -1,7 +1,6 @@
 {-# LANGUAGE TupleSections, OverloadedStrings #-}
 module Handler.Home 
        ( getHomeR
-       , postAccountIdR
        , postPasswordR
        , postEmailR
        , getVerifyR
@@ -16,7 +15,7 @@ import qualified Data.Text.Lazy.Encoding as TLE
 import Network.Mail.Mime
 import Owl.Helpers.Auth.HashDB (setPassword)
 import Owl.Helpers.Form
-import Owl.Helpers.Util (newIdent4, toGravatarHash)
+import Owl.Helpers.Util (newIdent3, toGravatarHash)
 import Owl.Helpers.Widget
 import qualified Settings (owlEmailAddress)
 import System.Random (newStdGen)
@@ -27,22 +26,12 @@ import Text.Hamlet (shamlet)
 getHomeR :: Handler RepHtml
 getHomeR = do
   u <- requireAuth
-  (menuAccount, menuPassword, menuEmail, menuProfile) <- newIdent4
-  tabIs <- fmap (maybe ("account-id"==) (==)) $ lookupGetParam "tab"
+  (menuProfile, menuPassword, menuEmail) <- newIdent3
+  tabIs <- fmap (maybe ("profile"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
   defaultLayout $ do
     setTitle "Home"
     $(widgetFile "homepage")
-
-postAccountIdR :: Handler ()
-postAccountIdR = do
-  ((r, _), _) <- runFormPost $ accountForm Nothing
-  case r of
-    FormSuccess x -> do
-      liftIO $ putStrLn $ "[TODO] update user account " ++ T.unpack x
-      setMessage "Update account..."
-    _ -> setMessage "Fail to update"
-  redirect ((HOME HomeR), [("tab", "account-id")])
 
 postPasswordR :: Handler ()
 postPasswordR = do

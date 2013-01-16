@@ -4,17 +4,10 @@ import Import
 import Prelude (head, tail)
 import Data.Tuple.HT (fst3, snd3, thd3)
 import Owl.Helpers.Form
-import Owl.Helpers.Util (newIdent2, newIdent3, newIdent4)
+import Owl.Helpers.Util (newIdent2, newIdent3)
 import Text.Julius (rawJS)
 import Yesod.Auth (requireAuth)
 import Yesod.Routes.Class (Route)
-
-accountWidget :: Route App -> Widget
-accountWidget toPost = do
-  account <- fmap (userUsername.entityVal) $ lift requireAuth
-  (w, e) <- lift $ generateFormPost $ accountForm (Just account)
-  r <- lift getUrlRender
-  $(widgetFile "account-id")
 
 passwordWidget :: Route App -> Widget
 passwordWidget toPost = do
@@ -70,7 +63,7 @@ userListWidget = do
 editUserWidget :: Widget
 editUserWidget = do
   u <- lift requireAuth
-  (menuAccount, menuPassword, menuEmail, menuProfile) <- lift newIdent4
+  (menuProfile, menuPassword, menuEmail) <- lift newIdent3
   $(widgetFile "edit-user")
 
 killUserWidget :: Widget
