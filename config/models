@@ -6,11 +6,9 @@ User
     email     Text Maybe
     verkey    Text Maybe
     verstatus VerStatus Maybe
+    md5hash   Text Maybe
 
     UniqueUser username
-
-Image
-    filename  FilePath
 
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)

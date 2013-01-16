@@ -11,9 +11,13 @@
           <li><a href="@{HOME HomeR}"><i class="icon-home"></i> _{MsgHome}</a>
           <li><a href="@{HELP HelpR}">_{MsgHelp}</a>
       $maybe Entity _ usr <- mu
+        $maybe h <- userMd5hash usr
+          <span .nav.pull-right>
+            <img .gravatar src="#{gravatarUrl 36 h}" alt=Gravatar">
         <ul .nav.pull-right>
           <li .dropdown>
-            <a href="" .dropdown-toggle data-toggle="dropdown">#{userUsername usr} #
+            <a href="" .dropdown-toggle data-toggle="dropdown">
+              #{userUsername usr} #
               <span class="caret">
             <ul .dropdown-menu>
               $if isadmin

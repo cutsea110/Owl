@@ -6,19 +6,22 @@
   <div .span12>
     <div .tabbable.tabs-left>
       <ul .nav.nav-tabs>
-        <li :tabIs "account-id":.active><a href="##{menuAccount}" data-toggle="tab">_{MsgAccount}</a>
+        <li :tabIs "profile":.active><a href="##{menuProfile}" data-toggle="tab">_{MsgProfile}</a>
         <li :tabIs "password":.active><a href="##{menuPassword}" data-toggle="tab">_{MsgPassword}</a>
         <li :tabIs "email":.active><a href="##{menuEmail}" data-toggle="tab">_{MsgEmail}</a>
-        <li :tabIs "profile":.active><a href="##{menuProfile}" data-toggle="tab">_{MsgProfile}</a>
       <div .tab-content>
         $maybe msg <- mmsg
           <div .alert.alert-block>
             <button type="button" .close data-dismiss="alert">&times;
             <p>#{msg}
 
-        <div .tab-pane :tabIs "account-id":.active ##{menuAccount}>
-          <p> message...message...message...message...
-          ^{accountWidget $ HOME AccountIdR}
+        <div .tab-pane :tabIs "profile":.active ##{menuProfile}>
+          <p>message...message...message...
+          ^{profileWidget $ HOME ProfileR}
+          <div .control-group>
+            <span .help-block>
+              <span .label.label-info>_{MsgNOTE}
+              <p>message...message...message...message...
         <div .tab-pane :tabIs "password":.active ##{menuPassword}>
           <p> message...message...message...message...
           ^{passwordWidget $ HOME PasswordR}
@@ -34,5 +37,3 @@
               <span .label.label-info>_{MsgNOTE}
               <p>message...message...message...message... #
                 <span .badge.badge-important>6</span>
-        <div .tab-pane :tabIs "profile":.active ##{menuProfile}>
-          ^{profileWidget}

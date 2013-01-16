@@ -1,13 +1,11 @@
 {-# LANGUAGE TupleSections, OverloadedStrings #-}
 module Handler.Home 
        ( getHomeR
-       , postAccountIdR
        , postPasswordR
        , postEmailR
        , getVerifyR
        , postVerifyR
        , postProfileR
-       , postUploadR
        ) where
 
 import Import
@@ -17,10 +15,9 @@ import qualified Data.Text.Lazy.Encoding as TLE
 import Network.Mail.Mime
 import Owl.Helpers.Auth.HashDB (setPassword)
 import Owl.Helpers.Form
-import Owl.Helpers.Util (newIdent4)
+import Owl.Helpers.Util (newIdent3, toGravatarHash)
 import Owl.Helpers.Widget
 import qualified Settings (owlEmailAddress)
-import System.FilePath
 import System.Random (newStdGen)
 import Text.Shakespeare.Text (stext)
 import Text.Blaze.Html.Renderer.Utf8 (renderHtml)
@@ -29,22 +26,12 @@ import Text.Hamlet (shamlet)
 getHomeR :: Handler RepHtml
 getHomeR = do
   u <- requireAuth
-  (menuAccount, menuPassword, menuEmail, menuProfile) <- newIdent4
-  tabIs <- fmap (maybe ("account-id"==) (==)) $ lookupGetParam "tab"
+  (menuProfile, menuPassword, menuEmail) <- newIdent3
+  tabIs <- fmap (maybe ("profile"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
   defaultLayout $ do
     setTitle "Home"
     $(widgetFile "homepage")
-
-postAccountIdR :: Handler ()
-postAccountIdR = do
-  ((r, _), _) <- runFormPost $ accountForm Nothing
-  case r of
-    FormSuccess x -> do
-      liftIO $ putStrLn $ "[TODO] update user account " ++ T.unpack x
-      setMessage "Update account..."
-    _ -> setMessage "Fail to update"
-  redirect ((HOME HomeR), [("tab", "account-id")])
 
 postPasswordR :: Handler ()
 postPasswordR = do
@@ -132,7 +119,8 @@ postVerifyR = do
         if userVerkey u == Just verKey
           then do
           lift $ setMessageI MsgSuccessVerifyEmail
-          update uid [UserVerkey =.Nothing, UserVerstatus =. Just Verified]
+          let hash = fmap toGravatarHash $ userEmail u
+          update uid [UserVerkey =.Nothing, UserVerstatus =. Just Verified, UserMd5hash =. hash]
           else do
           lift $ setMessageI MsgFailVerifyEmail
           return ()
@@ -150,29 +138,3 @@ postProfileR = do
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessage "fail to update profile"
   redirect ((HOME HomeR), [("tab", "profile")])
-
-postUploadR :: Handler ()
-postUploadR = do
-  ((r,_), _) <- runFormPost $ fileForm Nothing
-  case r of
-    FormSuccess fi -> do
-      filename <- writeToServer fi
-      _ <- runDB $ insert $ Image filename
-      setMessage "Image saved"
-      redirect $ HOME ProfileR
-    _ -> do
-      setMessage "Something went wrong"
-      redirect $ HOME ProfileR
-
-writeToServer :: FileInfo -> Handler FilePath
-writeToServer fi = do
-  let fname = T.unpack $ fileName fi
-      path = imageFilePath fname
-  liftIO $ fileMove fi path
-  return fname
-
-imageFilePath :: String -> FilePath
-imageFilePath f = uploadDirectory </> f
-
-uploadDirectory :: FilePath
-uploadDirectory = "uploaded-images"

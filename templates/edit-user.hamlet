@@ -1,13 +1,12 @@
 <!-- Edit User by Admin -->
 <div .tabbable.tabs-left>
   <ul .nav.nav-tabs>
-    <li .active><a href="##{menuAccount}" data-toggle="tab">_{MsgAccount}</a>
+    <li .active><a href="##{menuProfile}" data-toggle="tab">_{MsgProfile}</a>
     <li><a href="##{menuPassword}" data-toggle="tab">_{MsgPassword}</a>
     <li><a href="##{menuEmail}" data-toggle="tab">_{MsgEmail}</a>
-    <li><a href="##{menuProfile}" data-toggle="tab">_{MsgProfile}</a>
   <div .tab-content>
-    <div .tab-pane.active ##{menuAccount}>
-      ^{accountWidget $ HOME AccountIdR}
+    <div .tab-pane.active ##{menuProfile}>
+      ^{profileWidget $ HOME ProfileR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}
         message...message...
@@ -19,11 +18,6 @@
     <div .tab-pane ##{menuEmail}>
       $with verstatus <- userVerstatus $ entityVal u
         ^{emailWidget verstatus $ HOME EmailR}
-      <div .help-inline>
-        <span .label.label-info>_{MsgNOTE}
-        message...message...
-    <div .tab-pane ##{menuProfile}>
-      ^{editProfileWidget $ HOME ProfileR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}
         message...message...

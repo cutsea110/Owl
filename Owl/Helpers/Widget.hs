@@ -4,17 +4,10 @@ import Import
 import Prelude (head, tail)
 import Data.Tuple.HT (fst3, snd3, thd3)
 import Owl.Helpers.Form
-import Owl.Helpers.Util (newIdent2, newIdent3, newIdent4)
+import Owl.Helpers.Util (newIdent2, newIdent3)
 import Text.Julius (rawJS)
 import Yesod.Auth (requireAuth)
 import Yesod.Routes.Class (Route)
-
-accountWidget :: Route App -> Widget
-accountWidget toPost = do
-  account <- fmap (userUsername.entityVal) $ lift requireAuth
-  (w, e) <- lift $ generateFormPost $ accountForm (Just account)
-  r <- lift getUrlRender
-  $(widgetFile "account-id")
 
 passwordWidget :: Route App -> Widget
 passwordWidget toPost = do
@@ -36,41 +29,17 @@ verifyWidget mv toPost params = do
   r <- lift getUrlRenderParams
   $(widgetFile "verify")
 
-changeAvatarWidget :: Widget
-changeAvatarWidget = do
-  avatarCarousel <- lift newIdent
-  let photos = [ (img_avatar_avatar_jpg, "Photo 1"::Text)
-               , (img_avatar_avatar2_jpg, "Photo 2")
-               , (img_avatar_avatar3_jpg, "Photo 3")
-               , (img_avatar_avatar4_jpg, "Photo 4")
-               , (img_avatar_avatar5_jpg, "Photo 5")
-               , (img_avatar_avatar6_jpg, "Photo 6")
-               , (img_avatar_avatar7_jpg, "Photo 7")
-               , (img_avatar_avatar8_jpg, "Photo 8")
-               , (img_avatar_avatar9_jpg, "Photo 9")
-               ]
-      avatar = head photos
-  $(widgetFile "change-avatar")
-
-uploadPhotoWidget :: Widget
-uploadPhotoWidget = do
-  (w, e) <- lift $ generateFormPost $ fileForm Nothing
-  $(widgetFile "upload-photos")
-
 importCsvWidget :: Widget
 importCsvWidget = do
   (w, e) <- lift $ generateFormPost $ fileForm Nothing
   $(widgetFile "import-users-csv")
 
-editProfileWidget :: Route App -> Widget
-editProfileWidget toPost = do
+profileWidget :: Route App -> Widget
+profileWidget toPost = do
+  accountId <- lift newIdent
+  u <- lift requireAuth
   (w, e) <- lift $ generateFormPost $ profileForm Nothing
   r <- lift getUrlRender
-  $(widgetFile "edit-profile")
-
-profileWidget :: Widget
-profileWidget= do
-  (modalChangeAvatar, modalUploadPhotos, modalEditComment) <- lift newIdent3
   $(widgetFile "profile")
 
 userListWidget :: Widget
@@ -91,7 +60,7 @@ userListWidget = do
 editUserWidget :: Widget
 editUserWidget = do
   u <- lift requireAuth
-  (menuAccount, menuPassword, menuEmail, menuProfile) <- lift newIdent4
+  (menuProfile, menuPassword, menuEmail) <- lift newIdent3
   $(widgetFile "edit-user")
 
 killUserWidget :: Widget

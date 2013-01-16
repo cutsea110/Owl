@@ -29,14 +29,10 @@ Profile: Profile
 
 Update: Update
 Edit: Edit
-ChangeAvatar: Change avatar
-UploadPhotos: Upload photos
 EditProfile: Edit Profile
 EditComment: Edit Comment
 
-ChoiceAsAvatar: Choice as avatar
-FirePhoto: Fire photo
-
+UploadFilePath: File path
 Browse: Browse
 Upload: Upload
 
@@ -64,8 +60,6 @@ ClientName: Client Name
 ClientSecret: Client Secret
 EditClient: Edit Client
 Fire: Fire
-
-PhotoPath: Photo Path
 
 PasswordUpdated: password updated.
 FailToUpdatePassword: fail to updated password.

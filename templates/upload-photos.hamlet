@@ -1,5 +1,0 @@
-<!-- Upload photos -->
-<form method=post action=@{UploadR} enctype="#{e}">
-  <div .control-group>
-    <div .controls>
-      ^{w}
