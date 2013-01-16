@@ -36,6 +36,8 @@ importCsvWidget = do
 
 profileWidget :: Route App -> Widget
 profileWidget toPost = do
+  accountId <- lift newIdent
+  u <- lift requireAuth
   (w, e) <- lift $ generateFormPost $ profileForm Nothing
   r <- lift getUrlRender
   $(widgetFile "profile")
