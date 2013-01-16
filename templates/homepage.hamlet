@@ -16,7 +16,12 @@
             <p>#{msg}
 
         <div .tab-pane :tabIs "profile":.active ##{menuProfile}>
-          ^{profileWidget}
+          <p>message...message...message...
+          ^{profileWidget $ HOME ProfileR}
+          <div .control-group>
+            <span .help-block>
+              <span .label.label-info>_{MsgNOTE}
+              <p>message...message...message...message...
         <div .tab-pane :tabIs "password":.active ##{menuPassword}>
           <p> message...message...message...message...
           ^{passwordWidget $ HOME PasswordR}

@@ -6,7 +6,7 @@
     <li><a href="##{menuEmail}" data-toggle="tab">_{MsgEmail}</a>
   <div .tab-content>
     <div .tab-pane.active ##{menuProfile}>
-      ^{editProfileWidget $ HOME ProfileR}
+      ^{profileWidget $ HOME ProfileR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}
         message...message...

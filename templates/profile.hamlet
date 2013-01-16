@@ -1,24 +1,6 @@
-<!-- Profile -->
-<div.span4>
-  <div .thumbnail>
-    <img .img-rounded src="@{StaticR img_avatar_avatar_jpg}" data-src="holder.js/180x120" alt="avatar">
-  <div .caption>
-    <h3>Katsutoshi Itoh
-    <p>I'm a haskell web application developper. I've translated `Real World Haskell'.
-       I have a cute daughter.
-
-  <div .btn-group.dropup>
-    <a href="#" .btn.btn-primary>_{MsgEdit}
-    <a href="#" .btn.btn-primary.dropdown-toggle data-toggle="dropdown"><span class="caret"></span>
-    <ul .dropdown-menu>
-      <li><a href="##{modalEditComment}" data-toggle="modal"><i class="icon-edit"></i> _{MsgEditComment}</a>
-
-<!-- Dialog -->
-<div ##{modalEditComment} .modal.hide.fade>
-  <div .modal-header>
-    <a href="#" .close data-dismiss="modal">&times;
-    <h3>_{MsgEditProfile}
-  <div .modal-body>
-    ^{editProfileWidget $ HOME ProfileR}
-  <div .modal-footer>
-    <a href="#" .btn.close data-dismiss="modal">_{MsgClose}
+<!-- Edit Profile -->
+<form method=post action=#{r toPost} enctype=#{e}>
+  ^{w}
+  <div .control-group>
+    <div .controls>
+      <button type="submit" .btn.btn-primary>_{MsgUpdate}
