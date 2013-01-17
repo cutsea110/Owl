@@ -9,13 +9,17 @@
 
 <div>
   <ul .thumbnails>
-    $forall (p, c) <- photos
+    $forall Entity _ u <- us
       <li .span2>
         <div .thumbnail>
-          <img .img-rounded src="@{StaticR p}" data-src="holder.js/150x100" alt>
+          $maybe h <- userMd5hash u
+            <img src="#{gravatarUrl 80 h}" alt>
+          $nothing
+            $with h' <- toGravatarHash (userUsername u)
+              <img src="#{gravatarUrl 80 h'}" alt>
           <div .caption>
-            <h6>#{c}
-            <p>#{c}
+            <h6>#{userUsername u}
+            <p>#{userFullname u}
             <div .btn-group>
               <button href="##{modalEditUser}" data-toggle="modal" onclick="" .btn.btn-primary.btn-mini>_{MsgEditUser}
               <button href="##{modalKillUser}" data-toggle="modal" onclick="" .btn.btn-danger.btn-mini>_{MsgKillUser}

@@ -4,6 +4,7 @@ import Prelude
 import Yesod
 import Data.Text (Text)
 import Database.Persist.Quasi
+import Data.Monoid ((<>))
 
 data VerStatus = Unverified | Verified
             deriving (Read, Show, Eq, Ord, Enum, Bounded)
@@ -15,3 +16,6 @@ derivePersistField "VerStatus"
 -- http://www.yesodweb.com/book/persistent/
 share [mkPersist sqlSettings, mkMigrate "migrateAll"]
     $(persistFileWith lowerCaseSettings "config/models")
+
+userFullname :: User -> Text
+userFullname u = userFamilyname u <> " " <> userGivenname u
