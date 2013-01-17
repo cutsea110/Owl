@@ -1,9 +1,5 @@
 <!-- Edit Profile -->
 <form method=post action=#{r toPost} enctype=#{e}>
-  <div .control-group.info.clearfix>
-    <label .control-label for=##{accountId}>_{MsgAccount}
-    <div .controls>
-      <span ##{accountId}><b>#{userUsername $ entityVal u}</b>
   ^{w}
   <div .control-group>
     <div .controls>

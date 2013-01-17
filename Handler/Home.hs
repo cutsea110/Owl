@@ -134,7 +134,7 @@ postProfileR = do
   ((r, _), _) <- runFormPost $ profileForm Nothing
   case r of
     FormSuccess (fn, gn, cmt) -> do
-      runDB $ update uid []
+      runDB $ update uid [UserFamilyname =. fn, UserGivenname =. gn, UserComment =. cmt]
       setMessage "Update profile"
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessage "fail to update profile"
