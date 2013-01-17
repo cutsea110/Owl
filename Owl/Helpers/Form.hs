@@ -99,7 +99,27 @@ profileForm mv fragment = do
         (FormSuccess x, FormSuccess y, FormSuccess z) -> FormSuccess (x, y, z)
         _ -> FormFailure ["fail to profile update!"]
       vks = [(view0, "success"::Text), (view1, "success"), (view2, "info")]
-  let widget = [whamlet|
+  let widget = do
+        toWidget [julius|
+$('button.edit-profile').click(function(){
+  var uri = $(this).attr('uri'),
+      modalid = $(this).attr('href');
+
+  $.getJSON(uri, null, function(data, status){
+    if (status=='success') {
+      // set action uri for post
+      $(modalid).find('form').attr('action', uri);
+      // bind data
+      $('##{rawJS $ fvId view0}').val(data.familyname);
+      $('##{rawJS $ fvId view1}').val(data.givenname);
+      $('##{rawJS $ fvId view2}').val(data.comment);
+    } else {
+      $('##{rawJS $ fvId view0},##{rawJS $ fvId view1},##{rawJS $ fvId view2}').val('');
+    }
+  });
+});
+|]
+        [whamlet|
 \#{fragment}
 $forall (v, k) <- vks
   <div .control-group.#{k}.clearfix :fvRequired v:.required :not $ fvRequired v:.optional :isJust $ fvErrors v:.error>

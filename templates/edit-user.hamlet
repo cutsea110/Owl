@@ -6,7 +6,8 @@
     <li><a href="##{menuEmail}" data-toggle="tab">_{MsgEmail}</a>
   <div .tab-content>
     <div .tab-pane.active ##{menuProfile}>
-      ^{profileWidget $ HOME ProfileR}
+      #! No use this post target URI
+      ^{profileWidget $ AdminTool AdminToolsR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}
         message...message...

@@ -36,7 +36,6 @@ importCsvWidget = do
 
 profileWidget :: Route App -> Widget
 profileWidget toPost = do
-  accountId <- lift newIdent
   u <- fmap entityVal $ lift requireAuth
   let mv = Just $ (,,) <$> userFamilyname <*> userGivenname <*> userComment $ u
   (w, e) <- lift $ generateFormPost $ profileForm mv

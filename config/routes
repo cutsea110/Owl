@@ -21,3 +21,4 @@
 
 /admin-tools AdminTool:
   / AdminToolsR     GET
+  /profile/#UserId UserProfileR GET

@@ -1,5 +1,6 @@
 module Handler.AdminTools 
        ( getAdminToolsR
+       , getUserProfileR
        ) where
 
 import Import
@@ -13,3 +14,12 @@ getAdminToolsR = do
   defaultLayout $ do
     setTitle "Administrator's Tools"
     $(widgetFile "admin-tools")
+
+getUserProfileR :: UserId -> Handler RepJson
+getUserProfileR uid = do
+  u <- runDB $ get404 uid
+  jsonToRepJson $ object [ "username" .= userUsername u
+                         , "familyname" .= userFamilyname u
+                         , "givenname" .= userGivenname u
+                         , "comment" .= fmap unTextarea (userComment u)
+                         ]
