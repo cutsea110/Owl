@@ -75,3 +75,5 @@ SentVerifyMail: 確認メールを送信しました.
 
 UpdateProfile: プロフィールを更新しました.
 FailUpdateProfile: プロフィールの更新に失敗しました.
+
+NoEmailAddress: メールアドレス未設定

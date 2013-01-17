@@ -20,6 +20,14 @@
           <div .caption>
             <h6>#{userUsername u}
             <p>#{userFullname u}
+            $maybe email <- userEmail u
+              <p>#{email}
+                $maybe s <- userVerstatus u
+                  <span .badge :s == Verified:.badge-success :s == Unverified:.badge-warning >#{show s}
+                $nothing
+                  <span .badge.badge-warning>Unverified
+            $nothing
+              <p>_{MsgNoEmailAddress}
             <div .btn-group>
               <button href="##{modalEditUser}" uri="@{AdminTool $ UserProfileR uid}" data-toggle="modal" onclick="" .btn.btn-primary.btn-mini.edit-profile>_{MsgEditUser}
               <button href="##{modalKillUser}" data-toggle="modal" onclick="" .btn.btn-danger.btn-mini>_{MsgKillUser}
