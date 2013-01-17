@@ -21,4 +21,4 @@
 
 /admin-tools AdminTool:
   / AdminToolsR     GET
-  /profile/#UserId UserProfileR GET
+  /profile/#UserId UserProfileR GET POST

@@ -10,6 +10,11 @@
         <li :tabIs "import-users":.active><a href="##{menuImportUsers}" data-toggle="tab">_{MsgImportUser}</a>
         <li :tabIs "maint-client":.active><a href="##{menuMaintClient}" data-toggle="tab">_{MsgMaintClient}</a>
       <div .tab-content>
+        $maybe msg <- mmsg
+          <div .alert.alert-block>
+            <button type="button" .close data-dismiss="alert">&times;
+            <p>#{msg}
+
         <div .tab-pane :tabIs "maint-user":.active ##{menuMaintUser}>
           ^{userListWidget}
         <div .tab-pane :tabIs "import-users":.active ##{menuImportUsers}>
