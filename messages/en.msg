@@ -72,3 +72,6 @@ NotSetAnyEmail: You've not set any verifying email address.
 SuccessVerifyEmail: success to verify your email address.
 FailVerifyEmail: fail to verify your email address.
 SentVerifyMail: Send verify mail
+
+UpdateProfile: Update profile
+FailUpdateProfile: Fail to update profile

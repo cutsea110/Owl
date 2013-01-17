@@ -135,7 +135,7 @@ postProfileR = do
   case r of
     FormSuccess (fn, gn, cmt) -> do
       runDB $ update uid [UserFamilyname =. fn, UserGivenname =. gn, UserComment =. cmt]
-      setMessage "Update profile"
+      setMessageI MsgUpdateProfile
     FormFailure (x:_) -> setMessage $ toHtml x
-    _ -> setMessage "fail to update profile"
+    _ -> setMessageI MsgFailUpdateProfile
   redirect ((HOME HomeR), [("tab", "profile")])

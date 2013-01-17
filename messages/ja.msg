@@ -72,3 +72,6 @@ NotSetAnyEmail: メールアドレスが登録されていません.
 SuccessVerifyEmail: メールアドレスの確認に成功しました.
 FailVerifyEmail: メールアドレスの確認に失敗しました.
 SentVerifyMail: 確認メールを送信しました.
+
+UpdateProfile: プロフィールを更新しました.
+FailUpdateProfile: プロフィールの更新に失敗しました.
