@@ -161,7 +161,17 @@ instance YesodAuth App where
         case x of
             Just (Entity uid _) -> return $ Just uid
             Nothing -> do
-                fmap Just $ insert $ User (credsIdent creds) "" "" Nothing Nothing Nothing Nothing
+                fmap Just $ insert $ User { userUsername = (credsIdent creds) 
+                                          , userPassword = "" 
+                                          , userSalt = "" 
+                                          , userFamilyname = ""
+                                          , userGivenname = ""
+                                          , userComment = Nothing
+                                          , userEmail = Nothing 
+                                          , userVerkey = Nothing 
+                                          , userVerstatus = Nothing 
+                                          , userMd5hash = Nothing
+                                          }
 
     -- You can add other plugins like BrowserID, email or OAuth here
     authPlugins _ = [authHashDB (Just . UniqueUser)]

@@ -130,10 +130,11 @@ postVerifyR = do
 
 postProfileR :: Handler ()
 postProfileR = do
+  uid <- requireAuthId
   ((r, _), _) <- runFormPost $ profileForm Nothing
   case r of
-    FormSuccess x -> do
-      liftIO $ putStrLn $ "[TODO] Update profile! " ++ show x
+    FormSuccess (fn, gn, cmt) -> do
+      runDB $ update uid []
       setMessage "Update profile"
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessage "fail to update profile"

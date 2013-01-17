@@ -1,12 +1,16 @@
 User
-    username  Text Eq
-    password  Text
-    salt      Text
+    username    Text Eq
+    password    Text
+    salt        Text
 
-    email     Text Maybe
-    verkey    Text Maybe
-    verstatus VerStatus Maybe
-    md5hash   Text Maybe
+    familyname  Text
+    givenname   Text
+    comment     Textarea Maybe
+
+    email       Text Maybe
+    verkey      Text Maybe
+    verstatus   VerStatus Maybe
+    md5hash     Text Maybe
 
     UniqueUser username
 
