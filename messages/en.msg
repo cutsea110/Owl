@@ -77,3 +77,4 @@ UpdateProfile: Update profile
 FailUpdateProfile: Fail to update profile
 
 NoEmailAddress: No email address
+Fullname: Name

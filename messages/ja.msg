@@ -77,3 +77,4 @@ UpdateProfile: プロフィールを更新しました.
 FailUpdateProfile: プロフィールの更新に失敗しました.
 
 NoEmailAddress: メールアドレス未設定
+Fullname: 氏名

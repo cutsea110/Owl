@@ -7,7 +7,8 @@
 <form .inline.pull-right>
   <button href="##{modalEditUser}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-user_add glyphicon-white"></i> _{MsgAddNewFace}
 
-<div>
+<div .row>
+ <div .span10>
   <ul .thumbnails>
     $forall Entity uid u <- us
       <li .span2>
@@ -24,9 +25,9 @@
                 <span .badge :s == Verified:.badge-success :s == Unverified:.badge-warning >#{show s}
               $nothing
                 <span .badge.badge-warning>Unverified
-            <div .btn-group>
-              <button href="##{modalEditUser}" uri="@{AdminTool $ UserProfileR uid}" data-toggle="modal" onclick="" .btn.btn-primary.btn-mini.edit-profile>_{MsgEditUser}
-              <button href="##{modalKillUser}" data-toggle="modal" onclick="" .btn.btn-danger.btn-mini>_{MsgKillUser}
+              <div .btn-group>
+                <button href="##{modalEditUser}" uri="@{AdminTool $ UserProfileR uid}" data-toggle="modal" onclick="" .btn.btn-primary.btn-mini.edit-profile>_{MsgEditUser}
+                <button href="##{modalKillUser}" data-toggle="modal" onclick="" .btn.btn-danger.btn-mini>_{MsgKillUser}
 
   <div .pagination.pagination-centered>
     <ul>
