@@ -16,7 +16,7 @@
             <img src="#{gravatarUrl 80 h}" alt>
           $nothing
             $with h' <- toGravatarHash (userUsername u)
-              <img src="#{gravatarUrl 80 h'}" alt>
+              <img .img-rounded src="#{gravatarUrl 80 h'}" data-src="holder.js/150x100" alt>
           <div .caption>
             <h6>#{userUsername u}
             <p>#{userFullname u}
