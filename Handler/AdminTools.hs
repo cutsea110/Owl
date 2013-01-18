@@ -2,6 +2,9 @@ module Handler.AdminTools
        ( getAdminToolsR
        , getUserProfileR
        , postUserProfileR
+       , postUserPasswordR
+       , getUserEmailR
+       , postUserEmailR
        ) where
 
 import Import
@@ -37,3 +40,16 @@ postUserProfileR uid = do
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailUpdateProfile
   redirect $ AdminTool AdminToolsR -- FIXME!
+
+postUserPasswordR :: UserId -> Handler ()
+postUserPasswordR uid = undefined
+
+getUserEmailR :: UserId -> Handler RepJson
+getUserEmailR uid = do
+  u <- runDB $ get404 uid
+  jsonToRepJson $ object [ "email" .= userEmail u 
+                         , "verstatus" .= fmap show (userVerstatus u)
+                         ]
+
+postUserEmailR :: UserId -> Handler ()
+postUserEmailR uid = undefined

@@ -21,4 +21,6 @@
 
 /admin-tools AdminTool:
   / AdminToolsR     GET
-  /profile/#UserId UserProfileR GET POST
+  /profile/#UserId  UserProfileR  GET POST
+  /password/#UserId UserPasswordR POST
+  /email/#UserId    UserEmailR    GET POST

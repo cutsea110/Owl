@@ -29,6 +29,7 @@ getHomeR = do
   (menuProfile, menuPassword, menuEmail) <- newIdent3
   tabIs <- fmap (maybe ("profile"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
+  let passform = passwordForm (entityVal u) Nothing
   defaultLayout $ do
     setTitle "Home"
     $(widgetFile "homepage")

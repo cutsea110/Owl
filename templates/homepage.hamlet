@@ -24,7 +24,7 @@
               <p>message...message...message...message...
         <div .tab-pane :tabIs "password":.active ##{menuPassword}>
           <p> message...message...message...message...
-          ^{passwordWidget $ HOME PasswordR}
+          ^{passwordWidget passform $ HOME PasswordR}
           <div .control-group>
             <span .help-block>
               <span .label.label-info>_{MsgNOTE}

@@ -9,10 +9,10 @@ import Text.Julius (rawJS)
 import Yesod.Auth (requireAuth)
 import Yesod.Routes.Class (Route)
 
-passwordWidget :: Route App -> Widget
-passwordWidget toPost = do
+passwordWidget :: Form Text -> Route App -> Widget
+passwordWidget form toPost = do
   u <- lift requireAuth
-  (w, e) <- lift $ generateFormPost $ passwordForm (entityVal u) Nothing
+  (w, e) <- lift $ generateFormPost form
   r <- lift getUrlRender
   $(widgetFile "password")
 
@@ -52,6 +52,7 @@ editUserWidget :: Widget
 editUserWidget = do
   u <- lift requireAuth
   (menuProfile, menuPassword, menuEmail) <- lift newIdent3
+  let passform = passwordConfirmForm (entityVal u) Nothing
   $(widgetFile "edit-user")
 
 killUserWidget :: Widget

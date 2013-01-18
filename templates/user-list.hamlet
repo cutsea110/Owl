@@ -26,7 +26,7 @@
               $nothing
                 <span .badge.badge-warning>Unverified
               <div .btn-group>
-                <button href="##{modalEditUser}" uri="@{AdminTool $ UserProfileR uid}" data-toggle="modal" onclick="" .btn.btn-primary.btn-mini.edit-profile>_{MsgEditUser}
+                <button href="##{modalEditUser}" profile-uri="@{AdminTool $ UserProfileR uid}" password-uri="@{AdminTool $ UserPasswordR uid}" email-uri="@{AdminTool $ UserEmailR uid}" data-toggle="modal" onclick="" .btn.btn-primary.btn-mini.edit-profile.edit-password.edit-email>_{MsgEditUser}
                 <button href="##{modalKillUser}" data-toggle="modal" onclick="" .btn.btn-danger.btn-mini>_{MsgKillUser}
 
   <div .pagination.pagination-centered>
