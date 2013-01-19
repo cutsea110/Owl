@@ -8,6 +8,7 @@ module Handler.AdminTools
        ) where
 
 import Import
+import Owl.Helpers.Auth.HashDB (setPassword)
 import Owl.Helpers.Widget
 import Owl.Helpers.Form
 import Owl.Helpers.Util (newIdent3)
@@ -32,7 +33,7 @@ getUserProfileR uid = do
 
 postUserProfileR :: UserId -> Handler ()
 postUserProfileR uid = do
-  ((r,_), _) <- runFormPost $ profileForm Nothing
+  ((r, _), _) <- runFormPost $ profileForm Nothing
   case r of
     FormSuccess (fn, gn, cmt) -> do
       runDB $ update uid [UserFamilyname =. fn, UserGivenname =. gn, UserComment =. cmt]
@@ -42,7 +43,16 @@ postUserProfileR uid = do
   redirect $ AdminTool AdminToolsR -- FIXME!
 
 postUserPasswordR :: UserId -> Handler ()
-postUserPasswordR uid = undefined
+postUserPasswordR uid = do
+  u <- runDB $ get404 uid
+  ((r, _), _) <- runFormPost $ passwordConfirmForm u Nothing
+  case r of
+    FormSuccess newPass -> do
+      runDB $ replace uid =<< setPassword newPass u
+      setMessageI MsgPasswordUpdated
+    FormFailure (x:_) -> setMessage $ toHtml x
+    _ -> setMessageI MsgFailToUpdatePassword
+  redirect $ AdminTool AdminToolsR
 
 getUserEmailR :: UserId -> Handler RepJson
 getUserEmailR uid = do
