@@ -5,13 +5,14 @@ module Handler.AdminTools
        , postUserPasswordR
        , getUserEmailR
        , postUserEmailR
+       , postKillUserR
        ) where
 
 import Import
 import Owl.Helpers.Auth.HashDB (setPassword)
 import Owl.Helpers.Widget
 import Owl.Helpers.Form
-import Owl.Helpers.Util (newIdent3)
+import Owl.Helpers.Util (newIdent3, gravatarUrl)
 
 getAdminToolsR :: Handler RepHtml
 getAdminToolsR = do
@@ -29,6 +30,7 @@ getUserProfileR uid = do
                          , "familyname" .= userFamilyname u
                          , "givenname" .= userGivenname u
                          , "comment" .= fmap unTextarea (userComment u)
+                         , "avatarUrl80" .= gravatarUrl 80 (userMd5hash' u)
                          ]
 
 postUserProfileR :: UserId -> Handler ()
@@ -63,3 +65,6 @@ getUserEmailR uid = do
 
 postUserEmailR :: UserId -> Handler ()
 postUserEmailR uid = undefined
+
+postKillUserR :: UserId -> Handler ()
+postKillUserR uid = undefined

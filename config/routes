@@ -24,3 +24,4 @@
   /profile/#UserId  UserProfileR  GET POST
   /password/#UserId UserPasswordR POST
   /email/#UserId    UserEmailR    GET POST
+  /kill/#UserId     KillUserR     POST

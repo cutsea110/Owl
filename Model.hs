@@ -5,6 +5,7 @@ import Yesod
 import Data.Text (Text)
 import Database.Persist.Quasi
 import Data.Monoid ((<>))
+import Owl.Helpers.Util (toGravatarHash)
 
 data VerStatus = Unverified | Verified
             deriving (Read, Show, Eq, Ord, Enum, Bounded)
@@ -19,3 +20,8 @@ share [mkPersist sqlSettings, mkMigrate "migrateAll"]
 
 userFullname :: User -> Text
 userFullname u = userFamilyname u <> " " <> userGivenname u
+
+userMd5hash' :: User -> Text
+userMd5hash' u = case userMd5hash u of
+  Just x -> x
+  Nothing -> toGravatarHash $ userUsername u

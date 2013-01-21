@@ -1,5 +1,5 @@
 <!-- Kill User Dialog -->
-<form>
+<form method=post action="">
   <div .row>
     <div .span3>
       <div .thumbnail>

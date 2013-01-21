@@ -1,0 +1,12 @@
+$('button.kill-user').click(function(){
+  var uri = $(this).attr('kill-user-uri'),
+      prof_uri = $(this).attr('profile-uri'),
+      modalid = $(this).attr('href');
+  $(modalid).find('div.modal-body form').attr('action', uri);
+  $.getJSON(prof_uri, null, function(data, status){
+    if(status=='success') {
+      $(modalid).find('div.thumbnail img').attr('src', data.avatarUrl80);
+    } else {
+    }
+  });
+});

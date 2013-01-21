@@ -13,11 +13,8 @@
     $forall Entity uid u <- us
       <li .span2>
         <div .thumbnail>
-          $maybe h <- userMd5hash u
+          $with h <- userMd5hash' u
             <img img-rounded src="#{gravatarUrl 80 h}" data-src="holder.js/150x100" alt>
-          $nothing
-            $with h' <- toGravatarHash (userUsername u)
-              <img .img-rounded src="#{gravatarUrl 80 h'}" data-src="holder.js/150x100" alt>
           <div .caption>
             <h5>#{userUsername u}
             <p>#{userFullname u}
@@ -27,7 +24,7 @@
                 <span .badge.badge-warning>Unverified
               <div .btn-group>
                 <button href="##{modalEditUser}" profile-uri="@{AdminTool $ UserProfileR uid}" password-uri="@{AdminTool $ UserPasswordR uid}" email-uri="@{AdminTool $ UserEmailR uid}" data-toggle="modal" onclick="" .btn.btn-primary.btn-mini.edit-profile.edit-password.edit-email>_{MsgEditUser}
-                <button href="##{modalKillUser}" data-toggle="modal" onclick="" .btn.btn-danger.btn-mini>_{MsgKillUser}
+                <button href="##{modalKillUser}" profile-uri="@{AdminTool $ UserProfileR uid}" kill-user-uri="@{AdminTool $ KillUserR uid}" data-toggle="modal" onclick="" .btn.btn-danger.btn-mini.kill-user>_{MsgKillUser}
 
   <div .pagination.pagination-centered>
     <ul>

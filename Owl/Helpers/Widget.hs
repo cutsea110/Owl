@@ -4,7 +4,7 @@ import Import
 import Prelude (head, tail)
 import Data.Tuple.HT (fst3, snd3, thd3)
 import Owl.Helpers.Form
-import Owl.Helpers.Util (newIdent2, newIdent3, toGravatarHash, gravatarUrl)
+import Owl.Helpers.Util (newIdent2, newIdent3, gravatarUrl)
 import Text.Julius (rawJS)
 import Yesod.Auth (requireAuth)
 import Yesod.Routes.Class (Route)
