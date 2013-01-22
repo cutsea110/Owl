@@ -3,12 +3,10 @@
   <div .row>
     <div .span3>
       <div .thumbnail>
-        <img .img-rounded src="@{StaticR img_avatar_avatar_jpg}" data-src="holder.js/150x100" alt="avatar">
-    <div .span3>
-      <div .caption>
-        <h3>Katsutoshi Itoh
-        <p>I'm a haskell web application developper. I've translated `Real World Haskell'.
-           I have a cute daughter.
+        <img .img-rounded src="" data-src="holder.js/150x100" alt="avatar">
+        <div .caption>
+          <h5>familyname givenname
+          <p>user profile comment.
   <div .row>
     <div .span6>
       <hr .divider>

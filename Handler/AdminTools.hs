@@ -29,6 +29,7 @@ getUserProfileR uid = do
   jsonToRepJson $ object [ "username" .= userUsername u
                          , "familyname" .= userFamilyname u
                          , "givenname" .= userGivenname u
+                         , "fullname" .= userFullname u
                          , "comment" .= fmap unTextarea (userComment u)
                          , "avatarUrl80" .= gravatarUrl 80 (userMd5hash' u)
                          ]
