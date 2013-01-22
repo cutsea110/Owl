@@ -68,4 +68,6 @@ postUserEmailR :: UserId -> Handler ()
 postUserEmailR uid = undefined
 
 postKillUserR :: UserId -> Handler ()
-postKillUserR uid = undefined
+postKillUserR uid = do
+  runDB $ delete uid
+  redirect $ AdminTool AdminToolsR
