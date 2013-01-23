@@ -78,3 +78,6 @@ FailUpdateProfile: Fail to update profile
 
 NoEmailAddress: No email address
 Fullname: Name
+
+UpdateEmailaddress: Update email address
+FailToUpdateEmail: Fail to update email address

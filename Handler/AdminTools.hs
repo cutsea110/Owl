@@ -65,7 +65,15 @@ getUserEmailR uid = do
                          ]
 
 postUserEmailR :: UserId -> Handler ()
-postUserEmailR uid = undefined
+postUserEmailR uid = do
+  ((r, _), _) <- runFormPost $ emailForm  Nothing [] Nothing
+  case r of
+    FormSuccess ma -> do
+      runDB $ update uid [UserEmail =. Just ma]
+      setMessageI MsgUpdateEmailaddress
+    FormFailure (x:_) -> setMessage $ toHtml x
+    _ -> setMessageI MsgFailToUpdateEmail
+  redirect $ AdminTool AdminToolsR
 
 postKillUserR :: UserId -> Handler ()
 postKillUserR uid = do
