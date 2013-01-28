@@ -30,8 +30,7 @@
               <span .label.label-info>_{MsgNOTE}
               <p>message...message...message...message...
         <div .tab-pane :tabIs "email":.active ##{menuEmail}>
-          $with verstatus <- userVerstatus $ entityVal u
-            ^{emailWidget verstatus $ HOME EmailR}
+          ^{emailWidget $ HOME EmailR}
           <div .control-group>
             <span .help-block>
               <span .label.label-info>_{MsgNOTE}

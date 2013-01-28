@@ -18,8 +18,7 @@
         <span .label.label-info>_{MsgNOTE}
         message...message...
     <div .tab-pane.edit-email ##{menuEmail}>
-      $with verstatus <- userVerstatus $ entityVal u
-        ^{emailWidget verstatus $ HOME EmailR}
+      ^{emailWidget $ HOME EmailR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}
         message...message...
