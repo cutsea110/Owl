@@ -1,0 +1,6 @@
+<!-- Edit User Email -->
+<form method=post action=#{r toPost} enctype=#{e}>
+  ^{w}
+  <div .control-group>
+    <div .controls.btn-group>
+      <button type="submit" .btn.btn-primary>_{MsgUpdate}

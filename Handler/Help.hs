@@ -11,7 +11,7 @@ import Owl.Helpers.Form (emailForm)
 getHelpR :: Handler RepHtml
 getHelpR = do
   (menuSendReminderMail, menuUsage) <- (,) <$> newIdent <*> newIdent
-  (w, e) <- generateFormPost $ emailForm Nothing [("class", "span3")] Nothing
+  (w, e) <- generateFormPost $ emailForm [("class", "span3")] Nothing Nothing
   tabIs <- fmap (maybe ("password-reset"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
   defaultLayout $ do
@@ -24,7 +24,7 @@ postPasswordResetR :: Handler ()
 postPasswordResetR = do
   u <- requireAuth
   let (u', memail, mverstatus) = (entityVal u, userEmail u', userVerstatus u')
-  ((r, _), _) <- runFormPost $ emailForm mverstatus [] memail
+  ((r, _), _) <- runFormPost $ emailForm [] mverstatus memail
   case r of
     FormSuccess x -> do
       liftIO $ putStrLn $ "[TODO] send reminder mail to " ++ T.unpack x

@@ -93,8 +93,8 @@ $forall v <- vs
                          , fsAttrs = []
                          }
 
-emailForm :: Maybe VerStatus -> [(Text, Text)] -> Maybe Text -> Form Text
-emailForm vs attrs mv fragment = do
+emailForm :: [(Text, Text)] -> Maybe VerStatus -> Maybe Text -> Form Text
+emailForm attrs vs mv fragment = do
   (res, view) <- mreq emailField fs mv
   let widget = do
         toWidget [julius|

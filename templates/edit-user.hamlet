@@ -18,7 +18,7 @@
         <span .label.label-info>_{MsgNOTE}
         message...message...
     <div .tab-pane.edit-email ##{menuEmail}>
-      ^{emailWidget $ HOME EmailR}
+      ^{userEmailWidget Nothing $ AdminTool AdminToolsR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}
         message...message...

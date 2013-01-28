@@ -66,7 +66,7 @@ getUserEmailR uid = do
 
 postUserEmailR :: UserId -> Handler ()
 postUserEmailR uid = do
-  ((r, _), _) <- runFormPost $ emailForm  Nothing [] Nothing
+  ((r, _), _) <- runFormPost $ emailForm  [] Nothing Nothing
   case r of
     FormSuccess ma -> do
       runDB $ update uid [UserEmail =. Just ma]

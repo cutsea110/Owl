@@ -2,6 +2,7 @@ module Owl.Helpers.Widget where
 
 import Import
 import Prelude (head, tail)
+import Control.Monad (join)
 import Data.Tuple.HT (fst3, snd3, thd3)
 import Owl.Helpers.Form
 import Owl.Helpers.Util (newIdent2, newIdent3, gravatarUrl)
@@ -19,10 +20,17 @@ passwordWidget form toPost = do
 emailWidget :: Route App -> Widget
 emailWidget toPost = do
   u <- lift requireAuth
-  let (ue, memail, vs) = (entityVal u, userEmail ue, userVerstatus ue)
-  (w, e) <- lift $ generateFormPost $ emailForm vs [("class", "span3"),("placeholder","you@example.com")] memail
+  let (ue, memail, mverstatus) = (entityVal u, userEmail ue, userVerstatus ue)
+  (w, e) <- lift $ generateFormPost $ emailForm [("class", "span3"),("placeholder","you@example.com")] mverstatus memail
   r <- lift getUrlRender
   $(widgetFile "email")
+
+userEmailWidget :: Maybe User -> Route App -> Widget
+userEmailWidget mu toPost = do
+  let (mverstatus, memail) = (join $ userVerstatus <$> mu, join $ userEmail <$> mu)
+  (w, e) <- lift $ generateFormPost $ emailForm [("class", "span3"),("placeholder","you@example.com")] mverstatus memail
+  r <- lift getUrlRender
+  $(widgetFile "user-email")
 
 verifyWidget :: Maybe Text -> Route App -> [(Text, Text)] -> Widget
 verifyWidget mv toPost params = do
