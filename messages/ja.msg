@@ -25,6 +25,8 @@ NOTE: NOTE
 Account: アカウント
 Password: パスワード
 Email: メール
+Verkey: 確認キー
+Verstatus: 確認ステータス
 Profile: プロフィール
 
 Update: 更新する

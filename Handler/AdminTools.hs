@@ -60,16 +60,18 @@ postUserPasswordR uid = do
 getUserEmailR :: UserId -> Handler RepJson
 getUserEmailR uid = do
   u <- runDB $ get404 uid
-  jsonToRepJson $ object [ "email" .= userEmail u 
-                         , "verstatus" .= fmap show (userVerstatus u)
+  jsonToRepJson $ object [ "email" .= userEmail u
+                         , "verstatus" .= fmap ((+1).fromEnum) (userVerstatus u)
+                         , "verstatus_str" .= fmap show (userVerstatus u)
+                         , "verkey" .= userVerkey u
                          ]
 
 postUserEmailR :: UserId -> Handler ()
 postUserEmailR uid = do
-  ((r, _), _) <- runFormPost $ emailForm  [] Nothing Nothing
+  ((r, _), _) <- runFormPost $ userEmailForm [] Nothing
   case r of
-    FormSuccess ma -> do
-      runDB $ update uid [UserEmail =. Just ma]
+    FormSuccess (memail, mverstatus, mverkey) -> do
+      runDB $ update uid [UserEmail =. memail, UserVerstatus =. mverstatus, UserVerkey =. mverkey]
       setMessageI MsgUpdateEmailaddress
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailToUpdateEmail

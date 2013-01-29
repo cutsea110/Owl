@@ -27,8 +27,8 @@ emailWidget toPost = do
 
 userEmailWidget :: Maybe User -> Route App -> Widget
 userEmailWidget mu toPost = do
-  let (mverstatus, memail) = (join $ userVerstatus <$> mu, join $ userEmail <$> mu)
-  (w, e) <- lift $ generateFormPost $ emailForm [("class", "span3"),("placeholder","you@example.com")] mverstatus memail
+  let (memail, mverstatus, mverkey) = (join $ userEmail <$> mu, join $ userVerstatus <$> mu, join $ userVerkey <$> mu)
+  (w, e) <- lift $ generateFormPost $ userEmailForm [("class", "span3"),("placeholder","you@example.com")] $ Just (memail, mverstatus, mverkey)
   r <- lift getUrlRender
   $(widgetFile "user-email")
 

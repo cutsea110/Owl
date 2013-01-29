@@ -25,6 +25,8 @@ NOTE: NOTE
 Account: Account
 Password: Password
 Email: Email
+Verkey: Verify Key
+Verstatus: Verify Status
 Profile: Profile
 
 Update: Update

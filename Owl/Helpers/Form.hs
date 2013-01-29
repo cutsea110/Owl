@@ -2,13 +2,17 @@ module Owl.Helpers.Form
        ( passwordForm
        , passwordConfirmForm
        , emailForm
+       , userEmailForm
        , verifyForm
        , profileForm
        , fileForm
        ) where
 
 import Import
-import Data.Maybe (isJust)
+import Control.Arrow ((&&&))
+import Control.Monad (unless)
+import Data.Maybe (isJust, listToMaybe)
+import qualified Data.Text as T (pack)
 import Data.Tuple.HT (fst3, snd3, thd3)
 import Owl.Helpers.Auth.HashDB (validateUser)
 import Text.Julius (rawJS)
@@ -96,28 +100,7 @@ $forall v <- vs
 emailForm :: [(Text, Text)] -> Maybe VerStatus -> Maybe Text -> Form Text
 emailForm attrs vs mv fragment = do
   (res, view) <- mreq emailField fs mv
-  let widget = do
-        toWidget [julius|
-$('button.edit-email').click(function(){
-  var uri = $(this).attr('email-uri'),
-      modalid = $(this).attr('href');
-  $(modalid).find('div.edit-email form').attr('action', uri);
-  $.getJSON(uri, null, function(data, status){
-    if (status=='success') {
-      $('##{rawJS $ fvId view}').val(data.email);
-      $('label[for="##{rawJS $ fvId view}"]')
-        .find('span.badge')
-        .text(data.verstatus!=null?data.verstatus:'Unverified')
-        .removeClass('badge-success')
-        .removeClass('badge-warning')
-        .addClass(data.verstatus=='Verified'?'badge-success':'badge-warning');
-    } else {
-      $('##{rawJS $ fvId view}').val('');
-    }
-  });
-});
-|]
-        [whamlet|
+  let widget = [whamlet|
 \#{fragment}
 <div .control-group.warning .clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
   <label .control-label for=##{fvId view}>#{fvLabel view} #
@@ -140,6 +123,58 @@ $('button.edit-email').click(function(){
                        , fsName = Nothing
                        , fsAttrs = attrs
                        }
+
+userEmailForm :: [(Text, Text)] -> Maybe (Maybe Text, Maybe VerStatus, Maybe Text) -> Form (Maybe Text, Maybe VerStatus, Maybe Text)
+userEmailForm attrs mv fragment = do
+  (res0, view0) <- mopt emailField (fs MsgEmail) (fst3 <$> mv)
+  (res1, view1) <- mopt (selectFieldList vss) (fs MsgVerstatus) (snd3 <$> mv)
+  (res2, view2) <- mopt textField (fs MsgVerkey) (thd3 <$> mv)
+  let res = case (res0, res1, res2) of
+        (FormSuccess x, FormSuccess y, FormSuccess z) -> FormSuccess (x, y, z)
+        _ -> FormFailure ["fail to email update!"]
+      vks = [(view0, "info"::Text), (view1, "info"), (view2, "info")]
+  let widget = do
+        toWidget [julius|
+$('button.edit-email').click(function(){
+  var uri = $(this).attr('email-uri'),
+      modalid = $(this).attr('href');
+  $(modalid).find('div.edit-email form').attr('action', uri);
+  $.getJSON(uri, null, function(data, status){
+    if (status=='success') {
+      $('##{rawJS $ fvId view0}').val(data.email);
+      $('##{rawJS $ fvId view1}').val(data.verstatus);
+      $('##{rawJS $ fvId view2}').val(data.verkey);
+    } else {
+      $('##{rawJS $ fvId view0}').val(null);
+      $('##{rawJS $ fvId view1}').val('none');
+      $('##{rawJS $ fvId view2}').val(null
+);
+    }
+  });
+});
+|]
+        [whamlet|
+\#{fragment}
+$forall (v, k) <- vks
+  <div .control-group.#{k}.clearfix :fvRequired v:.required :not $ fvRequired v:.optional :isJust $ fvErrors v:.error>
+    <label .control-label for=##{fvId v}>#{fvLabel v} #
+    <div .controls .input>
+      ^{fvInput v}
+      $maybe tt <- fvTooltip v
+        <span .help-block>#{tt}
+      $maybe err <- fvErrors v
+        <span .help-block>#{err}
+|]
+  return (res, widget)
+  where
+    vss :: [(Text, VerStatus)]
+    vss = map ((T.pack . show) &&& id) [minBound..maxBound]
+    fs l = FieldSettings { fsLabel = SomeMessage l
+                         , fsTooltip = Nothing
+                         , fsId = Nothing
+                         , fsName = Nothing
+                         , fsAttrs = []
+                         }
 
 verifyForm :: Maybe Text -> Form Text
 verifyForm mv fragment = do
