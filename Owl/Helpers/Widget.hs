@@ -53,15 +53,22 @@ profileWidget toPost = do
 
 userListWidget :: Widget
 userListWidget = do
-  (modalEditUser, modalKillUser) <- lift newIdent2
+  (modalCreateUser, modalEditUser, modalKillUser) <- lift newIdent3
   us <- lift $ runDB $ selectList [] []
   $(widgetFile "user-list")
+
+createUserWidget :: Maybe Text -> Route App -> Widget
+createUserWidget mv toPost = do
+  (w, e) <- lift $ generateFormPost $ accountForm mv
+  (w2, e2) <- lift $ generateFormPost $ passwordConfirmForm Nothing
+  r <- lift getUrlRender
+  $(widgetFile "create-user")
 
 editUserWidget :: Widget
 editUserWidget = do
   u <- lift requireAuth
   (menuProfile, menuPassword, menuEmail) <- lift newIdent3
-  let passform = passwordConfirmForm (entityVal u) Nothing
+  let passform = passwordConfirmForm Nothing
   $(widgetFile "edit-user")
 
 killUserWidget :: Widget

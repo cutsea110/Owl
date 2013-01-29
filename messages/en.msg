@@ -41,6 +41,7 @@ Upload: Upload
 FamilyName: Family Name
 GivenName: Given Name
 
+Add: Add
 Close: Close
 
 AdministratorsToolbox: Administrator's Toolbox
@@ -49,6 +50,7 @@ ImportUser: Import user
 MaintClient: Maint client
 
 AddNewFace: Add new face
+CreateUser: Create
 EditUser: Edit
 KillUser: Kill
 

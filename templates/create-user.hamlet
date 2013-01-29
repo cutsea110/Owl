@@ -1,0 +1,6 @@
+<!-- Create User -->
+<form method=post action=#{r toPost} enctype=#{e}>
+  ^{w}
+  <div .control-group>
+    <div .controls>
+      <button type="submit" .btn.btn-primary>_{MsgAdd}

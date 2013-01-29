@@ -5,6 +5,7 @@ module Handler.AdminTools
        , postUserPasswordR
        , getUserEmailR
        , postUserEmailR
+       , postCreateUserR
        , postKillUserR
        ) where
 
@@ -48,7 +49,7 @@ postUserProfileR uid = do
 postUserPasswordR :: UserId -> Handler ()
 postUserPasswordR uid = do
   u <- runDB $ get404 uid
-  ((r, _), _) <- runFormPost $ passwordConfirmForm u Nothing
+  ((r, _), _) <- runFormPost $ passwordConfirmForm Nothing
   case r of
     FormSuccess newPass -> do
       runDB $ replace uid =<< setPassword newPass u
@@ -75,6 +76,14 @@ postUserEmailR uid = do
       setMessageI MsgUpdateEmailaddress
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailToUpdateEmail
+  redirect $ AdminTool AdminToolsR
+
+postCreateUserR :: Handler ()
+postCreateUserR = do
+  ((r, _), _) <- runFormPost $ accountForm Nothing
+  case r of
+    FormSuccess uname -> do
+      runDB $ insert $ User uname "" "" "" "" Nothing Nothing Nothing Nothing Nothing
   redirect $ AdminTool AdminToolsR
 
 postKillUserR :: UserId -> Handler ()

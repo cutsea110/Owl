@@ -25,3 +25,4 @@
   /password/#UserId UserPasswordR POST
   /email/#UserId    UserEmailR    GET POST
   /kill/#UserId     KillUserR     POST
+  /create           CreateUserR   POST

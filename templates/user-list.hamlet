@@ -5,7 +5,7 @@
     <button type="submit" .btn><i class="icon-search"></i>
 
 <form .inline.pull-right>
-  <button href="##{modalEditUser}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-user_add glyphicon-white"></i> _{MsgAddNewFace}
+  <button href="##{modalCreateUser}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-user_add glyphicon-white"></i> _{MsgAddNewFace}
 
 <div .row>
  <div .span10>
@@ -37,7 +37,17 @@
       <li .disabled><a href="#">..</a>
       <li><a href="#">»</a>
 
-<!-- Create/Edit User Dialog -->
+<!-- Create User Dialog -->
+<div ##{modalCreateUser} .modal.hide.fade>
+  <div .modal-header>
+    <a href="#" .close data-dismiss="modal">&times;
+    <h3>_{MsgCreateUser}
+  <div .modal-body>
+    ^{createUserWidget Nothing $ AdminTool CreateUserR}
+  <div .modal-footer>
+    <a href="#" .btn.close data-dismiss="modal">_{MsgClose}
+
+<!-- Edit User Dialog -->
 <div ##{modalEditUser} .modal.hide.fade>
   <div .modal-header>
     <a href="#" .close data-dismiss="modal">&times;

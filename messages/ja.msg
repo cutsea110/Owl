@@ -41,6 +41,7 @@ Upload: アップロード
 FamilyName: 姓
 GivenName: 名
 
+Add: 追加
 Close: 閉じる
 
 AdministratorsToolbox: 管理ツール
@@ -49,6 +50,7 @@ ImportUser: ユーザインポート
 MaintClient: クライアント管理
 
 AddNewFace: 新規ユーザ追加
+CreateUser: 作成
 EditUser: 編集
 KillUser: 削除
 

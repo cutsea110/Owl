@@ -1,5 +1,6 @@
 module Owl.Helpers.Form 
-       ( passwordForm
+       ( accountForm
+       , passwordForm
        , passwordConfirmForm
        , emailForm
        , userEmailForm
@@ -12,10 +13,34 @@ import Import
 import Control.Arrow ((&&&))
 import Control.Monad (unless)
 import Data.Maybe (isJust, listToMaybe)
+import Data.Monoid (mappend)
 import qualified Data.Text as T (pack)
 import Data.Tuple.HT (fst3, snd3, thd3)
 import Owl.Helpers.Auth.HashDB (validateUser)
 import Text.Julius (rawJS)
+
+accountForm :: Maybe Text -> Form Text
+accountForm mv fragment = do
+  (res, view) <- mreq textField (fs MsgAccountID) mv
+  let widget = [whamlet|
+\#{fragment}
+<div .control-group.info .clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
+  <label .control-label for=##{fvId view}>#{fvLabel view}
+  <div .controls .input>
+    ^{fvInput view}
+    $maybe tt <- fvTooltip view
+      <span .help-block>#{tt}
+    $maybe err <- fvErrors view
+      <span .help-block>#{err}
+|]
+  return (res, widget)
+  where
+    fs l = FieldSettings { fsLabel = SomeMessage l
+                         , fsTooltip = Nothing
+                         , fsId = Nothing
+                         , fsName = Nothing
+                         , fsAttrs = []
+                         }
 
 passwordForm :: User -> Maybe (Text,Text,Text) -> Form Text
 passwordForm u mv fragment = do
@@ -56,8 +81,8 @@ $forall (v, k) <- vks
                          }
 
 
-passwordConfirmForm :: User -> Maybe (Text,Text) -> Form Text
-passwordConfirmForm u mv fragment = do
+passwordConfirmForm :: Maybe (Text,Text) -> Form Text
+passwordConfirmForm mv fragment = do
   (res0, view0) <- mreq passwordField (fs MsgNewPassword) (fst <$> mv)
   (res1, view1) <- mreq passwordField (fs MsgConfirmPassword) (snd <$> mv)
   res <- lift $ case (res0, res1) of
