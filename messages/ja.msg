@@ -51,6 +51,8 @@ MaintClient: クライアント管理
 
 AddNewFace: 新規ユーザ追加
 CreateUser: 作成
+CreateNewFace: 新規ユーザを作成しました.
+FailToCreateUser: ユーザの作成に失敗しました.
 EditUser: 編集
 KillUser: 削除
 

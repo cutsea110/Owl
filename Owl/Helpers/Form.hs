@@ -11,9 +11,7 @@ module Owl.Helpers.Form
 
 import Import
 import Control.Arrow ((&&&))
-import Control.Monad (unless)
-import Data.Maybe (isJust, listToMaybe)
-import Data.Monoid (mappend)
+import Data.Maybe (isJust)
 import qualified Data.Text as T (pack)
 import Data.Tuple.HT (fst3, snd3, thd3)
 import Owl.Helpers.Auth.HashDB (validateUser)

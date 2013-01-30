@@ -83,7 +83,9 @@ postCreateUserR = do
   ((r, _), _) <- runFormPost $ accountForm Nothing
   case r of
     FormSuccess uname -> do
-      runDB $ insert $ User uname "" "" "" "" Nothing Nothing Nothing Nothing Nothing
+      _ <- runDB $ insert $ User uname "" "" "" "" Nothing Nothing Nothing Nothing Nothing
+      setMessageI MsgCreateNewFace
+    _ -> setMessageI MsgFailToCreateUser
   redirect $ AdminTool AdminToolsR
 
 postKillUserR :: UserId -> Handler ()

@@ -51,6 +51,8 @@ MaintClient: Maint client
 
 AddNewFace: Add new face
 CreateUser: Create
+CreateNewFace: Created new face
+FailToCreateUser: Fail to create new user
 EditUser: Edit
 KillUser: Kill
 
