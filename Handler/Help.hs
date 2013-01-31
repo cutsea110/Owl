@@ -5,14 +5,15 @@ module Handler.Help
 
 import Import
 import qualified Data.Text as T
-import Yesod.Auth (requireAuth)
+import Yesod.Auth (requireAuth, maybeAuth)
 import Owl.Helpers.Form (emailForm)
 
 getHelpR :: Handler RepHtml
 getHelpR = do
+  mu <- maybeAuth
   (menuSendReminderMail, menuUsage) <- (,) <$> newIdent <*> newIdent
   (w, e) <- generateFormPost $ emailForm [("class", "span3")] Nothing Nothing
-  tabIs <- fmap (maybe ("password-reset"==) (==)) $ lookupGetParam "tab"
+  tabIs <- fmap (maybe ("usage"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
   defaultLayout $ do
     let passreset = $(widgetFile "password-reset")
