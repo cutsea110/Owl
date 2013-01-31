@@ -88,3 +88,6 @@ Fullname: 氏名
 
 UpdateEmailaddress: メールアドレスを更新しました.
 FailToUpdateEmail: メールアドレスの更新に失敗しました.
+
+SuccessImportUsers: ユーザのインポートに成功しました.
+FailToImportUsers: ユーザのインポートに失敗しました.

@@ -88,3 +88,6 @@ Fullname: Name
 
 UpdateEmailaddress: Update email address
 FailToUpdateEmail: Fail to update email address
+
+SuccessImportUsers: Success import users
+FailToImportUsers: Fail to import users

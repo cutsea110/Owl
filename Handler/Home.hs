@@ -44,7 +44,7 @@ postPasswordR = do
       setMessageI MsgPasswordUpdated
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailToUpdatePassword
-  redirect ((HOME HomeR), [("tab", "password")])
+  redirect (HOME HomeR, [("tab", "password")])
 
 postEmailR :: Handler ()
 postEmailR = do
@@ -56,7 +56,7 @@ postEmailR = do
       setMessageI MsgSentVerifyMail
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailSentVerifyMail
-  redirect ((HOME HomeR), [("tab", "email")])
+  redirect (HOME HomeR, [("tab", "email")])
 
 register :: UserId -> Text -> Handler ()
 register uid email = do
@@ -127,7 +127,7 @@ postVerifyR = do
           return ()
     _ -> do
       setMessageI MsgFailVerifyEmail
-  redirect ((HOME HomeR), [("tab", "email")])
+  redirect (HOME HomeR, [("tab", "email")])
 
 postProfileR :: Handler ()
 postProfileR = do
@@ -139,4 +139,4 @@ postProfileR = do
       setMessageI MsgUpdateProfile
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailUpdateProfile
-  redirect ((HOME HomeR), [("tab", "profile")])
+  redirect (HOME HomeR, [("tab", "profile")])

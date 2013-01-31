@@ -4,7 +4,7 @@
   <h4>_{MsgWarning}
   Best check yourself, you're not...
 
-<form enctype=#{e}>
+<form method=post action=@{AdminTool ImportCsvR} enctype=#{e}>
   <div .control-group>
     <div .controls>
       ^{w}

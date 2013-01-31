@@ -318,6 +318,6 @@ $("##{rawJS id'}").change(function(){
   <span id=#{id'}-custom .input-large.uneditable-input>
   <input id=#{id'} name=#{name} .hide *{attrs} type=file :isReq:required>
   <a .btn id=#{id'}-browse>_{MsgBrowse}
-  <button .btn.btn-primary><i class="icon-upload icon-white"></i> _{MsgUpload}
+  <button type=submit .btn.btn-primary><i class="icon-upload icon-white"></i> _{MsgUpload}
 |]
     }

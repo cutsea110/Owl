@@ -26,3 +26,4 @@
   /email/#UserId    UserEmailR    GET POST
   /kill/#UserId     KillUserR     POST
   /create           CreateUserR   POST
+  /import-csv       ImportCsvR    POST

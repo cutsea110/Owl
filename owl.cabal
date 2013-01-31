@@ -88,6 +88,8 @@ library
                  , blaze-html >= 0.5 && < 0.6
                  , utf8-string >= 0.3 && < 0.4
                  , pureMD5 >= 2.1 && < 2.2
+                 , conduit >= 0.5 && < 0.6
+                 , csv-conduit >= 0.3 && < 0.4
 
 executable         owl
     if flag(library-only)
