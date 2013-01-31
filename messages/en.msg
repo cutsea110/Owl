@@ -3,6 +3,7 @@ AccountID: Account ID
 CurrentPassword: Current Password
 NewPassword: New Password
 ConfirmPassword: Confirm
+ConfirmNewPassword: Confirm
 
 Owl: Owl
 Home: Home

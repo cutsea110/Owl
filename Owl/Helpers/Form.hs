@@ -17,19 +17,30 @@ import Data.Tuple.HT (fst3, snd3, thd3)
 import Owl.Helpers.Auth.HashDB (validateUser)
 import Text.Julius (rawJS)
 
-accountForm :: Maybe Text -> Form Text
+accountForm :: Maybe (Text, Text, Text) -> Form (Text, Text)
 accountForm mv fragment = do
-  (res, view) <- mreq textField (fs MsgAccountID) mv
-  let widget = [whamlet|
+  (res0, view0) <- mreq textField (fs MsgAccountID) (fst3 <$> mv)
+  (res1, view1) <- mreq passwordField (fs MsgPassword) (snd3 <$> mv)
+  (res2, view2) <- mreq passwordField (fs MsgConfirmPassword) (thd3 <$> mv)
+  res <- lift $ case (res0, res1, res2) of
+    (FormSuccess uname, FormSuccess newPass, FormSuccess newPass') -> do
+      return $
+        if newPass == newPass'
+        then FormSuccess (uname, newPass)
+        else FormFailure ["don't match between new password and confirmation."]
+    _ -> return $ FormFailure ["fail to create user"]
+  let vks = [(view0, "info"::Text), (view1, "info"), (view2, "info")]
+      widget = [whamlet|
 \#{fragment}
-<div .control-group.info .clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
-  <label .control-label for=##{fvId view}>#{fvLabel view}
-  <div .controls .input>
-    ^{fvInput view}
-    $maybe tt <- fvTooltip view
-      <span .help-block>#{tt}
-    $maybe err <- fvErrors view
-      <span .help-block>#{err}
+$forall (v, k) <- vks
+  <div .control-group.#{k} .clearfix :fvRequired v:.required :not $ fvRequired v:.optional :isJust $ fvErrors v:.error>
+    <label .control-label for=##{fvId v}>#{fvLabel v}
+    <div .controls .input>
+      ^{fvInput v}
+      $maybe tt <- fvTooltip v
+        <span .help-block>#{tt}
+      $maybe err <- fvErrors v
+        <span .help-block>#{err}
 |]
   return (res, widget)
   where
@@ -44,7 +55,7 @@ passwordForm :: User -> Maybe (Text,Text,Text) -> Form Text
 passwordForm u mv fragment = do
   (res0, view0) <- mreq passwordField (fs MsgCurrentPassword) (fst3 <$> mv)
   (res1, view1) <- mreq passwordField (fs MsgNewPassword) (snd3 <$> mv)
-  (res2, view2) <- mreq passwordField (fs MsgConfirmPassword) (thd3 <$> mv)
+  (res2, view2) <- mreq passwordField (fs MsgConfirmNewPassword) (thd3 <$> mv)
   res <- lift $ case (res0, res1, res2) of
         (FormSuccess curPass, FormSuccess newPass, FormSuccess newPass') -> do
           checkedPass <- validateUser (mkUnique u) curPass
@@ -82,7 +93,7 @@ $forall (v, k) <- vks
 passwordConfirmForm :: Maybe (Text,Text) -> Form Text
 passwordConfirmForm mv fragment = do
   (res0, view0) <- mreq passwordField (fs MsgNewPassword) (fst <$> mv)
-  (res1, view1) <- mreq passwordField (fs MsgConfirmPassword) (snd <$> mv)
+  (res1, view1) <- mreq passwordField (fs MsgConfirmNewPassword) (snd <$> mv)
   res <- lift $ case (res0, res1) of
         (FormSuccess newPass, FormSuccess newPass') -> do
           return $

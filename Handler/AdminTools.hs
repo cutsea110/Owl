@@ -82,8 +82,10 @@ postCreateUserR :: Handler ()
 postCreateUserR = do
   ((r, _), _) <- runFormPost $ accountForm Nothing
   case r of
-    FormSuccess uname -> do
-      _ <- runDB $ insert $ User uname "" "" "" "" Nothing Nothing Nothing Nothing Nothing
+    FormSuccess (uname, pass) -> do
+      runDB $ do
+        uid <- insert $ User uname "" "" "" "" Nothing Nothing Nothing Nothing Nothing
+        replace uid =<< setPassword pass =<< get404 uid
       setMessageI MsgCreateNewFace
     _ -> setMessageI MsgFailToCreateUser
   redirect $ AdminTool AdminToolsR

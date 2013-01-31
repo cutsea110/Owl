@@ -2,7 +2,8 @@ Emailaddress: メールアドレス
 AccountID: アカウントID
 CurrentPassword: パスワード
 NewPassword: 新しいパスワード
-ConfirmPassword: 新しいパスワード(確認)
+ConfirmPassword: パスワード(確認)
+ConfirmNewPassword: 新しいパスワード(確認)
 
 Owl: Owl
 Home: ホーム
