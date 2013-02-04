@@ -22,6 +22,7 @@ import Handler.AdminTools
 import Handler.Config
 import Handler.Help
 import Handler.Home
+import Handler.Service
 import Handler.Top
 
 -- This line actually creates our YesodDispatch instance. It is the second half

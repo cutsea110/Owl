@@ -110,6 +110,7 @@ instance Yesod App where
     isAuthorized (HELP PasswordResetR) _ = loggedInAuth
     isAuthorized (HELP _) _ = return Authorized
     isAuthorized TopR _ = return Authorized
+    isAuthorized (Service _) _ = return Authorized
     isAuthorized _ _ = loggedInAuth
     -- This function creates static content files in the static folder
     -- and names them based on a hash of their content. This allows

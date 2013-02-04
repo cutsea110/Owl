@@ -27,3 +27,6 @@
   /kill/#UserId     KillUserR     POST
   /create           CreateUserR   POST
   /import-csv       ImportCsvR    POST
+
+/srv         Service:
+  /auth      AuthenticateR   POST
