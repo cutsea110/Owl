@@ -8,7 +8,7 @@ $('button.kill-user').click(function(){
     if(status=='success') {
       thumbnail.find('img').attr('src', data.avatarUrl80);
       thumbnail.find('div.caption h5').text(data.fullname);
-      thumbnail.find('div.caption p').text(data.comment);
+      thumbnail.find('div.caption p').text(data.comment == null ? "<no comment>" : data.comment);
     } else {
       thumbnail.find('div.caption h5').text('');
       thumbnail.find('div.caption p').text('');
