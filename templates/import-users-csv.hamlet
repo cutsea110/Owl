@@ -19,4 +19,8 @@
     <dt>password
     <dd>description for password...description for password...description for password...description for password...description for password...
     <dt>email address
-    <dd>description for email address...
+    <dd>description for email address
+    <dt>family name
+    <dd>description for family name
+    <dt>given name
+    <dd>description for given name
