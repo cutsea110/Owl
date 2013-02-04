@@ -77,9 +77,9 @@ killUserWidget = do
 clientListWidget :: Widget
 clientListWidget = do
   modalEditClient <- lift newIdent
-  let clients = [ ("a7362hd", "Kestrel", "aY/ay7w2hhuqwy9138yihdu_lUSY26hauiehw7a87329yhiUHLUS")
-                , ("97asdh2", "BISocie", "9wae/adisae9dcIOSJiidasiIOi42i472hDHjads8HIy98HDU7g9")
-                , ("8asASxp", "Owl", "SI8weddUH.DHIDU-sdahsid/HDHUAIDdsuasdhuiasiad924422h")
+  let clients = [ ("a7362hd", "Kestrel", "aY/ay7w2hhuqwy9138")
+                , ("97asdh2", "BISocie", "9wae/adisae9dcIOSJ")
+                , ("8asASxp", "Owl",     "SI8weddUH.DHIDU-sd")
                 ]::[(Text, Text, Text)]
   $(widgetFile "client-list")
 
