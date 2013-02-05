@@ -165,14 +165,15 @@ instance YesodAuth App where
             Just (Entity uid _) -> return $ Just uid
             Nothing -> do
                 fmap Just $ insert $ User { userUsername = (credsIdent creds) 
-                                          , userPassword = "" 
-                                          , userSalt = "" 
+                                          , userPassword = ""
+                                          , userSalt = ""
+                                          , userRole = None
                                           , userFamilyname = ""
                                           , userGivenname = ""
                                           , userComment = Nothing
-                                          , userEmail = Nothing 
-                                          , userVerkey = Nothing 
-                                          , userVerstatus = Nothing 
+                                          , userEmail = Nothing
+                                          , userVerkey = Nothing
+                                          , userVerstatus = Nothing
                                           , userMd5hash = Nothing
                                           }
 

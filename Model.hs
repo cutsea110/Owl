@@ -7,6 +7,10 @@ import Database.Persist.Quasi
 import Data.Monoid ((<>))
 import Owl.Helpers.Util (toGravatarHash)
 
+data Role = None | Admin
+          deriving (Read, Show, Eq, Ord, Enum, Bounded)
+derivePersistField "Role"
+
 data VerStatus = Unverified | Verified
             deriving (Read, Show, Eq, Ord, Enum, Bounded)
 derivePersistField "VerStatus"

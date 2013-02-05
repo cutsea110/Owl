@@ -3,6 +3,7 @@ User
     password    Text
     salt        Text
 
+    role        Role
     familyname  Text
     givenname   Text
     comment     Textarea Maybe

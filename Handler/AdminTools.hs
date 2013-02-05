@@ -91,7 +91,7 @@ postCreateUserR = do
   case r of
     FormSuccess (uname, pass) -> do
       runDB $ do
-        uid <- insert $ User uname "" "" "" "" Nothing Nothing Nothing Nothing Nothing
+        uid <- insert $ User uname "" "" None "" "" Nothing Nothing Nothing Nothing Nothing
         replace uid =<< setPassword pass =<< get404 uid
       setMessageI MsgCreateNewFace
     _ -> setMessageI MsgFailToCreateUser
@@ -122,6 +122,7 @@ postImportCsvR = do
              (insert $ User { userUsername=uname
                             , userPassword=""
                             , userSalt=""
+                            , userRole=None
                             , userFamilyname=fname
                             , userGivenname=gname
                             , userComment=Nothing
