@@ -180,7 +180,7 @@ authHashDB uniq = AuthPlugin "hashdb" dispatch $ \tm -> do
       <input type="password" ##{pwd} name="password" .span3 required>
   <div .control-group>
     <div .controls.btn-group>
-    <input type="submit" .btn.btn-primary value="Login">
+      <input type="submit" .btn.btn-primary value="Login">
 
   <script>
     if (!("autofocus" in document.createElement("input"))) {
