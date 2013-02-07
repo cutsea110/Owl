@@ -60,11 +60,17 @@ postAuthenticateR = do
   case fromJSON v of
     Success (AuthReq ident pass) -> do
       checked <- validateUser (UniqueUser ident) pass
-      if checked then authenticated ident else don'tAuthenticated (ident, pass)
+      if checked 
+        then authenticated (ident, pass)
+        else don'tAuthenticated (ident, pass)
     Error msg -> invalidArgs [T.pack msg]
   where
-    authenticated ident = do
+    authenticated (ident, pass) = do
       u <- runDB $ getBy404 (UniqueUser ident)
-      jsonToRepJson $ Accepted ident (userEmail (entityVal u))
+      let res = case userVerstatus (entityVal u) of
+            Just Verified -> Accepted ident (userEmail (entityVal u))
+            Just Unverified -> Rejected ident pass
+            Nothing -> Rejected ident pass
+      jsonToRepJson res
     don'tAuthenticated (ident, pass) = do
       jsonToRepJson $ Rejected ident pass
