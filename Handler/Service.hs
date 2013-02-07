@@ -18,7 +18,6 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import Data.HashMap.Strict as M (toList)
 
-
 -- for Request
 data AuthReq = AuthReq
                { ident :: Text
@@ -33,21 +32,31 @@ instance ToJSON AuthReq where
   toJSON (AuthReq i p) = object ["ident" .= i, "pass" .= p]
 
 -- for Response
-data AuthRes = Rejected { rejected_ident :: Text, rejected_pass :: Text }
-             | Accepted { accepted_ident :: Text, accepted_email :: Maybe Text }
+data AuthRes = Rejected
+               { rejected_ident :: Text
+               , rejected_pass :: Text
+               , rejected_reason :: Text
+               }
+             | Accepted
+               { accepted_ident :: Text
+               , accepted_email :: Maybe Text
+               }
              deriving (Show, Read, Eq)
 
 instance FromJSON AuthRes where
   parseJSON (Object o) = case M.toList o of
-    [("rejected", Object o')] -> Rejected <$> o' .: "ident" <*> o' .: "pass"
-    [("accepted", Object o')] -> Accepted <$> o' .: "ident" <*> o' .:? "email"
+    [("rejected", Object o')] ->
+      Rejected <$> o' .: "ident" <*> o' .: "pass" <*> o' .: "reason"
+    [("accepted", Object o')] ->
+      Accepted <$> o' .: "ident" <*> o' .:? "email"
   parseJSON _ = mzero
 
 instance ToJSON AuthRes where
-  toJSON (Rejected i p) = object [ "rejected" .= object [ "ident" .= i
-                                                        , "pass" .= p
-                                                        ]
-                                 ]
+  toJSON (Rejected i p r) = object [ "rejected" .= object [ "ident" .= i
+                                                          , "pass" .= p
+                                                          , "reason" .= r
+                                                          ]
+                                   ]
   toJSON (Accepted i me) = object [ "accepted" .= object [ "ident" .= i
                                                          , "email" .= me
                                                          ]
@@ -67,10 +76,9 @@ postAuthenticateR = do
   where
     authenticated (ident, pass) = do
       u <- runDB $ getBy404 (UniqueUser ident)
-      let res = case userVerstatus (entityVal u) of
+      jsonToRepJson $ case userVerstatus (entityVal u) of
             Just Verified -> Accepted ident (userEmail (entityVal u))
-            Just Unverified -> Rejected ident pass
-            Nothing -> Rejected ident pass
-      jsonToRepJson res
+            Just Unverified -> Rejected ident pass "Unverified email address"
+            Nothing -> Rejected ident pass "Unverified email address"
     don'tAuthenticated (ident, pass) = do
-      jsonToRepJson $ Rejected ident pass
+      jsonToRepJson $ Rejected ident pass "The account/password are invalid"
