@@ -34,6 +34,13 @@ instance ToJSON AuthReq where
   toJSON (AuthReq i p) = object ["ident" .= i, "pass" .= p]
 
 -- for Response
+data AuthRes' = AuthRes' { cipher :: LB.ByteString }
+instance FromJSON AuthRes' where
+  parseJSON (Object o) = AuthRes' <$> o .: "cipher"
+  parseJSON _ = mzero
+instance ToJSON AuthRes' where
+  toJSON (AuthRes' e) = object [ "cipher" .= e ]
+
 data AuthRes = Rejected
                { rejected_ident :: Text
                , rejected_pass :: Text
@@ -69,19 +76,19 @@ postAuthenticateR = do
   r <- fmap reqWaiRequest getRequest
   v <- liftIO $ runResourceT $ decrypt' (requestBody r) $$ sinkParser json
   case fromJSON v of
-    Success (AuthReq ident pass) -> do
-      checked <- validateUser (UniqueUser ident) pass
-      if checked 
-        then authenticated (ident, pass)
-        else don'tAuthenticated (ident, pass)
+    Success (AuthReq ident pass) -> jsonToRepJson =<< authentication (ident, pass)
     Error msg -> invalidArgs [T.pack msg]
   where
     decrypt' = mapOutput (decrypt Settings.owl_priv)
-    authenticated (ident, pass) = do
-      u <- runDB $ getBy404 (UniqueUser ident)
-      jsonToRepJson $ case userVerstatus (entityVal u) of
-            Just Verified -> Accepted ident (userEmail (entityVal u))
-            Just Unverified -> Rejected ident pass "Unverified email address"
-            Nothing -> Rejected ident pass "Unverified email address"
-    don'tAuthenticated (ident, pass) = do
-      jsonToRepJson $ Rejected ident pass "The account/password are invalid"
+    authentication (ident, pass) = do
+      checked <- validateUser (UniqueUser ident) pass
+      r <- if checked
+        then do
+        u <- runDB $ getBy404 (UniqueUser ident)
+        return $ case userVerstatus (entityVal u) of
+              Just Verified -> Accepted ident (userEmail (entityVal u))
+              Just Unverified -> Rejected ident pass "Unverified email address"
+              Nothing -> Rejected ident pass "Unverified email address"
+        else do
+        return $ Rejected ident pass "The account/password are invalid"
+      return . AuthRes' . fst =<< (liftIO $ encrypt Settings.bisocie_pub $ encode r)
