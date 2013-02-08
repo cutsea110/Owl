@@ -17,6 +17,8 @@ import qualified Data.ByteString.Lazy.UTF8 as LB
 import Data.Text (Text)
 import qualified Data.Text as T
 import Data.HashMap.Strict as M (toList)
+import Owl.Helpers.Util
+import qualified Settings
 
 -- for Request
 data AuthReq = AuthReq
@@ -65,7 +67,7 @@ instance ToJSON AuthRes where
 postAuthenticateR :: Handler RepJson
 postAuthenticateR = do
   r <- fmap reqWaiRequest getRequest
-  v <- liftIO $ runResourceT $ requestBody r $$ sinkParser json
+  v <- liftIO $ runResourceT $ decrypt' (requestBody r) $$ sinkParser json
   case fromJSON v of
     Success (AuthReq ident pass) -> do
       checked <- validateUser (UniqueUser ident) pass
@@ -74,6 +76,7 @@ postAuthenticateR = do
         else don'tAuthenticated (ident, pass)
     Error msg -> invalidArgs [T.pack msg]
   where
+    decrypt' = mapOutput (decrypt Settings.owl_priv)
     authenticated (ident, pass) = do
       u <- runDB $ getBy404 (UniqueUser ident)
       jsonToRepJson $ case userVerstatus (entityVal u) of
