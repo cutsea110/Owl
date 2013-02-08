@@ -5,6 +5,8 @@ module Owl.Helpers.Util
        , getCurrentRoute'
        , toGravatarHash
        , gravatarUrl
+       , fromLazy
+       , toLazy
          -- RSA
        , genKey
        , encrypt
