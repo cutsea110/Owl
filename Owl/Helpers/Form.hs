@@ -1,5 +1,5 @@
 module Owl.Helpers.Form 
-       ( accountForm
+       ( accountPasswordForm
        , passwordForm
        , passwordConfirmForm
        , emailForm
@@ -17,8 +17,8 @@ import Data.Tuple.HT (fst3, snd3, thd3)
 import Owl.Helpers.Auth.HashDB (validateUser)
 import Text.Julius (rawJS)
 
-accountForm :: Maybe (Text, Text, Text) -> Form (Text, Text)
-accountForm mv fragment = do
+accountPasswordForm :: Maybe (Text, Text, Text) -> Form (Text, Text)
+accountPasswordForm mv fragment = do
   (res0, view0) <- mreq textField (fs MsgAccountID) (fst3 <$> mv)
   (res1, view1) <- mreq passwordField (fs MsgPassword) (snd3 <$> mv)
   (res2, view2) <- mreq passwordField (fs MsgConfirmPassword) (thd3 <$> mv)

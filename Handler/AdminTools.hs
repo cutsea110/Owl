@@ -87,7 +87,7 @@ postUserEmailR uid = do
 
 postCreateUserR :: Handler ()
 postCreateUserR = do
-  ((r, _), _) <- runFormPost $ accountForm Nothing
+  ((r, _), _) <- runFormPost $ accountPasswordForm Nothing
   case r of
     FormSuccess (uname, pass) -> do
       runDB $ do

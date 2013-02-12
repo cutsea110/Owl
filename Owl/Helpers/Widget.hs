@@ -59,7 +59,7 @@ userListWidget = do
 
 createUserWidget :: Maybe (Text, Text, Text) -> Route App -> Widget
 createUserWidget mv toPost = do
-  (w, e) <- lift $ generateFormPost $ accountForm mv
+  (w, e) <- lift $ generateFormPost $ accountPasswordForm mv
   r <- lift getUrlRender
   $(widgetFile "create-user")
 
