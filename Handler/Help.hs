@@ -5,14 +5,12 @@ module Handler.Help
 
 import Import
 import qualified Data.Text as T
-import Yesod.Auth (requireAuth, maybeAuth)
-import Owl.Helpers.Form (emailForm)
+import Owl.Helpers.Form (accountForm)
 
 getHelpR :: Handler RepHtml
 getHelpR = do
-  mu <- maybeAuth
   (menuSendReminderMail, menuUsage) <- (,) <$> newIdent <*> newIdent
-  (w, e) <- generateFormPost $ emailForm [("class", "span3")] Nothing Nothing
+  (w, e) <- generateFormPost $ accountForm Nothing
   tabIs <- fmap (maybe ("usage"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
   defaultLayout $ do
@@ -23,12 +21,10 @@ getHelpR = do
 
 postPasswordResetR :: Handler ()
 postPasswordResetR = do
-  u <- requireAuth
-  let (u', memail, mverstatus) = (entityVal u, userEmail u', userVerstatus u')
-  ((r, _), _) <- runFormPost $ emailForm [] mverstatus memail
+  ((r, _), _) <- runFormPost $ accountForm Nothing
   case r of
-    FormSuccess x -> do
-      liftIO $ putStrLn $ "[TODO] send reminder mail to " ++ T.unpack x
+    FormSuccess uname -> do
+      liftIO $ putStrLn $ "[TODO] send reminder mail to " ++ T.unpack uname
       setMessage "Send reminder mail..."
       redirect ((HELP HelpR), [("tab", "password-reset")])
     _ -> redirect ((HELP HelpR), [("tab", "password-reset")])

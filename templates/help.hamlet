@@ -6,8 +6,7 @@
   <div .span12>
     <div .tabbable.tabs-left>
       <ul .nav.nav-tabs>
-        $maybe _ <- mu
-          <li :tabIs "password-reset":.active><a href="##{menuSendReminderMail}" data-toggle="tab">_{MsgForgetPassword}</a>
+        <li :tabIs "password-reset":.active><a href="##{menuSendReminderMail}" data-toggle="tab">_{MsgForgetPassword}</a>
         <li :tabIs "usage":.active><a href="##{menuUsage}" data-toggle="tab">_{MsgUsage}</a>
       <div .tab-content>
         $maybe msg <- mmsg
@@ -15,8 +14,7 @@
             <button type="button" .close data-dismiss="alert">&times;
             <p>#{msg}
 
-        $maybe _ <- mu
-          <div .tab-pane :tabIs "password-reset":.active ##{menuSendReminderMail}>
-            ^{passreset}
+        <div .tab-pane :tabIs "password-reset":.active ##{menuSendReminderMail}>
+          ^{passreset}
         <div .tab-pane :tabIs "usage":.active ##{menuUsage}>
           ^{usage}
