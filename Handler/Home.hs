@@ -49,7 +49,7 @@ postPasswordR = do
 postEmailR :: Handler ()
 postEmailR = do
   uid <- requireAuthId
-  ((r, _), _) <- runFormPost $ emailForm [] Nothing Nothing
+  ((r, _), _) <- runFormPost $ emailForm Nothing
   case r of
     FormSuccess email -> do
       register uid email

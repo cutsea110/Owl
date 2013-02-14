@@ -13,29 +13,28 @@ import Yesod.Routes.Class (Route)
 passwordWidget :: Form Text -> Route App -> Widget
 passwordWidget form toPost = do
   u <- lift requireAuth
-  (w, e) <- lift $ generateFormPost form
   r <- lift getUrlRender
+  (w, e) <- lift $ generateFormPost form
   $(widgetFile "password")
 
 emailWidget :: Route App -> Widget
 emailWidget toPost = do
   u <- lift requireAuth
-  let (ue, memail, mverstatus) = (entityVal u, userEmail ue, userVerstatus ue)
-  (w, e) <- lift $ generateFormPost $ emailForm [("class", "span3"),("placeholder","you@example.com")] mverstatus memail
   r <- lift getUrlRender
+  (w, e) <- lift $ generateFormPost $ emailForm $ userEmail $ entityVal u
   $(widgetFile "email")
 
 userEmailWidget :: Maybe User -> Route App -> Widget
 userEmailWidget mu toPost = do
   let (memail, mverstatus, mverkey) = (join $ userEmail <$> mu, join $ userVerstatus <$> mu, join $ userVerkey <$> mu)
-  (w, e) <- lift $ generateFormPost $ userEmailForm [("class", "span3"),("placeholder","you@example.com")] $ Just (memail, mverstatus, mverkey)
+  (w, e) <- lift $ generateFormPost $ userEmailForm $ Just (memail, mverstatus, mverkey)
   r <- lift getUrlRender
   $(widgetFile "user-email")
 
 verifyWidget :: Maybe Text -> Route App -> [(Text, Text)] -> Widget
 verifyWidget mv toPost params = do
-  (w, e) <- lift $ generateFormPost $ verifyForm mv
   r <- lift getUrlRenderParams
+  (w, e) <- lift $ generateFormPost $ verifyForm mv
   $(widgetFile "verify")
 
 importCsvWidget :: Widget
@@ -45,10 +44,10 @@ importCsvWidget = do
 
 profileWidget :: Route App -> Widget
 profileWidget toPost = do
-  u <- fmap entityVal $ lift requireAuth
-  let mv = Just $ (,,) <$> userFamilyname <*> userGivenname <*> userComment $ u
-  (w, e) <- lift $ generateFormPost $ profileForm mv
+  u <- lift requireAuth
   r <- lift getUrlRender
+  let mv = Just $ (,,) <$> userFamilyname <*> userGivenname <*> userComment $ entityVal u
+  (w, e) <- lift $ generateFormPost $ profileForm mv
   $(widgetFile "profile")
 
 userListWidget :: Widget
@@ -57,9 +56,9 @@ userListWidget = do
   us <- lift $ runDB $ selectList [] [Asc UserId]
   $(widgetFile "user-list")
 
-createUserWidget :: Maybe (Text, Text, Text) -> Route App -> Widget
+createUserWidget :: Maybe (Text, Text) -> Route App -> Widget
 createUserWidget mv toPost = do
-  (w, e) <- lift $ generateFormPost $ accountForm mv
+  (w, e) <- lift $ generateFormPost $ accountPasswordForm mv
   r <- lift getUrlRender
   $(widgetFile "create-user")
 

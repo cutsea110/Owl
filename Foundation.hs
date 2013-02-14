@@ -107,7 +107,6 @@ instance Yesod App where
 
     isAuthorized (AuthR _) _ = return Authorized
     isAuthorized (AdminTool _) _ = isAdminAuth
-    isAuthorized (HELP PasswordResetR) _ = loggedInAuth
     isAuthorized (HELP _) _ = return Authorized
     isAuthorized (Service _) _ = return Authorized
     isAuthorized TopR _ = return Authorized

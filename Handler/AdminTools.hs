@@ -76,7 +76,7 @@ getUserEmailR uid = do
 
 postUserEmailR :: UserId -> Handler ()
 postUserEmailR uid = do
-  ((r, _), _) <- runFormPost $ userEmailForm [] Nothing
+  ((r, _), _) <- runFormPost $ userEmailForm Nothing
   case r of
     FormSuccess (memail, mverstatus, mverkey) -> do
       runDB $ update uid [UserEmail =. memail, UserVerstatus =. mverstatus, UserVerkey =. mverkey]
@@ -87,7 +87,7 @@ postUserEmailR uid = do
 
 postCreateUserR :: Handler ()
 postCreateUserR = do
-  ((r, _), _) <- runFormPost $ accountForm Nothing
+  ((r, _), _) <- runFormPost $ accountPasswordForm Nothing
   case r of
     FormSuccess (uname, pass) -> do
       runDB $ do

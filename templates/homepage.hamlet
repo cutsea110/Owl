@@ -34,5 +34,13 @@
           <div .control-group>
             <span .help-block>
               <span .label.label-info>_{MsgNOTE}
-              <p>message...message...message...message... #
-                <span .badge.badge-important>6</span>
+              <p>_{MsgThisMailaddressIs} #
+                $case userVerstatus $ entityVal u
+                  $of Just v
+                    $if v == Verified
+                      <span.badge.badge-success>#{show v} #
+                    $else
+                      <span.badge.badge-warning>#{show v} #
+                  $of Nothing
+                      <span.badge.badge-warning>#{show Unverified} #
+                _{MsgPost4ThisMailaddressIs}
