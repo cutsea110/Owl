@@ -89,39 +89,27 @@ $forall (v, k) <- vks
   where
     mkUnique = UniqueUser . userUsername
 
-passwordConfirmForm :: Maybe (Text,Text) -> Form Text
-passwordConfirmForm mv fragment = do
-  (res0, view0) <- mreq passwordField (fs MsgNewPassword) (fst <$> mv)
-  (res1, view1) <- mreq passwordField (fs MsgConfirmNewPassword) (snd <$> mv)
-  res <- lift $ case (res0, res1) of
-        (FormSuccess newPass, FormSuccess newPass') -> do
-          return $
-            if newPass == newPass'
-            then FormSuccess newPass
-            else FormFailure ["don't match between new password and confirmation."]
-        _ -> return $ FormFailure ["fail to password update."]
-  let vs = [view0, view1]
-      widget = do
-        toWidget [julius|
-$('button.edit-password').click(function(){
-  var uri = $(this).attr('password-uri'),
-      modalid = $(this).attr('href');
-  $(modalid).find('div.edit-password form').attr('action', uri);
-});
+passwordConfirmForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
+passwordConfirmForm mv = renderBootstrap $ areq passwordConfirmField "" mv
+
+passwordConfirmField :: Field s App Text
+passwordConfirmField = Field
+  { fieldParse = \vals _ -> do
+       case vals of
+         [x, y] | x == y -> return $ Right $ Just x
+                | otherwise -> return $ Left "Passwords don't match"
+         [] -> return $ Right Nothing
+         _ -> return $ Left "Incorrect number of results"
+  , fieldView = \id' name attrs val isReq -> [whamlet|
+<label.control-label for=##{id'}>_{MsgNewPassword}
+<div.controls.input>
+  <input ##{id'} name=#{name} *{attrs} type=password :isReq:required>
+<label.control-label for=##{id'}-confirm>_{MsgConfirmNewPassword}
+<div.controls.input>
+  <input ##{id'}-confirm name=#{name} *{attrs} type=password :isReq:required>
 |]
-        [whamlet|
-\#{fragment}
-$forall v <- vs
-  <div .control-group.warning .clearfix :fvRequired v:.required :not $ fvRequired v:.optional :isJust $ fvErrors v:.error>
-    <label .control-label for=##{fvId v}>#{fvLabel v}
-    <div .controls .input>
-      ^{fvInput v}
-      $maybe tt <- fvTooltip v
-        <span .help-block>#{tt}
-      $maybe err <- fvErrors v
-        <span .help-block>#{err}
-|]
-  return (res, widget)
+  , fieldEnctype = UrlEncoded
+  }
 
 emailForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
 emailForm mv = renderBootstrap $ areq emailField (fs MsgEmail) mv
@@ -144,23 +132,10 @@ profileForm mv = renderBootstrap $ (,,)
                  <*> areq textField (fs MsgGivenName) (snd3 <$> mv)
                  <*> aopt textareaField (fs MsgProfile) (thd3 <$> mv)
 
-fileForm :: Maybe FileInfo -> Form FileInfo
-fileForm mv fragment = do
-  (res, view) <- mreq fileField' (fs MsgUploadFilePath) mv
-  let widget = [whamlet|
-\#{fragment}
-<div .control-group.clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
-  <label .control-label for=##{fvId view}>#{fvLabel view}
-  <div .controls .input>
-    ^{fvInput view}
-    $maybe tt <- fvTooltip view
-      <span .help-block>#{tt}
-    $maybe err <- fvErrors view
-      <span .help-block>#{err}
-|]
-  return (res, widget)
+fileForm :: Maybe FileInfo -> Html -> MForm s App (FormResult FileInfo, GWidget s App ())
+fileForm mv = renderBootstrap $ areq fileField' (fs MsgUploadFilePath) mv
 
-fileField' :: Field App App FileInfo
+fileField' :: Field s App FileInfo
 fileField' = fileField
     { fieldView = \id' name attrs _ isReq -> do
        toWidget [lucius|##{id'}-custom:hover {
