@@ -35,37 +35,20 @@ accountPasswordForm mv = renderBootstrap $ (,)
                          <$> areq textField (fs MsgAccountID) (fst <$> mv)
                          <*> areq passwordConfirmField "" (snd <$> mv)
 
-passwordForm :: User -> Maybe (Text,Text,Text) -> Form Text
+passwordForm :: User -> Maybe (Text, Text) -> Form Text
 passwordForm u mv fragment = do
-  (res0, view0) <- mreq passwordField (fs MsgCurrentPassword) (fst3 <$> mv)
-  (res1, view1) <- mreq passwordField (fs MsgNewPassword) (snd3 <$> mv)
-  (res2, view2) <- mreq passwordField (fs MsgConfirmNewPassword) (thd3 <$> mv)
-  res <- lift $ case (res0, res1, res2) of
-        (FormSuccess curPass, FormSuccess newPass, FormSuccess newPass') -> do
-          checkedPass <- validateUser (mkUnique u) curPass
-          return $
-            if checkedPass
-            then if newPass == newPass'
-                 then FormSuccess newPass
-                 else FormFailure ["don't match between new password and confirmation."]
-            else FormFailure ["incorrect current password."]
-        _ -> return $ FormFailure ["fail to password update."]
-  let vks = [(view0,"info"::Text),(view1,"warning"),(view2,"warning")]
-      widget = [whamlet|
-\#{fragment}
-$forall (v, k) <- vks
-  <div .control-group.#{k} .clearfix :fvRequired v:.required :not $ fvRequired v:.optional :isJust $ fvErrors v:.error>
-    <label .control-label for=##{fvId v}>#{fvLabel v}
-    <div .controls .input>
-      ^{fvInput v}
-      $maybe tt <- fvTooltip v
-        <span .help-block>#{tt}
-      $maybe err <- fvErrors v
-        <span .help-block>#{err}
-|]
-  return (res, widget)
+  (res, widget) <- flip renderBootstrap fragment $ (,)
+              <$> areq passwordField (fs MsgCurrentPassword) (fst <$> mv)
+              <*> areq passwordConfirmField "" (snd <$> mv)
+  res' <- lift $ case res of
+    FormSuccess (curPass, newPass) -> do
+      checkPass <- validateUser (mkUnique u) curPass
+      return $ if checkPass then FormSuccess newPass else FormFailure [msg]
+    _ -> return $ snd <$> res
+  return (res', widget)
   where
     mkUnique = UniqueUser . userUsername
+    msg = "Invalid current password"
 
 passwordConfirmForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
 passwordConfirmForm mv = renderBootstrap $ areq passwordConfirmField "" mv
