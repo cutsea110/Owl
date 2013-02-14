@@ -30,32 +30,10 @@ fs msg = FieldSettings { fsLabel = SomeMessage msg
 accountForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
 accountForm mv = renderBootstrap $ areq textField (fs MsgAccountID) mv
 
-accountPasswordForm :: Maybe (Text, Text, Text) -> Form (Text, Text)
-accountPasswordForm mv fragment = do
-  (res0, view0) <- mreq textField (fs MsgAccountID) (fst3 <$> mv)
-  (res1, view1) <- mreq passwordField (fs MsgPassword) (snd3 <$> mv)
-  (res2, view2) <- mreq passwordField (fs MsgConfirmPassword) (thd3 <$> mv)
-  res <- lift $ case (res0, res1, res2) of
-    (FormSuccess uname, FormSuccess newPass, FormSuccess newPass') -> do
-      return $
-        if newPass == newPass'
-        then FormSuccess (uname, newPass)
-        else FormFailure ["don't match between new password and confirmation."]
-    _ -> return $ FormFailure ["fail to create user"]
-  let vks = [(view0, "info"::Text), (view1, "info"), (view2, "info")]
-      widget = [whamlet|
-\#{fragment}
-$forall (v, k) <- vks
-  <div .control-group.#{k} .clearfix :fvRequired v:.required :not $ fvRequired v:.optional :isJust $ fvErrors v:.error>
-    <label .control-label for=##{fvId v}>#{fvLabel v}
-    <div .controls .input>
-      ^{fvInput v}
-      $maybe tt <- fvTooltip v
-        <span .help-block>#{tt}
-      $maybe err <- fvErrors v
-        <span .help-block>#{err}
-|]
-  return (res, widget)
+accountPasswordForm :: Maybe (Text, Text) -> Html -> MForm s App (FormResult (Text, Text), GWidget s App ())
+accountPasswordForm mv = renderBootstrap $ (,)
+                         <$> areq textField (fs MsgAccountID) (fst <$> mv)
+                         <*> areq passwordConfirmField "" (snd <$> mv)
 
 passwordForm :: User -> Maybe (Text,Text,Text) -> Form Text
 passwordForm u mv fragment = do

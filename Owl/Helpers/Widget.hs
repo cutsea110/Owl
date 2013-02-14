@@ -56,7 +56,7 @@ userListWidget = do
   us <- lift $ runDB $ selectList [] [Asc UserId]
   $(widgetFile "user-list")
 
-createUserWidget :: Maybe (Text, Text, Text) -> Route App -> Widget
+createUserWidget :: Maybe (Text, Text) -> Route App -> Widget
 createUserWidget mv toPost = do
   (w, e) <- lift $ generateFormPost $ accountPasswordForm mv
   r <- lift getUrlRender
