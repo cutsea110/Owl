@@ -18,28 +18,17 @@ import Data.Tuple.HT (fst3, snd3, thd3)
 import Owl.Helpers.Auth.HashDB (validateUser)
 import Text.Julius (rawJS)
 
-accountForm :: Maybe Text -> Form Text
-accountForm mv fragment = do
-  (res, view) <- mreq textField fs mv
-  let widget = [whamlet|
-\#{fragment}
-<div .control-group.info .clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
-  <label .control-label for=##{fvId view}>#{fvLabel view}
-  <div .controls .input>
-    ^{fvInput view}
-    $maybe tt <- fvTooltip view
-      <span .help-block>#{tt}
-    $maybe err <- fvErrors view
-      <span .help-block>#{err}
-|]
-  return (res, widget)
-  where
-    fs = FieldSettings { fsLabel = SomeMessage MsgAccountID
+fs :: RenderMessage m msg => msg -> FieldSettings m
+fs msg = FieldSettings { fsLabel = SomeMessage msg
                        , fsTooltip = Nothing
                        , fsId = Nothing
                        , fsName = Nothing
                        , fsAttrs = []
                        }
+
+
+accountForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
+accountForm mv = renderBootstrap $ areq textField (fs MsgAccountID) mv
 
 accountPasswordForm :: Maybe (Text, Text, Text) -> Form (Text, Text)
 accountPasswordForm mv fragment = do
