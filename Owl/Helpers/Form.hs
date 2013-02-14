@@ -172,20 +172,8 @@ $forall (v, k) <- vks
     vss :: [(Text, VerStatus)]
     vss = map ((T.pack . show) &&& id) [minBound..maxBound]
 
-verifyForm :: Maybe Text -> Form Text
-verifyForm mv fragment = do
-  (res, view) <- mreq hiddenField "verkey" mv
-  let widget = [whamlet|
-\#{fragment}
-<div .control-group .clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
-  <div .controls .input>
-    ^{fvInput view}
-    $maybe tt <- fvTooltip view
-      <span .help-block>#{tt}
-    $maybe err <- fvErrors view
-      <span .help-block>#{err}
-|]
-  return (res, widget)
+verifyForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
+verifyForm mv = renderBootstrap $ areq hiddenField "verkey" mv
 
 profileForm :: Maybe (Text, Text, Maybe Textarea) -> Form (Text, Text, Maybe Textarea)
 profileForm mv fragment = do
