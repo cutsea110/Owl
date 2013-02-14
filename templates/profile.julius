@@ -1,0 +1,22 @@
+$('button.edit-profile').click(function(){
+  var uri = $(this).attr('profile-uri'),
+      modalid = $(this).attr('href'),
+      form = $(modalid).find('div.edit-profile form'),
+      fname = form.find('input[type=text]').first(),
+      gname = form.find('input[type=text]').last(),
+      comment = form.find('textarea');
+
+  // set action uri for post
+  form.attr('action', uri);
+  $.getJSON(uri, null, function(data, status){
+    if (status=='success') {
+      fname.val(data.familyname);
+      gname.val(data.givenname);
+      comment.val(data.comment);
+    } else {
+      fname.val('');
+      gname.val('');
+      comment.val('');
+    }
+  });
+});

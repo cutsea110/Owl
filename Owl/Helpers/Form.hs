@@ -138,48 +138,11 @@ userEmailForm mv = renderBootstrap $ (,,)
 verifyForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
 verifyForm mv = renderBootstrap $ areq hiddenField "verkey" mv
 
-profileForm :: Maybe (Text, Text, Maybe Textarea) -> Form (Text, Text, Maybe Textarea)
-profileForm mv fragment = do
-  (res0, view0) <- mreq textField (fs MsgFamilyName) (fst3 <$> mv)
-  (res1, view1) <- mreq textField (fs MsgGivenName) (snd3 <$> mv)
-  (res2, view2) <- mopt textareaField (fs MsgProfile) (thd3 <$> mv)
-  let res = case (res0, res1, res2) of
-        (FormSuccess x, FormSuccess y, FormSuccess z) -> FormSuccess (x, y, z)
-        _ -> FormFailure ["fail to profile update!"]
-      vks = [(view0, "success"::Text), (view1, "success"), (view2, "info")]
-  let widget = do
-        toWidget [julius|
-$('button.edit-profile').click(function(){
-  var uri = $(this).attr('profile-uri'),
-      modalid = $(this).attr('href');
-
-  // set action uri for post
-  $(modalid).find('div.edit-profile form').attr('action', uri);
-  $.getJSON(uri, null, function(data, status){
-    if (status=='success') {
-      // bind data
-      $('##{rawJS $ fvId view0}').val(data.familyname);
-      $('##{rawJS $ fvId view1}').val(data.givenname);
-      $('##{rawJS $ fvId view2}').val(data.comment);
-    } else {
-      $('##{rawJS $ fvId view0},##{rawJS $ fvId view1},##{rawJS $ fvId view2}').val('');
-    }
-  });
-});
-|]
-        [whamlet|
-\#{fragment}
-$forall (v, k) <- vks
-  <div .control-group.#{k}.clearfix :fvRequired v:.required :not $ fvRequired v:.optional :isJust $ fvErrors v:.error>
-    <label .control-label for=##{fvId v}>#{fvLabel v}
-    <div .controls .input>
-      ^{fvInput v}
-      $maybe tt <- fvTooltip v
-        <span .help-block>#{tt}
-      $maybe err <- fvErrors v
-        <span .help-block>#{err}
-|]
-  return (res, widget)
+profileForm :: Maybe (Text, Text, Maybe Textarea) -> Html -> MForm s App (FormResult (Text, Text, Maybe Textarea), GWidget s App ())
+profileForm mv = renderBootstrap $ (,,) 
+                 <$> areq textField (fs MsgFamilyName) (fst3 <$> mv)
+                 <*> areq textField (fs MsgGivenName) (snd3 <$> mv)
+                 <*> aopt textareaField (fs MsgProfile) (thd3 <$> mv)
 
 fileForm :: Maybe FileInfo -> Form FileInfo
 fileForm mv fragment = do
