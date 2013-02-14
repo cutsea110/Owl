@@ -40,13 +40,13 @@ accountForm mv = renderBootstrap $ areq textField (fs MsgAccountID) mv
 accountPasswordForm :: Maybe (Text, Text) -> Html -> MForm s App (FormResult (Text, Text), GWidget s App ())
 accountPasswordForm mv = renderBootstrap $ (,)
                          <$> areq textField (fs MsgAccountID) (fst <$> mv)
-                         <*> areq passwordConfirmField "" (snd <$> mv)
+                         <*> areq passwordConfirmField (fs MsgNewPassword) (snd <$> mv)
 
 passwordForm :: User -> Maybe (Text, Text) -> Form Text
 passwordForm u mv fragment = do
   (res, widget) <- flip renderBootstrap fragment $ (,)
               <$> areq passwordField (fs MsgCurrentPassword) (fst <$> mv)
-              <*> areq passwordConfirmField "" (snd <$> mv)
+              <*> areq passwordConfirmField (fs MsgNewPassword) (snd <$> mv)
   res' <- lift $ case res of
     FormSuccess (curPass, newPass) -> do
       checkPass <- validateUser (mkUnique u) curPass
@@ -58,7 +58,7 @@ passwordForm u mv fragment = do
     msg = "Invalid current password"
 
 passwordConfirmForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
-passwordConfirmForm mv = renderBootstrap $ areq passwordConfirmField "" mv
+passwordConfirmForm mv = renderBootstrap $ areq passwordConfirmField (fs MsgNewPassword) mv
 
 passwordConfirmField :: Field s App Text
 passwordConfirmField = Field
@@ -69,12 +69,9 @@ passwordConfirmField = Field
          [] -> return $ Right Nothing
          _ -> return $ Left "Incorrect number of results"
   , fieldView = \id' name attrs val isReq -> [whamlet|
-<label.control-label for=##{id'}>_{MsgNewPassword}
-<div.controls.input>
-  <input ##{id'} name=#{name} *{attrs} type=password :isReq:required>
+<input ##{id'} name=#{name} *{attrs} type=password :isReq:required>
 <label.control-label for=##{id'}-confirm>_{MsgConfirmNewPassword}
-<div.controls.input>
-  <input ##{id'}-confirm name=#{name} *{attrs} type=password :isReq:required>
+<input ##{id'}-confirm name=#{name} *{attrs} type=password :isReq:required>
 |]
   , fieldEnctype = UrlEncoded
   }
