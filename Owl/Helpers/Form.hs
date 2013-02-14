@@ -26,6 +26,14 @@ fs msg = FieldSettings { fsLabel = SomeMessage msg
                        , fsAttrs = []
                        }
 
+fs' :: RenderMessage m msg => msg -> [(Text, Text)] -> FieldSettings m
+fs' msg attrs = FieldSettings { fsLabel = SomeMessage msg
+                              , fsTooltip = Nothing
+                              , fsId = Nothing
+                              , fsName = Nothing
+                              , fsAttrs = attrs
+                              }
+
 
 accountForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
 accountForm mv = renderBootstrap $ areq textField (fs MsgAccountID) mv
@@ -73,11 +81,12 @@ passwordConfirmField = Field
   }
 
 emailForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
-emailForm mv = renderBootstrap $ areq emailField (fs MsgEmail) mv
+emailForm mv = renderBootstrap $
+               areq emailField (fs' MsgEmail [("placeholder", "your@example.com")]) mv
 
 userEmailForm :: Maybe (Maybe Text, Maybe VerStatus, Maybe Text) -> Html -> MForm s App (FormResult (Maybe Text, Maybe VerStatus, Maybe Text), GWidget s App ())
 userEmailForm mv = renderBootstrap $ (,,)
-                   <$> aopt emailField (fs MsgEmail) (fst3 <$> mv)
+                   <$> aopt emailField (fs' MsgEmail [("placeholder", "your@example.com")]) (fst3 <$> mv)
                    <*> aopt (selectFieldList vss) (fs MsgVerstatus) (snd3 <$> mv)
                    <*> aopt textField (fs MsgVerkey) (thd3 <$> mv)
   where
