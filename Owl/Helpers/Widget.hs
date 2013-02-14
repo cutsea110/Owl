@@ -13,15 +13,15 @@ import Yesod.Routes.Class (Route)
 passwordWidget :: Form Text -> Route App -> Widget
 passwordWidget form toPost = do
   u <- lift requireAuth
-  (w, e) <- lift $ generateFormPost form
   r <- lift getUrlRender
+  (w, e) <- lift $ generateFormPost form
   $(widgetFile "password")
 
 emailWidget :: Route App -> Widget
 emailWidget toPost = do
+  u <- lift requireAuth
   r <- lift getUrlRender
-  memail <- fmap (userEmail.entityVal) $ lift requireAuth
-  (w, e) <- lift $ generateFormPost $ emailForm memail
+  (w, e) <- lift $ generateFormPost $ emailForm $ userEmail $ entityVal u
   $(widgetFile "email")
 
 userEmailWidget :: Maybe User -> Route App -> Widget
@@ -33,8 +33,8 @@ userEmailWidget mu toPost = do
 
 verifyWidget :: Maybe Text -> Route App -> [(Text, Text)] -> Widget
 verifyWidget mv toPost params = do
-  (w, e) <- lift $ generateFormPost $ verifyForm mv
   r <- lift getUrlRenderParams
+  (w, e) <- lift $ generateFormPost $ verifyForm mv
   $(widgetFile "verify")
 
 importCsvWidget :: Widget
@@ -44,10 +44,10 @@ importCsvWidget = do
 
 profileWidget :: Route App -> Widget
 profileWidget toPost = do
-  u <- fmap entityVal $ lift requireAuth
-  let mv = Just $ (,,) <$> userFamilyname <*> userGivenname <*> userComment $ u
-  (w, e) <- lift $ generateFormPost $ profileForm mv
+  u <- lift requireAuth
   r <- lift getUrlRender
+  let mv = Just $ (,,) <$> userFamilyname <*> userGivenname <*> userComment $ entityVal u
+  (w, e) <- lift $ generateFormPost $ profileForm mv
   $(widgetFile "profile")
 
 userListWidget :: Widget
