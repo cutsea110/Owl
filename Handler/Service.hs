@@ -3,18 +3,14 @@ module Handler.Service
        ) where
 
 import Import hiding (object)
-import Data.Maybe (fromJust)
 import Owl.Helpers.Auth.HashDB (validateUser)
 
-import Control.Monad (mzero, (=<<), (<=<), (>=>))
+import Control.Monad (mzero)
 import Data.Conduit as C
 import Network.Wai
 import Data.Aeson
-import Data.Aeson.Parser (json)
 import Data.Conduit.Attoparsec (sinkParser)
 import qualified Data.ByteString.Lazy.Char8 as LB
-import qualified Data.ByteString.Lazy.UTF8 as LB
-import Data.Text (Text)
 import qualified Data.Text as T
 import Data.HashMap.Strict as M (toList)
 import Owl.Helpers.Util
