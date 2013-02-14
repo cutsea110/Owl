@@ -91,3 +91,6 @@ FailToUpdateEmail: メールアドレスの更新に失敗しました.
 
 SuccessImportUsers: ユーザのインポートに成功しました.
 FailToImportUsers: ユーザのインポートに失敗しました.
+
+ThisMailaddressIs: このメールアドレスは現在
+Post4ThisMailaddressIs: です.
