@@ -1,0 +1,20 @@
+$('button.edit-email').click(function(){
+  var uri = $(this).attr('email-uri'),
+      modalid = $(this).attr('href'),
+      form = $(modalid).find('div.edit-email form'),
+      email = form.find('input[type=email]'),
+      verstatus = form.find('select'),
+      verkey = form.find('input[type=text]');
+  form.attr('action', uri);
+  $.getJSON(uri, null, function(data, status){
+    if (status=='success') {
+      email.val(data.email);
+      verstatus.val(data.verstatus);
+      verkey.val(data.verkey);
+    } else {
+      email.val('');
+      verstatus.val('none');
+      verkey.val('');
+    }
+  });
+});

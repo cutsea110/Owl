@@ -126,48 +126,11 @@ $forall v <- vs
 emailForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
 emailForm mv = renderBootstrap $ areq emailField (fs MsgEmail) mv
 
-userEmailForm :: Maybe (Maybe Text, Maybe VerStatus, Maybe Text) -> Form (Maybe Text, Maybe VerStatus, Maybe Text)
-userEmailForm mv fragment = do
-  (res0, view0) <- mopt emailField (fs MsgEmail) (fst3 <$> mv)
-  (res1, view1) <- mopt (selectFieldList vss) (fs MsgVerstatus) (snd3 <$> mv)
-  (res2, view2) <- mopt textField (fs MsgVerkey) (thd3 <$> mv)
-  let res = case (res0, res1, res2) of
-        (FormSuccess x, FormSuccess y, FormSuccess z) -> FormSuccess (x, y, z)
-        _ -> FormFailure ["fail to email update!"]
-      vks = [(view0, "info"::Text), (view1, "info"), (view2, "info")]
-  let widget = do
-        toWidget [julius|
-$('button.edit-email').click(function(){
-  var uri = $(this).attr('email-uri'),
-      modalid = $(this).attr('href');
-  $(modalid).find('div.edit-email form').attr('action', uri);
-  $.getJSON(uri, null, function(data, status){
-    if (status=='success') {
-      $('##{rawJS $ fvId view0}').val(data.email);
-      $('##{rawJS $ fvId view1}').val(data.verstatus);
-      $('##{rawJS $ fvId view2}').val(data.verkey);
-    } else {
-      $('##{rawJS $ fvId view0}').val(null);
-      $('##{rawJS $ fvId view1}').val('none');
-      $('##{rawJS $ fvId view2}').val(null
-);
-    }
-  });
-});
-|]
-        [whamlet|
-\#{fragment}
-$forall (v, k) <- vks
-  <div .control-group.#{k}.clearfix :fvRequired v:.required :not $ fvRequired v:.optional :isJust $ fvErrors v:.error>
-    <label .control-label for=##{fvId v}>#{fvLabel v} #
-    <div .controls .input>
-      ^{fvInput v}
-      $maybe tt <- fvTooltip v
-        <span .help-block>#{tt}
-      $maybe err <- fvErrors v
-        <span .help-block>#{err}
-|]
-  return (res, widget)
+userEmailForm :: Maybe (Maybe Text, Maybe VerStatus, Maybe Text) -> Html -> MForm s App (FormResult (Maybe Text, Maybe VerStatus, Maybe Text), GWidget s App ())
+userEmailForm mv = renderBootstrap $ (,,)
+                   <$> aopt emailField (fs MsgEmail) (fst3 <$> mv)
+                   <*> aopt (selectFieldList vss) (fs MsgVerstatus) (snd3 <$> mv)
+                   <*> aopt textField (fs MsgVerkey) (thd3 <$> mv)
   where
     vss :: [(Text, VerStatus)]
     vss = map ((T.pack . show) &&& id) [minBound..maxBound]
