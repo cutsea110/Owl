@@ -56,13 +56,6 @@ $forall (v, k) <- vks
         <span .help-block>#{err}
 |]
   return (res, widget)
-  where
-    fs l = FieldSettings { fsLabel = SomeMessage l
-                         , fsTooltip = Nothing
-                         , fsId = Nothing
-                         , fsName = Nothing
-                         , fsAttrs = []
-                         }
 
 passwordForm :: User -> Maybe (Text,Text,Text) -> Form Text
 passwordForm u mv fragment = do
@@ -95,13 +88,6 @@ $forall (v, k) <- vks
   return (res, widget)
   where
     mkUnique = UniqueUser . userUsername
-    fs l = FieldSettings { fsLabel = SomeMessage l
-                         , fsTooltip = Nothing
-                         , fsId = Nothing
-                         , fsName = Nothing
-                         , fsAttrs = []
-                         }
-
 
 passwordConfirmForm :: Maybe (Text,Text) -> Form Text
 passwordConfirmForm mv fragment = do
@@ -136,13 +122,6 @@ $forall v <- vs
         <span .help-block>#{err}
 |]
   return (res, widget)
-  where
-    fs l = FieldSettings { fsLabel = SomeMessage l
-                         , fsTooltip = Nothing
-                         , fsId = Nothing
-                         , fsName = Nothing
-                         , fsAttrs = []
-                         }
 
 emailForm :: [(Text, Text)] -> Maybe VerStatus -> Maybe Text -> Form Text
 emailForm attrs vs mv fragment = do
@@ -216,12 +195,6 @@ $forall (v, k) <- vks
   where
     vss :: [(Text, VerStatus)]
     vss = map ((T.pack . show) &&& id) [minBound..maxBound]
-    fs l = FieldSettings { fsLabel = SomeMessage l
-                         , fsTooltip = Nothing
-                         , fsId = Nothing
-                         , fsName = Nothing
-                         , fsAttrs = []
-                         }
 
 verifyForm :: Maybe Text -> Form Text
 verifyForm mv fragment = do
@@ -280,17 +253,10 @@ $forall (v, k) <- vks
         <span .help-block>#{err}
 |]
   return (res, widget)
-  where
-    fs l = FieldSettings { fsLabel = SomeMessage l
-                         , fsTooltip = Nothing
-                         , fsId = Nothing
-                         , fsName = Nothing
-                         , fsAttrs = []
-                         }
 
 fileForm :: Maybe FileInfo -> Form FileInfo
 fileForm mv fragment = do
-  (res, view) <- mreq fileField' fs mv
+  (res, view) <- mreq fileField' (fs MsgUploadFilePath) mv
   let widget = [whamlet|
 \#{fragment}
 <div .control-group.clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
@@ -303,13 +269,6 @@ fileForm mv fragment = do
       <span .help-block>#{err}
 |]
   return (res, widget)
-  where
-    fs = FieldSettings { fsLabel = SomeMessage MsgUploadFilePath
-                       , fsTooltip = Nothing
-                       , fsId = Nothing
-                       , fsName = Nothing
-                       , fsAttrs = []
-                       }
 
 fileField' :: Field App App FileInfo
 fileField' = fileField
