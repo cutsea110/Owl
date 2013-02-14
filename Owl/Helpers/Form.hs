@@ -126,8 +126,8 @@ $forall v <- vs
 emailForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
 emailForm mv = renderBootstrap $ areq emailField (fs MsgEmail) mv
 
-userEmailForm :: [(Text, Text)] -> Maybe (Maybe Text, Maybe VerStatus, Maybe Text) -> Form (Maybe Text, Maybe VerStatus, Maybe Text)
-userEmailForm attrs mv fragment = do
+userEmailForm :: Maybe (Maybe Text, Maybe VerStatus, Maybe Text) -> Form (Maybe Text, Maybe VerStatus, Maybe Text)
+userEmailForm mv fragment = do
   (res0, view0) <- mopt emailField (fs MsgEmail) (fst3 <$> mv)
   (res1, view1) <- mopt (selectFieldList vss) (fs MsgVerstatus) (snd3 <$> mv)
   (res2, view2) <- mopt textField (fs MsgVerkey) (thd3 <$> mv)
