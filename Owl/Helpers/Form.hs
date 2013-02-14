@@ -123,32 +123,8 @@ $forall v <- vs
 |]
   return (res, widget)
 
-emailForm :: [(Text, Text)] -> Maybe VerStatus -> Maybe Text -> Form Text
-emailForm attrs vs mv fragment = do
-  (res, view) <- mreq emailField fs mv
-  let widget = [whamlet|
-\#{fragment}
-<div .control-group.warning .clearfix :fvRequired view:.required :not $ fvRequired view:.optional :isJust $ fvErrors view:.error>
-  <label .control-label for=##{fvId view}>#{fvLabel view} #
-    $maybe s <- vs
-      <span .badge :s == Verified:.badge-success :s == Unverified:.badge-warning >#{show s}
-    $nothing
-      <span .badge.badge-warning>Unverified
-  <div .controls .input>
-    ^{fvInput view}
-    $maybe tt <- fvTooltip view
-      <span .help-block>#{tt}
-    $maybe err <- fvErrors view
-      <span .help-block>#{err}
-|]
-  return (res, widget)
-  where
-    fs = FieldSettings { fsLabel = SomeMessage MsgEmail
-                       , fsTooltip = Nothing
-                       , fsId = Nothing
-                       , fsName = Nothing
-                       , fsAttrs = attrs
-                       }
+emailForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
+emailForm mv = renderBootstrap $ areq emailField (fs MsgEmail) mv
 
 userEmailForm :: [(Text, Text)] -> Maybe (Maybe Text, Maybe VerStatus, Maybe Text) -> Form (Maybe Text, Maybe VerStatus, Maybe Text)
 userEmailForm attrs mv fragment = do

@@ -21,7 +21,7 @@ emailWidget :: Route App -> Widget
 emailWidget toPost = do
   u <- lift requireAuth
   let (ue, memail, mverstatus) = (entityVal u, userEmail ue, userVerstatus ue)
-  (w, e) <- lift $ generateFormPost $ emailForm [("class", "span3"),("placeholder","you@example.com")] mverstatus memail
+  (w, e) <- lift $ generateFormPost $ emailForm memail
   r <- lift getUrlRender
   $(widgetFile "email")
 
