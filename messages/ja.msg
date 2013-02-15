@@ -57,6 +57,7 @@ CreateNewFace: 新規ユーザを作成しました.
 FailToCreateUser: ユーザの作成に失敗しました.
 EditUser: 編集
 KillUser: 削除
+UserKilled: ユーザを削除しました.
 
 Warning: 警告!
 Danger: 危険!

@@ -20,13 +20,14 @@
 /config      ConfigR         GET
 
 /admin-tools AdminTool:
-  / AdminToolsR     GET
+  /user-list        UserListR     GET
   /profile/#UserId  UserProfileR  GET POST
   /password/#UserId UserPasswordR POST
   /email/#UserId    UserEmailR    GET POST
   /kill/#UserId     KillUserR     POST
   /create           CreateUserR   POST
-  /import-csv       ImportCsvR    POST
+  /import-csv       ImportCsvR    GET POST
+  /client-list      ClientListR   GET
 
 /srv         Service:
   /auth      AuthenticateR   POST

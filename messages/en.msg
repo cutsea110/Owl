@@ -57,6 +57,7 @@ CreateNewFace: Created new face
 FailToCreateUser: Fail to create new user
 EditUser: Edit
 KillUser: Kill
+UserKilled: User killed.
 
 Warning: Warning!
 Danger: Danger!

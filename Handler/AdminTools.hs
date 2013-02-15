@@ -1,5 +1,5 @@
 module Handler.AdminTools 
-       ( getAdminToolsR
+       ( getUserListR
        , getUserProfileR
        , postUserProfileR
        , postUserPasswordR
@@ -7,7 +7,9 @@ module Handler.AdminTools
        , postUserEmailR
        , postCreateUserR
        , postKillUserR
+       , getImportCsvR
        , postImportCsvR
+       , getClientListR
        ) where
 
 import Import
@@ -20,16 +22,16 @@ import Data.Text.Encoding (decodeUtf8)
 import Owl.Helpers.Auth.HashDB (setPassword)
 import Owl.Helpers.Widget
 import Owl.Helpers.Form
-import Owl.Helpers.Util (newIdent3, gravatarUrl)
+import Owl.Helpers.Util
 
-getAdminToolsR :: Handler RepHtml
-getAdminToolsR = do
-  (menuMaintUser, menuImportUsers, menuMaintClient) <- newIdent3
-  tabIs <- fmap (maybe ("maint-user"==) (==)) $ lookupGetParam "tab"
+getUserListR :: Handler RepHtml
+getUserListR = do
+  (modalCreateUser, modalEditUser, modalKillUser) <- newIdent3
+  us <- runDB $ selectList [] [Asc UserId]
   mmsg <- getMessage
   defaultLayout $ do
-    setTitle "Administrator's Tools"
-    $(widgetFile "admin-tools")
+    setTitleI MsgMaintUser
+    $(widgetFile "user-list")
 
 getUserProfileR :: UserId -> Handler RepJson
 getUserProfileR uid = do
@@ -52,7 +54,7 @@ postUserProfileR uid = do
       setMessageI MsgUpdateProfile
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailUpdateProfile
-  redirect (AdminTool AdminToolsR, [("tab", "maint-user")])
+  redirect $ AdminTool UserListR
 
 postUserPasswordR :: UserId -> Handler ()
 postUserPasswordR uid = do
@@ -64,7 +66,7 @@ postUserPasswordR uid = do
       setMessageI MsgPasswordUpdated
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailToUpdatePassword
-  redirect (AdminTool AdminToolsR, [("tab", "maint-user")])
+  redirect $ AdminTool UserListR
 
 getUserEmailR :: UserId -> Handler RepJson
 getUserEmailR uid = do
@@ -84,7 +86,7 @@ postUserEmailR uid = do
       setMessageI MsgUpdateEmailaddress
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailToUpdateEmail
-  redirect (AdminTool AdminToolsR, [("tab", "maint-user")])
+  redirect $ AdminTool UserListR
 
 postCreateUserR :: Handler ()
 postCreateUserR = do
@@ -97,12 +99,21 @@ postCreateUserR = do
       setMessageI MsgCreateNewFace
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailToCreateUser
-  redirect (AdminTool AdminToolsR, [("tab", "maint-user")])
+  redirect $ AdminTool UserListR
 
 postKillUserR :: UserId -> Handler ()
 postKillUserR uid = do
   runDB $ delete uid
-  redirect (AdminTool AdminToolsR, [("tab", "maint-user")])
+  setMessageI MsgUserKilled
+  redirect $ AdminTool UserListR
+
+getImportCsvR :: Handler RepHtml
+getImportCsvR = do
+  mmsg <- getMessage
+  (w, e) <- generateFormPost $ fileForm Nothing
+  defaultLayout $ do
+    setTitleI MsgImportUser
+    $(widgetFile "import-users-csv")
 
 postImportCsvR :: Handler ()
 postImportCsvR = do
@@ -110,12 +121,12 @@ postImportCsvR = do
   case r of
     FormSuccess fi  -> do
       lbs <- lift $ BC.unlines <$> (fileSource fi $$ consume)
-      either 
-        (setMessage.toHtml) 
-        (\csv -> importCSV csv >> setMessageI MsgSuccessImportUsers) 
+      either
+        (setMessage.toHtml)
+        (\csv -> importCSV csv >> setMessageI MsgSuccessImportUsers)
         $ parseCSV defCSVSettings lbs
     _ -> setMessageI MsgFailToImportUsers
-  redirect (AdminTool AdminToolsR, [("tab", "import-users")])
+  redirect $ AdminTool ImportCsvR
   where
     importCSV :: [[BC.ByteString]] -> Handler ()
     importCSV = runDB . mapM_ importRow . fmap (fmap decodeUtf8) . filter ((>=5).length)
@@ -129,3 +140,15 @@ postImportCsvR = do
              (return . entityKey)
              =<< getBy (UniqueUser uname)
       replace uid =<< setPassword rawpass =<< get404 uid
+
+getClientListR :: Handler RepHtml
+getClientListR = do
+  mmsg <- getMessage
+  modalEditClient <- newIdent
+  let clients = [ ("a7362hd", "Kestrel", "aY/ay7w2hhuqwy9138")
+                , ("97asdh2", "BISocie", "9wae/adisae9dcIOSJ")
+                , ("8asASxp", "Owl",     "SI8weddUH.DHIDU-sd")
+                ]::[(Text, Text, Text)]
+  defaultLayout $ do
+    setTitleI MsgMaintClient
+    $(widgetFile "client-list")

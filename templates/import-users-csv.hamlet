@@ -1,26 +1,31 @@
 <!-- Import Users from CSV -->
-<div .alert.alert-block>
-  <button type="button" .close data-dismiss="alert">&times;
-  <h4>_{MsgWarning}
-  Best check yourself, you're not...
+<div .page-header>
+  <h2>_{MsgImportUser}
 
-<form method=post action=@{AdminTool ImportCsvR} enctype=#{e}>
-  <div .control-group>
-    <div .controls>
-      ^{w}
+<div .row>
+  <div .span12>
+    $maybe msg <- mmsg
+      <div .alert.alert-block>
+        <button type="button" .close data-dismiss="alert">&times;
+        <p>#{msg}
 
-<div .help-block>
-  <span .label.label-info>_{MsgNOTE}
-  <h6>CSV format
-  <p>use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.
-  <dl .dl-horizontal>
-    <dt>account id
-    <dd>description for account id...description for account id...description for account id...description for account id...
-    <dt>password
-    <dd>description for password...description for password...description for password...description for password...description for password...
-    <dt>email address
-    <dd>description for email address
-    <dt>family name
-    <dd>description for family name
-    <dt>given name
-    <dd>description for given name
+    <form method=post action=@{AdminTool ImportCsvR} enctype=#{e}>
+      <div .control-group>
+        <div .controls>
+          ^{w}
+
+    <div .help-block>
+      <span .label.label-info>_{MsgNOTE}
+      <h6>CSV format
+      <p>use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.
+      <dl .dl-horizontal>
+        <dt>account id
+        <dd>description for account id...description for account id...description for account id...description for account id...
+        <dt>password
+        <dd>description for password...description for password...description for password...description for password...description for password...
+        <dt>email address
+        <dd>description for email address
+        <dt>family name
+        <dd>description for family name
+        <dt>given name
+        <dd>description for given name

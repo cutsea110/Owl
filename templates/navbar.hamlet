@@ -21,7 +21,11 @@
               <span class="caret">
             <ul .dropdown-menu>
               $if isadmin
-                <li><a href="@{AdminTool AdminToolsR}"><i class="glyphicon-claw_hammer"></i> _{MsgAdminTool}</a>
+                <li .dropdown-submenu><a href="#"><i class="glyphicon-claw_hammer"></i> _{MsgAdminTool}</a>
+                  <ul .dropdown-menu>
+                    <li><a href="@{AdminTool UserListR}">_{MsgMaintUser}</a>
+                    <li><a href="@{AdminTool ImportCsvR}">_{MsgImportUser}</a>
+                    <li><a href="@{AdminTool ClientListR}">_{MsgMaintClient}</a>
                 <li .divider>
               <li><a href="@{ConfigR}"><i class="glyphicon-settings"></i> _{MsgSettings}</a>
               <li><a href="@{AuthR LogoutR}"><i class="glyphicon-power"></i> _{MsgLogout}</a>

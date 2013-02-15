@@ -1,20 +1,29 @@
 <!-- Client List -->
-<form .pull-right>
-  <button href="##{modalEditClient}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-circle_plus glyphicon-white"></i> _{MsgAddNewClient}
+<div .page-header>
+  <h2>_{MsgMaintClient}
 
+<div .row>
+  <div .span12>
+    $maybe msg <- mmsg
+      <div .alert.alert-block>
+        <button type="button" .close data-dismiss="alert">&times;
+        <p>#{msg}
 
-<table .table.table-striped.table-hover>
-  <thead>
-    <tr>
-      <th>_{MsgClientID}
-      <th>_{MsgClientName}
-      <th>_{MsgClientSecret}
-  <tbody>
-    $forall c <- clients
-      <tr onclick="setRowdata4Modal($(this))" data-toggle="modal" href="##{modalEditClient}">
-        <td .client_id><span>#{fst3 c}</span>
-        <td .client_name><span>#{snd3 c}</span>
-        <td .client_secret><span>#{thd3 c}</span>
+    <form .pull-right>
+      <button href="##{modalEditClient}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-circle_plus glyphicon-white"></i> _{MsgAddNewClient}
+
+    <table .table.table-striped.table-hover>
+      <thead>
+        <tr>
+          <th>_{MsgClientID}
+          <th>_{MsgClientName}
+          <th>_{MsgClientSecret}
+      <tbody>
+        $forall c <- clients
+          <tr onclick="setRowdata4Modal($(this))" data-toggle="modal" href="##{modalEditClient}">
+            <td .client_id><span>#{fst3 c}</span>
+            <td .client_name><span>#{snd3 c}</span>
+            <td .client_secret><span>#{thd3 c}</span>
 
 <!-- Edit Client data Dialog -->
 <div ##{modalEditClient} .modal.hide.fade>

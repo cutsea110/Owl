@@ -3,9 +3,8 @@ module Owl.Helpers.Widget where
 import Import
 import Prelude (head, tail)
 import Control.Monad (join)
-import Data.Tuple.HT (fst3, snd3, thd3)
 import Owl.Helpers.Form
-import Owl.Helpers.Util (newIdent3, gravatarUrl)
+import Owl.Helpers.Util (newIdent3)
 import Text.Julius (rawJS)
 import Yesod.Auth (requireAuth)
 import Yesod.Routes.Class (Route)
@@ -37,11 +36,6 @@ verifyWidget mv toPost params = do
   (w, e) <- lift $ generateFormPost $ verifyForm mv
   $(widgetFile "verify")
 
-importCsvWidget :: Widget
-importCsvWidget = do
-  (w, e) <- lift $ generateFormPost $ fileForm Nothing
-  $(widgetFile "import-users-csv")
-
 profileWidget :: Route App -> Widget
 profileWidget toPost = do
   (u, r) <- lift $ (,) <$> requireAuth <*> getUrlRender
@@ -56,16 +50,10 @@ profileWidget' toPost = do
   (w, e) <- lift $ generateFormPost $ profileForm' mv
   $(widgetFile "profile")
 
-userListWidget :: Widget
-userListWidget = do
-  (modalCreateUser, modalEditUser, modalKillUser) <- lift newIdent3
-  us <- lift $ runDB $ selectList [] [Asc UserId]
-  $(widgetFile "user-list")
-
 createUserWidget :: Maybe (Text, Role, Text, Text) -> Route App -> Widget
 createUserWidget mv toPost = do
   (w, e) <- lift $ generateFormPost $ newAccountForm mv
-  r <- lift getUrlRender
+  r <- lift $ getUrlRender
   $(widgetFile "create-user")
 
 editUserWidget :: Widget
@@ -78,15 +66,6 @@ editUserWidget = do
 killUserWidget :: Widget
 killUserWidget = do
   $(widgetFile "kill-user")
-
-clientListWidget :: Widget
-clientListWidget = do
-  modalEditClient <- lift newIdent
-  let clients = [ ("a7362hd", "Kestrel", "aY/ay7w2hhuqwy9138")
-                , ("97asdh2", "BISocie", "9wae/adisae9dcIOSJ")
-                , ("8asASxp", "Owl",     "SI8weddUH.DHIDU-sd")
-                ]::[(Text, Text, Text)]
-  $(widgetFile "client-list")
 
 editClientWidget :: Widget
 editClientWidget = do

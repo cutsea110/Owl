@@ -1,43 +1,50 @@
 <!-- User List -->
-<form .form-search.inline>
-  <div .input-append>
-    <input type="text" .span2.search-query placeholder="_{MsgAccountID}">
-    <button type="submit" .btn><i class="icon-search"></i>
-
-<form .inline.pull-right>
-  <button href="##{modalCreateUser}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-user_add glyphicon-white"></i> _{MsgAddNewFace}
+<div .page-header>
+  <h2>_{MsgMaintUser}
 
 <div .row>
- <div .span10>
-  <ul .thumbnails>
-    $forall Entity uid u <- us
-      <li .span2>
-        <div .thumbnail>
-          $with h <- userMd5hash' u
-            <img .img-rounded src="#{gravatarUrl 80 h}" data-src="holder.js/150x100" alt>
-          <div .caption>
-            <h5>#{userUsername u} #
-              $if userRole u == Admin
-                <i .glyphicon-crown>
-              $maybe s <- userVerstatus u
-                <span .badge :s == Verified:.badge-success :s == Unverified:.badge-warning >#{show s}
-              $nothing
-                <span .badge>#{show Unverified}
-            <p>#{userFullname u} #
-              <div .btn-group>
-                <button href="##{modalEditUser}" profile-uri="@{AdminTool $ UserProfileR uid}" password-uri="@{AdminTool $ UserPasswordR uid}" email-uri="@{AdminTool $ UserEmailR uid}" data-toggle="modal" onclick="" .btn.btn-primary.btn-mini.edit-profile.edit-password.edit-email>_{MsgEditUser}
-                <button href="##{modalKillUser}" profile-uri="@{AdminTool $ UserProfileR uid}" kill-user-uri="@{AdminTool $ KillUserR uid}" data-toggle="modal" onclick="" .btn.btn-danger.btn-mini.kill-user>_{MsgKillUser}
+  <div .span12>
+    $maybe msg <- mmsg
+      <div .alert.alert-block>
+        <button type="button" .close data-dismiss="alert">&times;
+        <p>#{msg}
+    <form .form-search.inline>
+      <div .input-append>
+        <input type="text" .span2.search-query placeholder="_{MsgAccountID}">
+        <button type="submit" .btn><i class="icon-search"></i>
 
-  <div .pagination.pagination-centered>
-    <ul>
-      <li .disabled><a href="#">«</a>
-      <li .active><a href="#">1</a>
-      <li><a href="#">2</a>
-      <li><a href="#">3</a>
-      <li><a href="#">4</a>
-      <li><a href="#">5</a>
-      <li .disabled><a href="#">..</a>
-      <li><a href="#">»</a>
+    <form .inline.pull-right>
+      <button href="##{modalCreateUser}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-user_add glyphicon-white"></i> _{MsgAddNewFace}
+
+    <ul .thumbnails>
+      $forall Entity uid u <- us
+        <li .span2>
+          <div .thumbnail>
+            $with h <- userMd5hash' u
+              <img .img-rounded src="#{gravatarUrl 80 h}" data-src="holder.js/150x100" alt>
+            <div .caption>
+              <h5>#{userUsername u} #
+                $if userRole u == Admin
+                  <i .glyphicon-crown>
+                $maybe s <- userVerstatus u
+                  <span .badge :s == Verified:.badge-success :s == Unverified:.badge-warning >#{show s}
+                $nothing
+                  <span .badge>#{show Unverified}
+              <p>#{userFullname u} #
+                <div .btn-group>
+                  <button href="##{modalEditUser}" profile-uri="@{AdminTool $ UserProfileR uid}" password-uri="@{AdminTool $ UserPasswordR uid}" email-uri="@{AdminTool $ UserEmailR uid}" data-toggle="modal" onclick="" .btn.btn-primary.btn-mini.edit-profile.edit-password.edit-email>_{MsgEditUser}
+                  <button href="##{modalKillUser}" profile-uri="@{AdminTool $ UserProfileR uid}" kill-user-uri="@{AdminTool $ KillUserR uid}" data-toggle="modal" onclick="" .btn.btn-danger.btn-mini.kill-user>_{MsgKillUser}
+
+    <div .pagination.pagination-centered>
+      <ul>
+        <li .disabled><a href="#">«</a>
+        <li .active><a href="#">1</a>
+        <li><a href="#">2</a>
+        <li><a href="#">3</a>
+        <li><a href="#">4</a>
+        <li><a href="#">5</a>
+        <li .disabled><a href="#">..</a>
+        <li><a href="#">»</a>
 
 <!-- Create User Dialog -->
 <div ##{modalCreateUser} .modal.hide.fade>

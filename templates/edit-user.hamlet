@@ -7,18 +7,18 @@
   <div .tab-content>
     <div .tab-pane.edit-profile.active ##{menuProfile}>
       <!-- No use this post target URI -->
-      ^{profileWidget' $ AdminTool AdminToolsR}
+      ^{profileWidget' $ AdminTool UserListR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}
         message...message...
     <div .tab-pane.edit-password ##{menuPassword}>
       <!-- No use this post target URI -->
-      ^{passwordWidget passform $ AdminTool AdminToolsR}
+      ^{passwordWidget passform $ AdminTool UserListR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}
         message...message...
     <div .tab-pane.edit-email ##{menuEmail}>
-      ^{userEmailWidget Nothing $ AdminTool AdminToolsR}
+      ^{userEmailWidget Nothing $ AdminTool UserListR}
       <div .help-inline>
         <span .label.label-info>_{MsgNOTE}
         message...message...
