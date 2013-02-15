@@ -134,8 +134,8 @@ postProfileR = do
   uid <- requireAuthId
   ((r, _), _) <- runFormPost $ profileForm Nothing
   case r of
-    FormSuccess (fn, gn, cmt) -> do
-      runDB $ update uid [UserFamilyname =. fn, UserGivenname =. gn, UserComment =. cmt]
+    FormSuccess (fn, gn, rl, cmt) -> do
+      runDB $ update uid [UserFamilyname =. fn, UserGivenname =. gn, UserRole =. rl, UserComment =. cmt]
       setMessageI MsgUpdateProfile
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailUpdateProfile

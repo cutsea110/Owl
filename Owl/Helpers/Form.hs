@@ -13,8 +13,8 @@ module Owl.Helpers.Form
 import Import
 import Control.Arrow ((&&&))
 import qualified Data.Text as T (pack)
-import Data.Tuple.HT (fst3, snd3, thd3)
 import Owl.Helpers.Auth.HashDB (validateUser)
+import Owl.Helpers.Util
 import Text.Julius (rawJS)
 
 fs :: RenderMessage m msg => msg -> FieldSettings m
@@ -97,11 +97,15 @@ emailForm' mv = renderBootstrap $ (,,)
 verifyForm :: Maybe Text -> Form Text
 verifyForm mv = renderBootstrap $ areq hiddenField "verkey" mv
 
-profileForm :: Maybe (Text, Text, Maybe Textarea) -> Form (Text, Text, Maybe Textarea)
-profileForm mv = renderBootstrap $ (,,) 
-                 <$> areq textField (fs MsgFamilyName) (fst3 <$> mv)
-                 <*> areq textField (fs MsgGivenName) (snd3 <$> mv)
-                 <*> aopt textareaField (fs MsgProfile) (thd3 <$> mv)
+profileForm :: Maybe (Text, Text, Role, Maybe Textarea) -> Form (Text, Text, Role, Maybe Textarea)
+profileForm mv = renderBootstrap $ (,,,)
+                 <$> areq textField (fs MsgFamilyName) (fst4 <$> mv)
+                 <*> areq textField (fs MsgGivenName) (snd4 <$> mv)
+                 <*> areq (selectFieldList rls) (fs MsgRole) (thd4 <$> mv)
+                 <*> aopt textareaField (fs MsgProfile) (frh4 <$> mv)
+  where
+    rls :: [(Text, Role)]
+    rls = map ((T.pack . show) &&& id) [minBound..maxBound]
 
 fileForm :: Maybe FileInfo -> Form FileInfo
 fileForm mv = renderBootstrap $ areq fileField' (fs MsgUploadFilePath) mv

@@ -41,6 +41,7 @@ Upload: Upload
 
 FamilyName: Family Name
 GivenName: Given Name
+Role: Role
 
 Add: Add
 Close: Close

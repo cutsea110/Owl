@@ -46,7 +46,8 @@ profileWidget :: Route App -> Widget
 profileWidget toPost = do
   u <- lift requireAuth
   r <- lift getUrlRender
-  let mv = Just $ (,,) <$> userFamilyname <*> userGivenname <*> userComment $ entityVal u
+  let mv = Just $ (,,,)
+           <$> userFamilyname <*> userGivenname <*> userRole <*> userComment $ entityVal u
   (w, e) <- lift $ generateFormPost $ profileForm mv
   $(widgetFile "profile")
 

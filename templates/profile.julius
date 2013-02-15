@@ -4,6 +4,7 @@ $('button.edit-profile').click(function(){
       form = $(modalid).find('div.edit-profile form'),
       fname = form.find('input[type=text]').first(),
       gname = form.find('input[type=text]').last(),
+      role = form.find('select'),
       comment = form.find('textarea');
 
   // set action uri for post
@@ -12,10 +13,12 @@ $('button.edit-profile').click(function(){
     if (status=='success') {
       fname.val(data.familyname);
       gname.val(data.givenname);
+      role.val(data.role);
       comment.val(data.comment);
     } else {
       fname.val('');
       gname.val('');
+      role.val('#{rawJS $ show $ fromEnum None + 1}');
       comment.val('');
     }
   });

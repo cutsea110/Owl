@@ -38,6 +38,7 @@ getUserProfileR uid = do
                          , "familyname" .= userFamilyname u
                          , "givenname" .= userGivenname u
                          , "fullname" .= userFullname u
+                         , "role" .= show (fromEnum (userRole u) + 1)
                          , "comment" .= fmap unTextarea (userComment u)
                          , "avatarUrl80" .= gravatarUrl 80 (userMd5hash' u)
                          ]
@@ -46,8 +47,8 @@ postUserProfileR :: UserId -> Handler ()
 postUserProfileR uid = do
   ((r, _), _) <- runFormPost $ profileForm Nothing
   case r of
-    FormSuccess (fn, gn, cmt) -> do
-      runDB $ update uid [UserFamilyname =. fn, UserGivenname =. gn, UserComment =. cmt]
+    FormSuccess (fn, gn, rl, cmt) -> do
+      runDB $ update uid [UserFamilyname =. fn, UserGivenname =. gn, UserRole =. rl, UserComment =. cmt]
       setMessageI MsgUpdateProfile
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailUpdateProfile

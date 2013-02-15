@@ -41,6 +41,7 @@ Upload: アップロード
 
 FamilyName: 姓
 GivenName: 名
+Role: ロール
 
 Add: 追加
 Close: 閉じる

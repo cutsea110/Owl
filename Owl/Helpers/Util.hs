@@ -13,6 +13,13 @@ module Owl.Helpers.Util
        , decrypt
        , sign
        , verify
+       , fst3
+       , snd3
+       , thd3
+       , fst4
+       , snd4
+       , thd4
+       , frh4
        ) where
 
 import Prelude
@@ -29,6 +36,7 @@ import Data.Char (toLower, isSpace)
 import Data.Digest.Pure.MD5 (md5)
 import Data.Text (Text)
 import qualified Data.Text as T
+import Data.Tuple.HT (fst3, snd3, thd3)
 
 newIdent2 :: Yesod m => GHandler s m (Text, Text)
 newIdent2 = (,) <$> newIdent <*> newIdent
@@ -90,3 +98,12 @@ sign = (encode.).RSA.sign
 
 verify :: RSA.PublicKey -> BL.ByteString -> BL.ByteString -> Bool
 verify pub plain cipher = RSA.verify pub plain $ decode cipher
+
+fst4 :: (a, b, c, d) -> a
+fst4 (f,_,_,_) = f
+snd4 :: (a, b, c, d) -> b
+snd4 (_,s,_,_) = s
+thd4 :: (a, b, c, d) -> c
+thd4 (_,_,t,_) = t
+frh4 :: (a, b, c, d) -> d
+frh4 (_,_,_,f) = f
