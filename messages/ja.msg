@@ -69,7 +69,9 @@ EditClient: クライアント編集
 Fire: 削除
 
 PasswordUpdated: パスワードを変更しました.
+PasswordsUnmatch: 新しいパスワードが異なります.
 FailToUpdatePassword: パスワードの変更に失敗しました.
+InvalidCurrentPassword: 現在のパスワードが間違っています.
 
 Verify: 認証する
 VerifyKey: 認証キー

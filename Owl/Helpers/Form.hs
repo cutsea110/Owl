@@ -34,53 +34,58 @@ fs' msg attrs = FieldSettings { fsLabel = SomeMessage msg
                               }
 
 
-accountForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
+accountForm :: Maybe Text -> Form Text
 accountForm mv = renderBootstrap $ areq textField (fs MsgAccountID) mv
 
-accountPasswordForm :: Maybe (Text, Text) -> Html -> MForm s App (FormResult (Text, Text), GWidget s App ())
-accountPasswordForm mv = renderBootstrap $ (,)
-                         <$> areq textField (fs MsgAccountID) (fst <$> mv)
-                         <*> areq passwordConfirmField (fs MsgNewPassword) (snd <$> mv)
-
-passwordForm :: User -> Maybe (Text, Text) -> Form Text
-passwordForm u mv fragment = do
-  (res, widget) <- flip renderBootstrap fragment $ (,)
-              <$> areq passwordField (fs MsgCurrentPassword) (fst <$> mv)
-              <*> areq passwordConfirmField (fs MsgNewPassword) (snd <$> mv)
-  res' <- lift $ case res of
-    FormSuccess (curPass, newPass) -> do
-      checkPass <- validateUser (mkUnique u) curPass
-      return $ if checkPass then FormSuccess newPass else FormFailure [msg]
-    _ -> return $ snd <$> res
-  return (res', widget)
+accountPasswordForm :: Maybe (Text, Text, Text) -> Form (Text, Text)
+accountPasswordForm mv fragment = do
+  (y, l) <- lift $ (,) <$> getYesod <*> fmap reqLangs getRequest
+  (res, widget) <- flip renderBootstrap fragment $ (,,)
+                   <$> areq textField (fs MsgAccountID) (fst3 <$> mv)
+                   <*> areq passwordField (fs MsgNewPassword) (snd3 <$> mv)
+                   <*> areq passwordField (fs MsgConfirmNewPassword) (thd3 <$> mv)
+  lift $ return $ case res of
+    FormSuccess (id', newPass, newPass')
+      | newPass == newPass' -> (FormSuccess (id', newPass), widget)
+      | otherwise -> (FormFailure [renderMessage y l MsgPasswordsUnmatch], widget)
+    _ -> (fst'snd <$> res, widget)
   where
-    mkUnique = UniqueUser . userUsername
-    msg = "Invalid current password"
+    fst'snd (f, s, t) = (f, s)
 
-passwordConfirmForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
-passwordConfirmForm mv = renderBootstrap $ areq passwordConfirmField (fs MsgNewPassword) mv
+passwordForm :: User -> Maybe (Text, Text, Text) -> Form Text
+passwordForm u mv fragment = do
+  (y, l) <- lift $ (,) <$> getYesod <*> fmap reqLangs getRequest
+  (res, widget) <- flip renderBootstrap fragment $ (,,)
+                   <$> areq passwordField (fs MsgCurrentPassword) (fst3 <$> mv)
+                   <*> areq passwordField (fs MsgNewPassword) (snd3 <$> mv)
+                   <*> areq passwordField (fs MsgConfirmNewPassword) (thd3 <$> mv)
+  lift $ case res of
+    FormSuccess (curPass, newPass, newPass')
+      | newPass == newPass' -> do
+        checkPass <- validateUser (UniqueUser $ userUsername u) curPass
+        if checkPass 
+          then return (FormSuccess newPass, widget) 
+          else return (FormFailure [renderMessage y l MsgInvalidCurrentPassword], widget)
+      | otherwise -> return (FormFailure [renderMessage y l MsgPasswordsUnmatch], widget)
+    _ -> return (snd3 <$> res, widget)
 
-passwordConfirmField :: Field s App Text
-passwordConfirmField = Field
-  { fieldParse = \vals _ -> do
-       case vals of
-         [x, y] | x == y -> return $ Right $ Just x
-                | otherwise -> return $ Left "Passwords don't match"
-         [] -> return $ Right Nothing
-         _ -> return $ Left "Incorrect number of results"
-  , fieldView = \id' name attrs val isReq -> [whamlet|
-<input ##{id'} name=#{name} *{attrs} type=password :isReq:required>
-<label.control-label for=##{id'}-confirm>_{MsgConfirmNewPassword}
-<input ##{id'}-confirm name=#{name} *{attrs} type=password :isReq:required>
-|]
-  , fieldEnctype = UrlEncoded
-  }
+passwordConfirmForm :: Maybe (Text, Text) -> Form Text
+passwordConfirmForm mv fragment = do
+  (y, l) <- lift $ (,) <$> getYesod <*> fmap reqLangs getRequest
+  (res, widget) <- flip renderBootstrap fragment $ (,)
+                   <$> areq passwordField (fs MsgNewPassword) (fst <$> mv)
+                   <*> areq passwordField (fs MsgConfirmNewPassword) (snd <$> mv)
+  lift $ return $ case res of
+    FormSuccess (newPass, newPass') 
+      | newPass == newPass' -> (FormSuccess newPass, widget)
+      | otherwise -> (FormFailure [renderMessage y l MsgPasswordsUnmatch], widget)
+    _ -> (fst <$> res, widget)
 
-emailForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
+emailForm :: Maybe Text -> Form Text
 emailForm mv = renderBootstrap $
                areq emailField (fs' MsgEmail [("placeholder", "your@example.com")]) mv
 
-userEmailForm :: Maybe (Maybe Text, Maybe VerStatus, Maybe Text) -> Html -> MForm s App (FormResult (Maybe Text, Maybe VerStatus, Maybe Text), GWidget s App ())
+userEmailForm :: Maybe (Maybe Text, Maybe VerStatus, Maybe Text) -> Form (Maybe Text, Maybe VerStatus, Maybe Text)
 userEmailForm mv = renderBootstrap $ (,,)
                    <$> aopt emailField (fs' MsgEmail [("placeholder", "your@example.com")]) (fst3 <$> mv)
                    <*> aopt (selectFieldList vss) (fs MsgVerstatus) (snd3 <$> mv)
@@ -89,16 +94,16 @@ userEmailForm mv = renderBootstrap $ (,,)
     vss :: [(Text, VerStatus)]
     vss = map ((T.pack . show) &&& id) [minBound..maxBound]
 
-verifyForm :: Maybe Text -> Html -> MForm s App (FormResult Text, GWidget s App ())
+verifyForm :: Maybe Text -> Form Text
 verifyForm mv = renderBootstrap $ areq hiddenField "verkey" mv
 
-profileForm :: Maybe (Text, Text, Maybe Textarea) -> Html -> MForm s App (FormResult (Text, Text, Maybe Textarea), GWidget s App ())
+profileForm :: Maybe (Text, Text, Maybe Textarea) -> Form (Text, Text, Maybe Textarea)
 profileForm mv = renderBootstrap $ (,,) 
                  <$> areq textField (fs MsgFamilyName) (fst3 <$> mv)
                  <*> areq textField (fs MsgGivenName) (snd3 <$> mv)
                  <*> aopt textareaField (fs MsgProfile) (thd3 <$> mv)
 
-fileForm :: Maybe FileInfo -> Html -> MForm s App (FormResult FileInfo, GWidget s App ())
+fileForm :: Maybe FileInfo -> Form FileInfo
 fileForm mv = renderBootstrap $ areq fileField' (fs MsgUploadFilePath) mv
 
 fileField' :: Field s App FileInfo

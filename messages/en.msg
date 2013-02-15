@@ -68,8 +68,10 @@ ClientSecret: Client Secret
 EditClient: Edit Client
 Fire: Fire
 
-PasswordUpdated: password updated.
-FailToUpdatePassword: fail to updated password.
+PasswordUpdated: Password updated.
+PasswordsUnmatch: Passwords don't match.
+FailToUpdatePassword: Fail to updated password.
+InvalidCurrentPassword: Invalid current password.
 
 Verify: Verify
 VerifyKey: Verify key
