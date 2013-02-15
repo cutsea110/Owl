@@ -44,7 +44,7 @@ accountPasswordForm mv fragment = do
                    <$> areq textField (fs MsgAccountID) (fst3 <$> mv)
                    <*> areq passwordField (fs MsgNewPassword) (snd3 <$> mv)
                    <*> areq passwordField (fs MsgConfirmNewPassword) (thd3 <$> mv)
-  lift $ return $ case res of
+  return $ case res of
     FormSuccess (id', newPass, newPass')
       | newPass == newPass' -> (FormSuccess (id', newPass), widget)
       | otherwise -> (FormFailure [renderMessage y l MsgPasswordsUnmatch], widget)
@@ -75,7 +75,7 @@ passwordForm mv fragment = do
   (res, widget) <- flip renderBootstrap fragment $ (,)
                    <$> areq passwordField (fs MsgNewPassword) (fst <$> mv)
                    <*> areq passwordField (fs MsgConfirmNewPassword) (snd <$> mv)
-  lift $ return $ case res of
+  return $ case res of
     FormSuccess (newPass, newPass') 
       | newPass == newPass' -> (FormSuccess newPass, widget)
       | otherwise -> (FormFailure [renderMessage y l MsgPasswordsUnmatch], widget)
