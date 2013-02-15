@@ -91,18 +91,7 @@ postCreateUserR = do
   case r of
     FormSuccess (uname, pass) -> do
       runDB $ do
-        uid <- insert $ User { userUsername= uname 
-                             , userPassword="" 
-                             , userSalt="" 
-                             , userRole=None 
-                             , userFamilyname="" 
-                             , userGivenname="" 
-                             , userComment=Nothing 
-                             , userEmail=Nothing 
-                             , userVerkey=Nothing 
-                             , userVerstatus=Nothing 
-                             , userMd5hash=Nothing
-                             }
+        uid <- insert $ defUser { userUsername = uname }
         replace uid =<< setPassword pass =<< get404 uid
       setMessageI MsgCreateNewFace
     FormFailure (x:_) -> setMessage $ toHtml x
@@ -131,18 +120,11 @@ postImportCsvR = do
     importCSV = runDB . mapM_ importRow . fmap (fmap decodeUtf8) . filter ((>=5).length)
     importRow (uname:rawpass:email:fname:gname:_) = do
       uid <- maybe 
-             (insert $ User { userUsername=uname
-                            , userPassword=""
-                            , userSalt=""
-                            , userRole=None
-                            , userFamilyname=fname
-                            , userGivenname=gname
-                            , userComment=Nothing
-                            , userEmail=Just email
-                            , userVerkey=Nothing
-                            , userVerstatus=Nothing
-                            , userMd5hash=Nothing
-                            })
-              (return . entityKey)
+             (insert $ defUser { userUsername=uname
+                               , userFamilyname=fname
+                               , userGivenname=gname
+                               , userEmail=Just email
+                               })
+             (return . entityKey)
              =<< getBy (UniqueUser uname)
       replace uid =<< setPassword rawpass =<< get404 uid
