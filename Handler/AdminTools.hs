@@ -45,10 +45,10 @@ getUserProfileR uid = do
 
 postUserProfileR :: UserId -> Handler ()
 postUserProfileR uid = do
-  ((r, _), _) <- runFormPost $ profileForm Nothing
+  ((r, _), _) <- runFormPost $ profileForm' Nothing
   case r of
-    FormSuccess (fn, gn, rl, cmt) -> do
-      runDB $ update uid [UserFamilyname =. fn, UserGivenname =. gn, UserRole =. rl, UserComment =. cmt]
+    FormSuccess (fn, gn, role, cmt) -> do
+      runDB $ update uid [UserFamilyname =. fn, UserGivenname =. gn, UserRole =. role, UserComment =. cmt]
       setMessageI MsgUpdateProfile
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailUpdateProfile

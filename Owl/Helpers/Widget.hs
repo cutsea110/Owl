@@ -44,11 +44,16 @@ importCsvWidget = do
 
 profileWidget :: Route App -> Widget
 profileWidget toPost = do
-  u <- lift requireAuth
-  r <- lift getUrlRender
-  let mv = Just $ (,,,)
-           <$> userFamilyname <*> userGivenname <*> userRole <*> userComment $ entityVal u
+  (u, r) <- lift $ (,) <$> requireAuth <*> getUrlRender
+  let mv = Just $ (,,) <$> userFamilyname <*> userGivenname <*> userComment $ entityVal u
   (w, e) <- lift $ generateFormPost $ profileForm mv
+  $(widgetFile "profile")
+
+profileWidget' :: Route App -> Widget
+profileWidget' toPost = do
+  (u, r) <- lift $ (,) <$> requireAuth <*> getUrlRender
+  let mv = Just $ (,,,) <$> userFamilyname <*> userGivenname <*> userRole <*> userComment $ entityVal u
+  (w, e) <- lift $ generateFormPost $ profileForm' mv
   $(widgetFile "profile")
 
 userListWidget :: Widget
