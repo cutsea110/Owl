@@ -69,6 +69,7 @@ EditClient: Edit Client
 Fire: Fire
 
 PasswordUpdated: password updated.
+PasswordsUnmatch: new passwords don't match.
 FailToUpdatePassword: fail to updated password.
 
 Verify: Verify

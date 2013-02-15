@@ -91,9 +91,21 @@ postCreateUserR = do
   case r of
     FormSuccess (uname, pass) -> do
       runDB $ do
-        uid <- insert $ User uname "" "" None "" "" Nothing Nothing Nothing Nothing Nothing
+        uid <- insert $ User { userUsername= uname 
+                             , userPassword="" 
+                             , userSalt="" 
+                             , userRole=None 
+                             , userFamilyname="" 
+                             , userGivenname="" 
+                             , userComment=Nothing 
+                             , userEmail=Nothing 
+                             , userVerkey=Nothing 
+                             , userVerstatus=Nothing 
+                             , userMd5hash=Nothing
+                             }
         replace uid =<< setPassword pass =<< get404 uid
       setMessageI MsgCreateNewFace
+    FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailToCreateUser
   redirect (AdminTool AdminToolsR, [("tab", "maint-user")])
 
