@@ -39,6 +39,7 @@ accountForm mv = renderBootstrap $ areq textField (fs MsgAccountID) mv
 
 accountPasswordForm :: Maybe (Text, Text, Text) -> Form (Text, Text)
 accountPasswordForm mv fragment = do
+  (y, l) <- lift $ (,) <$> getYesod <*> fmap reqLangs getRequest
   (res, widget) <- flip renderBootstrap fragment $ (,,)
                    <$> areq textField (fs MsgAccountID) (fst3 <$> mv)
                    <*> areq passwordField (fs MsgNewPassword) (snd3 <$> mv)
@@ -46,13 +47,14 @@ accountPasswordForm mv fragment = do
   lift $ return $ case res of
     FormSuccess (id', newPass, newPass')
       | newPass == newPass' -> (FormSuccess (id', newPass), widget)
-      | otherwise -> (FormFailure ["Passwords don't match"], widget)
+      | otherwise -> (FormFailure [renderMessage y l MsgPasswordsUnmatch], widget)
     _ -> (fst'snd <$> res, widget)
   where
     fst'snd (f, s, t) = (f, s)
 
 passwordForm :: User -> Maybe (Text, Text, Text) -> Form Text
 passwordForm u mv fragment = do
+  (y, l) <- lift $ (,) <$> getYesod <*> fmap reqLangs getRequest
   (res, widget) <- flip renderBootstrap fragment $ (,,)
                    <$> areq passwordField (fs MsgCurrentPassword) (fst3 <$> mv)
                    <*> areq passwordField (fs MsgNewPassword) (snd3 <$> mv)
@@ -63,19 +65,20 @@ passwordForm u mv fragment = do
         checkPass <- validateUser (UniqueUser $ userUsername u) curPass
         if checkPass 
           then return (FormSuccess newPass, widget) 
-          else return (FormFailure ["Invalid current password"], widget)
-      | otherwise -> return (FormFailure ["Passwords don't match"], widget)
+          else return (FormFailure [renderMessage y l MsgInvalidCurrentPassword], widget)
+      | otherwise -> return (FormFailure [renderMessage y l MsgPasswordsUnmatch], widget)
     _ -> return (snd3 <$> res, widget)
 
 passwordConfirmForm :: Maybe (Text, Text) -> Form Text
 passwordConfirmForm mv fragment = do
+  (y, l) <- lift $ (,) <$> getYesod <*> fmap reqLangs getRequest
   (res, widget) <- flip renderBootstrap fragment $ (,)
                    <$> areq passwordField (fs MsgNewPassword) (fst <$> mv)
                    <*> areq passwordField (fs MsgConfirmNewPassword) (snd <$> mv)
   lift $ return $ case res of
     FormSuccess (newPass, newPass') 
       | newPass == newPass' -> (FormSuccess newPass, widget)
-      | otherwise -> (FormFailure ["Passwords don't match"], widget)
+      | otherwise -> (FormFailure [renderMessage y l MsgPasswordsUnmatch], widget)
     _ -> (fst <$> res, widget)
 
 emailForm :: Maybe Text -> Form Text
