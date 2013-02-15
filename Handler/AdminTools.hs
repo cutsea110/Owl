@@ -56,7 +56,7 @@ postUserProfileR uid = do
 postUserPasswordR :: UserId -> Handler ()
 postUserPasswordR uid = do
   u <- runDB $ get404 uid
-  ((r, _), _) <- runFormPost $ passwordConfirmForm Nothing
+  ((r, _), _) <- runFormPost $ passwordForm Nothing
   case r of
     FormSuccess newPass -> do
       runDB $ replace uid =<< setPassword newPass u
@@ -76,7 +76,7 @@ getUserEmailR uid = do
 
 postUserEmailR :: UserId -> Handler ()
 postUserEmailR uid = do
-  ((r, _), _) <- runFormPost $ userEmailForm Nothing
+  ((r, _), _) <- runFormPost $ emailForm' Nothing
   case r of
     FormSuccess (memail, mverstatus, mverkey) -> do
       runDB $ update uid [UserEmail =. memail, UserVerstatus =. mverstatus, UserVerkey =. mverkey]

@@ -2,9 +2,9 @@ module Owl.Helpers.Form
        ( accountForm
        , accountPasswordForm
        , passwordForm
-       , passwordConfirmForm
+       , passwordForm'
        , emailForm
-       , userEmailForm
+       , emailForm'
        , verifyForm
        , profileForm
        , fileForm
@@ -52,8 +52,8 @@ accountPasswordForm mv fragment = do
   where
     fst'snd (f, s, t) = (f, s)
 
-passwordForm :: User -> Maybe (Text, Text, Text) -> Form Text
-passwordForm u mv fragment = do
+passwordForm' :: User -> Maybe (Text, Text, Text) -> Form Text
+passwordForm' u mv fragment = do
   (y, l) <- lift $ (,) <$> getYesod <*> fmap reqLangs getRequest
   (res, widget) <- flip renderBootstrap fragment $ (,,)
                    <$> areq passwordField (fs MsgCurrentPassword) (fst3 <$> mv)
@@ -69,8 +69,8 @@ passwordForm u mv fragment = do
       | otherwise -> return (FormFailure [renderMessage y l MsgPasswordsUnmatch], widget)
     _ -> return (snd3 <$> res, widget)
 
-passwordConfirmForm :: Maybe (Text, Text) -> Form Text
-passwordConfirmForm mv fragment = do
+passwordForm :: Maybe (Text, Text) -> Form Text
+passwordForm mv fragment = do
   (y, l) <- lift $ (,) <$> getYesod <*> fmap reqLangs getRequest
   (res, widget) <- flip renderBootstrap fragment $ (,)
                    <$> areq passwordField (fs MsgNewPassword) (fst <$> mv)
@@ -85,8 +85,8 @@ emailForm :: Maybe Text -> Form Text
 emailForm mv = renderBootstrap $
                areq emailField (fs' MsgEmail [("placeholder", "your@example.com")]) mv
 
-userEmailForm :: Maybe (Maybe Text, Maybe VerStatus, Maybe Text) -> Form (Maybe Text, Maybe VerStatus, Maybe Text)
-userEmailForm mv = renderBootstrap $ (,,)
+emailForm' :: Maybe (Maybe Text, Maybe VerStatus, Maybe Text) -> Form (Maybe Text, Maybe VerStatus, Maybe Text)
+emailForm' mv = renderBootstrap $ (,,)
                    <$> aopt emailField (fs' MsgEmail [("placeholder", "your@example.com")]) (fst3 <$> mv)
                    <*> aopt (selectFieldList vss) (fs MsgVerstatus) (snd3 <$> mv)
                    <*> aopt textField (fs MsgVerkey) (thd3 <$> mv)

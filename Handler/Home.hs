@@ -29,7 +29,7 @@ getHomeR = do
   (menuProfile, menuPassword, menuEmail) <- newIdent3
   tabIs <- fmap (maybe ("profile"==) (==)) $ lookupGetParam "tab"
   mmsg <- getMessage
-  let passform = passwordForm (entityVal u) Nothing
+  let passform = passwordForm' (entityVal u) Nothing
   defaultLayout $ do
     setTitle "Home"
     $(widgetFile "homepage")
@@ -37,7 +37,7 @@ getHomeR = do
 postPasswordR :: Handler ()
 postPasswordR = do
   u <- requireAuth
-  ((r, _), _) <- runFormPost $ passwordForm (entityVal u) Nothing
+  ((r, _), _) <- runFormPost $ passwordForm' (entityVal u) Nothing
   case r of
     FormSuccess newPass -> do
       runDB . replace (entityKey u) =<< setPassword newPass (entityVal u)

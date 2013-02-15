@@ -27,7 +27,7 @@ emailWidget toPost = do
 userEmailWidget :: Maybe User -> Route App -> Widget
 userEmailWidget mu toPost = do
   let (memail, mverstatus, mverkey) = (join $ userEmail <$> mu, join $ userVerstatus <$> mu, join $ userVerkey <$> mu)
-  (w, e) <- lift $ generateFormPost $ userEmailForm $ Just (memail, mverstatus, mverkey)
+  (w, e) <- lift $ generateFormPost $ emailForm' $ Just (memail, mverstatus, mverkey)
   r <- lift getUrlRender
   $(widgetFile "user-email")
 
@@ -66,7 +66,7 @@ editUserWidget :: Widget
 editUserWidget = do
   u <- lift requireAuth
   (menuProfile, menuPassword, menuEmail) <- lift newIdent3
-  let passform = passwordConfirmForm Nothing
+  let passform = passwordForm Nothing
   $(widgetFile "edit-user")
 
 killUserWidget :: Widget
