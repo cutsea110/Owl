@@ -1,6 +1,6 @@
 module Owl.Helpers.Form 
        ( accountForm
-       , accountPasswordForm
+       , newAccountForm
        , passwordForm
        , passwordForm'
        , emailForm
@@ -37,20 +37,23 @@ fs' msg attrs = FieldSettings { fsLabel = SomeMessage msg
 accountForm :: Maybe Text -> Form Text
 accountForm mv = renderBootstrap $ areq textField (fs MsgAccountID) mv
 
-accountPasswordForm :: Maybe (Text, Text, Text) -> Form (Text, Text)
-accountPasswordForm mv fragment = do
+newAccountForm :: Maybe (Text, Role, Text, Text) -> Form (Text, Role, Text)
+newAccountForm mv fragment = do
   (y, l) <- lift $ (,) <$> getYesod <*> fmap reqLangs getRequest
-  (res, widget) <- flip renderBootstrap fragment $ (,,)
-                   <$> areq textField (fs MsgAccountID) (fst3 <$> mv)
-                   <*> areq passwordField (fs MsgNewPassword) (snd3 <$> mv)
-                   <*> areq passwordField (fs MsgConfirmNewPassword) (thd3 <$> mv)
+  (res, widget) <- flip renderBootstrap fragment $ (,,,)
+                   <$> areq textField (fs MsgAccountID) (fst4 <$> mv)
+                   <*> areq (selectFieldList rls) (fs MsgRole) (snd4 <$> mv)
+                   <*> areq passwordField (fs MsgNewPassword) (thd4 <$> mv)
+                   <*> areq passwordField (fs MsgConfirmNewPassword) (frh4 <$> mv)
   return $ case res of
-    FormSuccess (id', newPass, newPass')
-      | newPass == newPass' -> (FormSuccess (id', newPass), widget)
+    FormSuccess (id', role, newPass, newPass')
+      | newPass == newPass' -> (FormSuccess (id', role, newPass), widget)
       | otherwise -> (FormFailure [renderMessage y l MsgPasswordsUnmatch], widget)
-    _ -> (fst'snd <$> res, widget)
+    _ -> (drop4th <$> res, widget)
   where
-    fst'snd (f, s, t) = (f, s)
+    rls :: [(Text, Role)]
+    rls = map ((T.pack . show) &&& id) [minBound..maxBound]
+    drop4th (f, s, t, _) = (f, s, t)
 
 passwordForm' :: User -> Maybe (Text, Text, Text) -> Form Text
 passwordForm' u mv fragment = do

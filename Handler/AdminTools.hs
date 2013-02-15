@@ -88,11 +88,11 @@ postUserEmailR uid = do
 
 postCreateUserR :: Handler ()
 postCreateUserR = do
-  ((r, _), _) <- runFormPost $ accountPasswordForm Nothing
+  ((r, _), _) <- runFormPost $ newAccountForm Nothing
   case r of
-    FormSuccess (uname, pass) -> do
+    FormSuccess (uname, role, pass) -> do
       runDB $ do
-        uid <- insert $ defUser { userUsername = uname }
+        uid <- insert $ defUser { userUsername = uname, userRole = role }
         replace uid =<< setPassword pass =<< get404 uid
       setMessageI MsgCreateNewFace
     FormFailure (x:_) -> setMessage $ toHtml x
