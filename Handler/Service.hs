@@ -6,10 +6,11 @@ import Import hiding (object)
 import Owl.Helpers.Auth.HashDB (validateUser)
 
 import Control.Monad (mzero)
+import Control.Monad.Trans.Maybe (MaybeT(..))
 import Data.Conduit as C
 import Network.Wai
 import Data.Aeson
-import Data.Conduit.Attoparsec (sinkParser)
+import Data.Attoparsec (parse, maybeResult)
 import qualified Data.ByteString.Lazy.Char8 as LB
 import qualified Data.Text as T
 import Data.HashMap.Strict as M (toList)
@@ -69,22 +70,36 @@ instance ToJSON AuthRes where
 
 postAuthenticateR :: Handler RepJson
 postAuthenticateR = do
-  r <- fmap reqWaiRequest getRequest
-  v <- liftIO $ runResourceT $ decrypt' (requestBody r) $$ sinkParser json
-  case fromJSON v of
-    Success (AuthReq ident pass) -> jsonToRepJson =<< authentication (ident, pass)
-    Error msg -> invalidArgs [T.pack msg]
+  req <- getRequest
+  let (req', h) = (reqWaiRequest req, requestHeaders req')
+  mc <- liftIO $ runResourceT $ requestBody req' $$ await
+  let mchecked = mc >>= \cipher ->
+        lookup "X-Owl-clientId" h >>= \clientId ->
+        lookup "X-Owl-signature" h >>= \signature ->
+        lookup clientId Settings.clientPublicKeys >>= \pubkey ->
+        return (verify pubkey cipher signature,
+                pubkey,
+                maybeResult $ parse json $ decrypt Settings.owl_priv cipher
+               )
+  case mchecked of
+    Just (True, key, Just v) -> case fromJSON v of
+      Success (AuthReq ident pass) ->
+        jsonToRepJson =<< authentication key (ident, pass)
+      Error msg -> invalidArgs [T.pack msg]
+    _ -> permissionDeniedI MsgYouUnauthorizedClient
   where
-    decrypt' = mapOutput (decrypt Settings.owl_priv)
-    authentication (ident, pass) = do
+    authentication key (ident, pass) = do
+      (y, l) <- (,) <$> getYesod <*> fmap reqLangs getRequest
       checked <- validateUser (UniqueUser ident) pass
       r <- if checked
         then do
         u <- runDB $ getBy404 (UniqueUser ident)
         return $ case userVerstatus (entityVal u) of
               Just Verified -> Accepted ident (userEmail (entityVal u))
-              Just Unverified -> Rejected ident pass "Unverified email address"
-              Nothing -> Rejected ident pass "Unverified email address"
+              Just Unverified ->
+                Rejected ident pass $ renderMessage y l MsgUnverifiedEmailaddress
+              Nothing ->
+                Rejected ident pass $ renderMessage y l MsgUnverifiedEmailaddress
         else do
-        return $ Rejected ident pass "The account/password are invalid"
-      return . AuthRes' . fst =<< (liftIO $ encrypt Settings.bisocie_pub $ encode r)
+        return $ Rejected ident pass $ renderMessage y l MsgTheAccountPasswordInvalid
+      return . AuthRes' . fst =<< (liftIO $ encrypt key $ encode r)

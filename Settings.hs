@@ -3,7 +3,19 @@
 -- In addition, you can configure a number of different aspects of Yesod
 -- by overriding methods in the Yesod typeclass. That instance is
 -- declared in the Foundation.hs file.
-module Settings where
+module Settings
+       ( PersistConfig
+       , staticDir
+       , staticRoot
+       , widgetFileSettings
+       , widgetFile
+       , Extra(..)
+       , parseExtra
+       , owlEmailAddress
+       , owl_pub
+       , owl_priv
+       , clientPublicKeys
+       ) where
 
 import Prelude
 import Text.Shakespeare.Text (st)
@@ -16,6 +28,7 @@ import Data.Yaml
 import Control.Applicative
 import Settings.Development
 import Data.Default (def)
+import qualified Data.ByteString as B
 import Text.Hamlet
 import Network.Mail.Mime (Address(..))
 import Crypto.PubKey.RSA
@@ -109,3 +122,7 @@ bisocie_pub = PublicKey
                 , public_n = 142887632286261757537094637659623324734697953632479544023914951183445364758392871651394986748021326605711095552963080510340887443639041675225698836993818697214651802692561889331648696803649628007583123319923152270864869553112419238211869186697095157615128026430308563152416661072674744763116497602227470107301
                 , public_e = 65537
                 }
+
+clientPublicKeys :: [(B.ByteString, PublicKey)]
+clientPublicKeys = [ ("BISocie", bisocie_pub)
+                   ]

@@ -69,6 +69,7 @@ ClientName: クライアント名
 ClientSecret: クライアント秘密キー
 EditClient: クライアント編集
 Fire: 削除
+YouUnauthorizedClient: 正規のクライアントではありません.
 
 PasswordUpdated: パスワードを変更しました.
 PasswordsUnmatch: 新しいパスワードが異なります.
@@ -98,3 +99,6 @@ FailToImportUsers: ユーザのインポートに失敗しました.
 
 ThisMailaddressIs: このメールアドレスは現在
 Post4ThisMailaddressIs: です.
+
+UnverifiedEmailaddress: メールアドレスがまだ有効ではありません.
+TheAccountPasswordInvalid: そのアカウントとパスワードは有効ではありません.

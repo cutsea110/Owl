@@ -69,6 +69,7 @@ ClientName: Client Name
 ClientSecret: Client Secret
 EditClient: Edit Client
 Fire: Fire
+YouUnauthorizedClient: You are Unauthorized client.
 
 PasswordUpdated: Password updated.
 PasswordsUnmatch: Passwords don't match.
@@ -98,3 +99,6 @@ FailToImportUsers: Fail to import users
 
 ThisMailaddressIs: This mail address is
 Post4ThisMailaddressIs: now.
+
+UnverifiedEmailaddress: Unverified email address.
+TheAccountPasswordInvalid: The account/password are invalid.

@@ -96,8 +96,11 @@ decrypt priv cipher = either BS.pack (fromLazy . RSA.decrypt priv . toLazy) $ Ba
 sign :: RSA.PrivateKey -> BL.ByteString -> BL.ByteString
 sign = (encode.).RSA.sign
 
-verify :: RSA.PublicKey -> BL.ByteString -> BL.ByteString -> Bool
-verify pub plain cipher = RSA.verify pub plain $ decode cipher
+verify :: RSA.PublicKey -> BS.ByteString -> BS.ByteString -> Bool
+verify pub plain cipher = RSA.verify pub plain' $ decode cipher'
+  where
+    plain' = toLazy plain
+    cipher' = toLazy cipher
 
 fst4 :: (a, b, c, d) -> a
 fst4 (f,_,_,_) = f
