@@ -130,12 +130,12 @@ loggedInAuth :: GHandler s App AuthResult
 loggedInAuth = fmap (maybe AuthenticationRequired $ const Authorized) maybeAuthId
 
 isAdmin :: GHandler s App Bool
-isAdmin = fmap (maybe False $ (=="system").userUsername.entityVal) maybeAuth
+isAdmin = fmap (maybe False $ (==Admin).userRole.entityVal) maybeAuth
 
 isAdminAuth :: GHandler s App AuthResult
 isAdminAuth = fmap (maybe AuthenticationRequired isadmin) maybeAuth
   where
-    isadmin = toAuth.(=="system").userUsername.entityVal
+    isadmin = toAuth.(==Admin).userRole.entityVal
     toAuth b = if b
                then Authorized 
                else Unauthorized "This account doesn't have administrator privileges."
