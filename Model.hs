@@ -3,6 +3,7 @@ module Model where
 import Prelude
 import Yesod
 import Data.Text (Text)
+import qualified Data.Text as T
 import Database.Persist.Quasi
 import Data.Monoid ((<>))
 import Owl.Helpers.Util (toGravatarHash)
@@ -23,7 +24,9 @@ share [mkPersist sqlSettings, mkMigrate "migrateAll"]
     $(persistFileWith lowerCaseSettings "config/models")
 
 userFullname :: User -> Text
-userFullname u = userFamilyname u <> " " <> userGivenname u
+userFullname u = if T.null $ userFamilyname u <> userGivenname u
+                 then "(no name)"
+                 else userFamilyname u <> " " <> userGivenname u
 
 userMd5hash' :: User -> Text
 userMd5hash' u = case userMd5hash u of
