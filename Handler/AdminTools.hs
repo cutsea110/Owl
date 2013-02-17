@@ -18,6 +18,7 @@ import Data.CSV.Conduit (defCSVSettings)
 import Data.CSV.Conduit.Parser.ByteString (parseCSV)
 import Data.Conduit (($$))
 import Data.Conduit.List (consume)
+import Data.Maybe
 import Data.Text.Encoding (decodeUtf8)
 import Owl.Helpers.Auth.HashDB (setPassword)
 import Owl.Helpers.Widget
@@ -27,6 +28,8 @@ import Owl.Helpers.Util
 getUserListR :: Handler RepHtml
 getUserListR = do
   (modalCreateUser, modalEditUser, modalKillUser) <- newIdent3
+  (mq, mp') <- (,) <$> lookupPostParam "q" <*> lookupPostParam "p"
+--  let mp = maybe 0 fromJust mp'
   us <- runDB $ selectList [] [Asc UserId]
   mmsg <- getMessage
   defaultLayout $ do

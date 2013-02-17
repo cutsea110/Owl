@@ -114,6 +114,15 @@ owl_priv = PrivateKey { private_pub =
                       , private_qinv = 0
                       }
 -- |
+-- Kestrel RSA keys
+--
+kestrel_pub :: PublicKey
+kestrel_pub = PublicKey
+               { public_size = 128
+               , public_n = 120332330775436211464295534571972888673387300679598566062508608458655719305789686349395492378128543547366411787689981100009887893124585139574893280404868432860950478019280547842280406034811001082141945533376685014426870049436530317211335145209888151263557448528262054842217958692127741265705082667427881950147
+               , public_e = 65537
+               }
+-- |
 -- BISocie RSA keys
 --
 bisocie_pub :: PublicKey
@@ -124,5 +133,6 @@ bisocie_pub = PublicKey
                 }
 
 clientPublicKeys :: [(B.ByteString, PublicKey)]
-clientPublicKeys = [ ("BISocie", bisocie_pub)
+clientPublicKeys = [ ("Kestrel", kestrel_pub)
+                   , ("BISocie", bisocie_pub)
                    ]
