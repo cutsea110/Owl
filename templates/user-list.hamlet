@@ -10,7 +10,7 @@
         <p>#{msg}
     <form .form-search.inline>
       <div .input-append>
-        <input type="text" .span2.search-query placeholder="_{MsgAccountID}">
+        <input type="text" name="q" :isJust mq:value="#{fromJust mq}" .span2.search-query placeholder="_{MsgAccountID}">
         <button type="submit" .btn><i class="icon-search"></i>
 
     <form .inline.pull-right>
