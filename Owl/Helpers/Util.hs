@@ -117,4 +117,6 @@ frh4 (_,_,_,f) = f
 ilike :: EntityField v Text -> Text -> Filter v
 ilike field val = Filter field (Left $ T.concat ["%", escape val, "%"]) (BackendSpecificFilter "ILIKE")
   where
-    escape = T.replace "%" "\\%"
+    escape = T.foldr esc ""
+    esc c t | T.any (==c) "%?'" = '\\' `T.cons` c `T.cons` t
+            | otherwise = c `T.cons` t
