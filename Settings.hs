@@ -11,6 +11,9 @@ module Settings
        , widgetFile
        , Extra(..)
        , parseExtra
+       , userNumPerPage
+       , fillGapWidth
+       , pagenateWidth
        , owlEmailAddress
        , owl_pub
        , owl_priv
@@ -85,6 +88,13 @@ parseExtra :: DefaultEnv -> Object -> Parser Extra
 parseExtra _ o = Extra
     <$> o .:  "copyright"
     <*> o .:? "analytics"
+
+userNumPerPage :: Int
+userNumPerPage = 10
+fillGapWidth :: Int
+fillGapWidth = 3
+pagenateWidth :: Int
+pagenateWidth = 3
 
 owlEmailAddress :: Address
 owlEmailAddress = Address { addressName = Just "Owl system"

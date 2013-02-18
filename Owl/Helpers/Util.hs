@@ -20,6 +20,8 @@ module Owl.Helpers.Util
        , snd4
        , thd4
        , frh4
+         -- like query
+       , ilike
        ) where
 
 import Prelude
@@ -28,6 +30,7 @@ import qualified Codec.Crypto.RSA as RSA
 import Control.Applicative ((<$>),(<*>))
 import Control.Arrow (first)
 import Crypto.Random
+import Database.Persist.Store
 import qualified Data.ByteString.Char8 as BS
 import qualified Data.ByteString.Base64 as Base64
 import qualified Data.ByteString.Lazy.Char8 as BL
@@ -110,3 +113,8 @@ thd4 :: (a, b, c, d) -> c
 thd4 (_,_,t,_) = t
 frh4 :: (a, b, c, d) -> d
 frh4 (_,_,_,f) = f
+
+ilike :: EntityField v Text -> Text -> Filter v
+ilike field val = Filter field (Left $ T.concat ["%", escape val, "%"]) (BackendSpecificFilter "ILIKE")
+  where
+    escape = T.replace "%" "\\%"

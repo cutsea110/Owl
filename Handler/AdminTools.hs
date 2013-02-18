@@ -19,22 +19,30 @@ import Data.CSV.Conduit.Parser.ByteString (parseCSV)
 import Data.Conduit (($$))
 import Data.Conduit.List (consume)
 import Data.Maybe
+import qualified Data.Text as T
 import Data.Text.Encoding (decodeUtf8)
 import Owl.Helpers.Auth.HashDB (setPassword)
 import Owl.Helpers.Widget
 import Owl.Helpers.Form
 import Owl.Helpers.Util
+import Settings (userNumPerPage)
 
 getUserListR :: Handler RepHtml
 getUserListR = do
   (modalCreateUser, modalEditUser, modalKillUser) <- newIdent3
-  (mq, mp') <- (,) <$> lookupPostParam "q" <*> lookupPostParam "p"
---  let mp = maybe 0 fromJust mp'
-  us <- runDB $ selectList [] [Asc UserId]
+  (mq, mp) <- (,) <$> lookupGetParam "q" <*> lookupGetParam "p"
+  let p = maybe 0 (read . T.unpack) mp
+  us <- runDB $ selectList (like mq) [ Asc UserId
+                                     , LimitTo userNumPerPage
+                                     , OffsetBy (userNumPerPage * p)
+                                     ]
   mmsg <- getMessage
   defaultLayout $ do
     setTitleI MsgMaintUser
     $(widgetFile "user-list")
+  where
+    like Nothing = []
+    like (Just q) = [UserUsername `ilike` q]
 
 getUserProfileR :: UserId -> Handler RepJson
 getUserProfileR uid = do
