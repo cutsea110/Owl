@@ -32,17 +32,15 @@ getUserListR = do
   (modalCreateUser, modalEditUser, modalKillUser) <- newIdent3
   (mq, mp) <- (,) <$> lookupGetParam "q" <*> lookupGetParam "p"
   let p = maybe 0 (read . T.unpack) mp
-  us <- runDB $ selectList (like mq) [ Asc UserId
-                                     , LimitTo userNumPerPage
-                                     , OffsetBy (userNumPerPage * p)
-                                     ]
+  us <- runDB $ selectList (maybeToList $ fmap (ilike UserUsername) mq)
+                           [ Asc UserId
+                           , LimitTo userNumPerPage
+                           , OffsetBy (userNumPerPage * p)
+                           ]
   mmsg <- getMessage
   defaultLayout $ do
     setTitleI MsgMaintUser
     $(widgetFile "user-list")
-  where
-    like Nothing = []
-    like (Just q) = [UserUsername `ilike` q]
 
 getUserProfileR :: UserId -> Handler RepJson
 getUserProfileR uid = do
