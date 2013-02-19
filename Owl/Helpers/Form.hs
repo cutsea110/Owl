@@ -40,7 +40,7 @@ accountForm mv = renderBootstrap $ areq textField (fs MsgAccountID) mv
 
 newAccountForm :: Maybe (Text, Role, Text, Text) -> Form (Text, Role, Text)
 newAccountForm mv fragment = do
-  (y, l) <- lift $ (,) <$> getYesod <*> fmap reqLangs getRequest
+  render <- lift getMessageRender
   (res, widget) <- flip renderBootstrap fragment $ (,,,)
                    <$> areq textField (fs MsgAccountID) (fst4 <$> mv)
                    <*> areq (selectFieldList rls) (fs MsgRole) (snd4 <$> mv)
@@ -49,7 +49,7 @@ newAccountForm mv fragment = do
   return $ case res of
     FormSuccess (id', role, newPass, newPass')
       | newPass == newPass' -> (FormSuccess (id', role, newPass), widget)
-      | otherwise -> (FormFailure [renderMessage y l MsgPasswordsUnmatch], widget)
+      | otherwise -> (FormFailure [render MsgPasswordsUnmatch], widget)
     _ -> (drop4th <$> res, widget)
   where
     rls :: [(Text, Role)]
@@ -58,7 +58,7 @@ newAccountForm mv fragment = do
     
 passwordForm' :: User -> Maybe (Text, Text, Text) -> Form Text
 passwordForm' u mv fragment = do
-  (y, l) <- lift $ (,) <$> getYesod <*> fmap reqLangs getRequest
+  render <- lift getMessageRender
   (res, widget) <- flip renderBootstrap fragment $ (,,)
                    <$> areq passwordField (fs MsgCurrentPassword) (fst3 <$> mv)
                    <*> areq passwordField (fs MsgNewPassword) (snd3 <$> mv)
@@ -69,20 +69,20 @@ passwordForm' u mv fragment = do
         checkPass <- validateUser (UniqueUser $ userUsername u) curPass
         if checkPass 
           then return (FormSuccess newPass, widget) 
-          else return (FormFailure [renderMessage y l MsgInvalidCurrentPassword], widget)
-      | otherwise -> return (FormFailure [renderMessage y l MsgPasswordsUnmatch], widget)
+          else return (FormFailure [render MsgInvalidCurrentPassword], widget)
+      | otherwise -> return (FormFailure [render MsgPasswordsUnmatch], widget)
     _ -> return (snd3 <$> res, widget)
 
 passwordForm :: Maybe (Text, Text) -> Form Text
 passwordForm mv fragment = do
-  (y, l) <- lift $ (,) <$> getYesod <*> fmap reqLangs getRequest
+  render <- lift getMessageRender
   (res, widget) <- flip renderBootstrap fragment $ (,)
                    <$> areq passwordField (fs MsgNewPassword) (fst <$> mv)
                    <*> areq passwordField (fs MsgConfirmNewPassword) (snd <$> mv)
   return $ case res of
     FormSuccess (newPass, newPass') 
       | newPass == newPass' -> (FormSuccess newPass, widget)
-      | otherwise -> (FormFailure [renderMessage y l MsgPasswordsUnmatch], widget)
+      | otherwise -> (FormFailure [render MsgPasswordsUnmatch], widget)
     _ -> (fst <$> res, widget)
 
 emailForm :: Maybe Text -> Form Text

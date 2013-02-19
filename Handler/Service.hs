@@ -89,7 +89,7 @@ postAuthenticateR = do
     _ -> permissionDeniedI MsgYouUnauthorizedClient
   where
     authentication key (ident, pass) = do
-      (y, l) <- (,) <$> getYesod <*> fmap reqLangs getRequest
+      render <- getMessageRender
       checked <- validateUser (UniqueUser ident) pass
       r <- if checked
         then do
@@ -97,9 +97,9 @@ postAuthenticateR = do
         return $ case userVerstatus (entityVal u) of
               Just Verified -> Accepted ident (userEmail (entityVal u))
               Just Unverified ->
-                Rejected ident pass $ renderMessage y l MsgUnverifiedEmailaddress
+                Rejected ident pass $ render MsgUnverifiedEmailaddress
               Nothing ->
-                Rejected ident pass $ renderMessage y l MsgUnverifiedEmailaddress
+                Rejected ident pass $ render MsgUnverifiedEmailaddress
         else do
-        return $ Rejected ident pass $ renderMessage y l MsgTheAccountPasswordInvalid
+        return $ Rejected ident pass $ render MsgTheAccountPasswordInvalid
       return . AuthRes' . fst =<< (liftIO $ encrypt key $ encode r)
