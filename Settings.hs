@@ -90,7 +90,7 @@ parseExtra _ o = Extra
     <*> o .:? "analytics"
 
 userNumPerPage :: Int
-userNumPerPage = 10
+userNumPerPage = 30
 fillGapWidth :: Int
 fillGapWidth = 3
 pagenateWidth :: Int
