@@ -11,6 +11,7 @@ import Network.Wai
 import Data.Aeson
 import Data.Attoparsec (parse, maybeResult)
 import qualified Data.ByteString.Lazy.Char8 as LB
+import Data.List (find)
 import qualified Data.Text as T
 import Data.HashMap.Strict as M (toList)
 import Owl.Helpers.Util
@@ -74,11 +75,11 @@ postAuthenticateR = do
   let (req', h) = (reqWaiRequest req, requestHeaders req')
   mc <- liftIO $ runResourceT $ requestBody req' $$ await
   let mchecked = mc >>= \cipher ->
-        lookup "X-Owl-clientId" h >>= \clientId ->
+        lookup "X-Owl-clientId" h >>= \cid ->
         lookup "X-Owl-signature" h >>= \signature ->
-        lookup clientId Settings.clientPublicKeys >>= \pubkey ->
-        return (verify pubkey cipher signature,
-                pubkey,
+        find ((==cid).clientId) Settings.clientPublicKeys >>= \c ->
+        return (verify (pubkey c) cipher signature,
+                pubkey c,
                 maybeResult $ parse json $ decrypt Settings.owl_priv cipher
                )
   case mchecked of

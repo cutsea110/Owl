@@ -18,6 +18,7 @@ module Settings
        , owl_pub
        , owl_priv
        , clientPublicKeys
+       , Client(..)
        ) where
 
 import Prelude
@@ -142,7 +143,12 @@ bisocie_pub = PublicKey
                 , public_e = 65537
                 }
 
-clientPublicKeys :: [(B.ByteString, PublicKey)]
-clientPublicKeys = [ ("Kestrel", kestrel_pub)
-                   , ("BISocie", bisocie_pub)
+data Client = Client { clientId :: B.ByteString
+                     , clientName :: Text
+                     , pubkey :: PublicKey
+                     }
+
+clientPublicKeys :: [Client]
+clientPublicKeys = [ Client "Kestrel" "Kestrel" kestrel_pub
+                   , Client "BISocie" "BISocie" bisocie_pub
                    ]
