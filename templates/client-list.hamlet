@@ -21,9 +21,9 @@
       <tbody>
         $forall c <- clients
           <tr onclick="setRowdata4Modal($(this))" data-toggle="modal" href="##{modalEditClient}">
-            <td .client_id><span>#{fst3 c}</span>
-            <td .client_name><span>#{snd3 c}</span>
-            <td .client_secret><span>#{thd3 c}</span>
+            <td .client_id><span>#{BC.unpack $ clientId c}</span>
+            <td .client_name><span>#{clientName c}</span>
+            <td .client_secret><span>#{take 50 $ BC.unpack $ showSshKey $ pubkey c}...</span>
 
 <!-- Edit Client data Dialog -->
 <div ##{modalEditClient} .modal.hide.fade>

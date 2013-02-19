@@ -155,10 +155,7 @@ getClientListR :: Handler RepHtml
 getClientListR = do
   mmsg <- getMessage
   modalEditClient <- newIdent
-  let clients = [ ("a7362hd", "Kestrel", "aY/ay7w2hhuqwy9138")
-                , ("97asdh2", "BISocie", "9wae/adisae9dcIOSJ")
-                , ("8asASxp", "Owl",     "SI8weddUH.DHIDU-sd")
-                ]::[(Text, Text, Text)]
+  let clients = clientPublicKeys
   defaultLayout $ do
     setTitleI MsgMaintClient
     $(widgetFile "client-list")

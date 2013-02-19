@@ -13,6 +13,7 @@ module Owl.Helpers.Util
        , decrypt
        , sign
        , verify
+       , showSshKey
        , fst3
        , snd3
        , thd3
@@ -32,6 +33,7 @@ import qualified Codec.Crypto.RSA as RSA
 import Control.Applicative ((<$>),(<*>))
 import Control.Arrow (first)
 import Crypto.Random
+import qualified Crypto.PubKey.OpenSsh as SSH (OpenSshPublicKey(..), encode, decode)
 import Database.Persist.Store
 import qualified Data.ByteString.Char8 as BS
 import qualified Data.ByteString.Base64 as Base64
@@ -107,6 +109,9 @@ verify pub plain cipher = RSA.verify pub plain' $ decode cipher'
   where
     plain' = toLazy plain
     cipher' = toLazy cipher
+
+showSshKey :: RSA.PublicKey -> BS.ByteString
+showSshKey pub = SSH.encode $ SSH.OpenSshPublicKeyRsa pub ""
 
 fst4 :: (a, b, c, d) -> a
 fst4 (f,_,_,_) = f
