@@ -6,7 +6,6 @@ import Import hiding (object)
 import Owl.Helpers.Auth.HashDB (validateUser)
 
 import Control.Monad (mzero)
-import Control.Monad.Trans.Maybe (MaybeT(..))
 import Data.Conduit as C
 import Network.Wai
 import Data.Aeson
@@ -55,6 +54,7 @@ instance FromJSON AuthRes where
       Rejected <$> o' .: "ident" <*> o' .: "pass" <*> o' .: "reason"
     [("accepted", Object o')] ->
       Accepted <$> o' .: "ident" <*> o' .:? "email"
+    _ -> mzero
   parseJSON _ = mzero
 
 instance ToJSON AuthRes where

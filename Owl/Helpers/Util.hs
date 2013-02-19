@@ -1,4 +1,4 @@
-module Owl.Helpers.Util 
+module Owl.Helpers.Util
        ( newIdent2
        , newIdent3
        , newIdent4
@@ -39,7 +39,6 @@ import qualified Data.ByteString.Lazy.Char8 as BL
 import qualified Data.ByteString.Lazy.UTF8 as BL
 import Data.Char (toLower, isSpace)
 import Data.Digest.Pure.MD5 (md5)
-import Data.Either
 import Data.List (intersperse)
 import Data.Text (Text)
 import qualified Data.Text as T
@@ -134,11 +133,12 @@ pagenate :: Int    -- fillGapWidth
             -> [Either Text (Text, (Route a, [(Text, Text)]))]
 pagenate f w n (rt, qs) i c = concat $ intersperse [Left ".."] $ ps
   where
-    maxpage = ceiling (fromIntegral i/fromIntegral n) - 1
+    maxpage = ceiling (fromIntegral i / fromIntegral n) - 1
     ints = mkPagenate f w maxpage c
     ps = map (map make) ints
-    make n | n /= c    = Right (T.pack $ show (n+1), (rt, ("p", T.pack $ show n):qs))
-           | otherwise = Left (T.pack $ show (n+1))
+    toText = T.pack . show
+    make n | n /= c    = Right (toText (n+1), (rt, ("p", toText n):qs))
+           | otherwise = Left (toText (n+1))
 
 mkPagenate :: Int -> Int -> Int -> Int -> [[Int]]
 mkPagenate fillGap width maxpage current =

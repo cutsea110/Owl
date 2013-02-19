@@ -18,7 +18,6 @@ import Data.CSV.Conduit (defCSVSettings)
 import Data.CSV.Conduit.Parser.ByteString (parseCSV)
 import Data.Conduit (($$))
 import Data.Conduit.List (consume)
-import Data.List (intersperse)
 import Data.Maybe
 import qualified Data.Text as T
 import Data.Text.Encoding (decodeUtf8)
@@ -26,7 +25,6 @@ import Owl.Helpers.Auth.HashDB (setPassword)
 import Owl.Helpers.Widget
 import Owl.Helpers.Form
 import Owl.Helpers.Util
-import Settings (userNumPerPage, fillGapWidth, pagenateWidth)
 
 getUserListR :: Handler RepHtml
 getUserListR = do
@@ -143,7 +141,7 @@ postImportCsvR = do
     importCSV :: [[BC.ByteString]] -> Handler ()
     importCSV = runDB . mapM_ importRow . fmap (fmap decodeUtf8) . filter ((>=5).length)
     importRow (uname:rawpass:email:fname:gname:_) = do
-      uid <- maybe 
+      uid <- maybe
              (insert $ defUser { userUsername=uname
                                , userFamilyname=fname
                                , userGivenname=gname
