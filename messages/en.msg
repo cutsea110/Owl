@@ -1,3 +1,7 @@
+OwlSystem: This is Owl Authentication system.
+ThisIsOwl: This is Owl.
+LoginFromHere: Login from here.
+
 Emailaddress: Email address
 AccountID: Account ID
 CurrentPassword: Current Password
@@ -13,7 +17,10 @@ Settings: Settings
 Logout: Logout
 
 ForgetPassword: Forget Password?
+IfYouLostPassword: If you lost your password, reset password by using email reminder.
+ReceiveReminderMail: You can login to the Owl at one time.
 Usage: Usage
+DescrptForUsage: (No description)
 
 SendReminderMail: Send reminder mail
 FailSentReminderMail: Fail to send reminder mail
@@ -58,6 +65,7 @@ FailToCreateUser: Fail to create new user
 EditUser: Edit
 KillUser: Kill
 UserKilled: User killed.
+NoteToKillUser: Be carefull to kill user. Couldn't revert the account.
 
 Warning: Warning!
 Danger: Danger!
@@ -97,8 +105,21 @@ FailToUpdateEmail: Fail to update email address
 SuccessImportUsers: Success import users
 FailToImportUsers: Fail to import users
 
+AboutCSVFormat: Use UTF-8 and require header on first line. Columns's format is below.
+AboutAccountIdColumn: User Account ID
+AboutPasswordColumn: User default password
+AboutEmailColumn: User's email address
+AboutFamilyNameColumn: User's family name
+AboutGivenNameColumn: User's given name
+
 ThisMailaddressIs: This mail address is
 Post4ThisMailaddressIs: now.
 
 UnverifiedEmailaddress: Unverified email address.
 TheAccountPasswordInvalid: The account/password are invalid.
+
+NoteToChangeOthersPassword: Be carefull to change user's password.
+NoteToChangeOthersEmail: Be carefull to change user's email address.
+
+ConfigUserSetting: Config user settings
+DescriptForConfigSetting: No item to configure on this version.

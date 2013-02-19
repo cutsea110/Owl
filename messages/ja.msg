@@ -1,6 +1,10 @@
+OwlSystem: Owl認証システム
+ThisIsOwl: Owl認証システムです.
+LoginFromHere: こちらからログインしてください.
+
 Emailaddress: メールアドレス
 AccountID: アカウントID
-CurrentPassword: パスワード
+CurrentPassword: 現在のパスワード
 NewPassword: 新しいパスワード
 ConfirmPassword: パスワード(確認)
 ConfirmNewPassword: 新しいパスワード(確認)
@@ -13,7 +17,10 @@ Settings: 設定
 Logout: ログアウト
 
 ForgetPassword: パスワードを忘れた?
+IfYouLostPassword: パスワードを忘れた場合には,リマインダメールを使ってパスワードをリセットしてください.
+ReceiveReminderMail: リマインダメールに記載しているアカウントで一時的にログインできるようになります.
 Usage: 使用方法
+DescrptForUsage: (No description)
 
 SendReminderMail: リマインダメール送信
 FailSentReminderMail: リマインダメールの送信に失敗しました
@@ -58,6 +65,7 @@ FailToCreateUser: ユーザの作成に失敗しました.
 EditUser: 編集
 KillUser: 削除
 UserKilled: ユーザを削除しました.
+NoteToKillUser: ユーザの削除は十分確認して行ってください.削除したアカウントを元に戻すことは出来ません.
 
 Warning: 警告!
 Danger: 危険!
@@ -94,6 +102,13 @@ Fullname: 氏名
 UpdateEmailaddress: メールアドレスを更新しました.
 FailToUpdateEmail: メールアドレスの更新に失敗しました.
 
+AboutCSVFormat: 文字コードはUTF-8で書かれていることと,先頭にヘッダ行が必要です.フィールドの書式を以下にしめします.
+AboutAccountIdColumn: ユーザアカウントID
+AboutPasswordColumn: デフォルトパスワード
+AboutEmailColumn: ユーザのメールアドレス
+AboutFamilyNameColumn: ユーザの姓
+AboutGivenNameColumn: ユーザの名前
+
 SuccessImportUsers: ユーザのインポートに成功しました.
 FailToImportUsers: ユーザのインポートに失敗しました.
 
@@ -102,3 +117,9 @@ Post4ThisMailaddressIs: です.
 
 UnverifiedEmailaddress: メールアドレスがまだ有効ではありません.
 TheAccountPasswordInvalid: そのアカウントとパスワードは有効ではありません.
+
+NoteToChangeOthersPassword: ユーザのパスワード変更は注意して行ってください.
+NoteToChangeOthersEmail: ユーザのメールアドレス変更は注意して行ってください.
+
+ConfigUserSetting: ユーザ設定
+DescriptForConfigSetting: 現在のバージョンでは設定可能な項目はありません.

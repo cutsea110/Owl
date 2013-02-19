@@ -1,18 +1,10 @@
 <!-- Top page -->
 <div .page-header>
-  <h2>Owl Authentication System
+  <h2>_{MsgOwlSystem}
 
-<p>This is Owl.
+<p>_{MsgThisIsOwl}
 
 $maybe _ <- mu
 $nothing
   <div>
     <a href="@{HOME HomeR}" .btn.btn-large.btn-success>Login from here.
-
-<ul .thumbnails>
-  $forall (kls, xy) <- classes
-    <li .span2>
-      <div .thumbnail>
-        <i class="glyphicon-#{kls}"></i>
-        <div .caption>#{kls}
-        <p>(#{show $ fst xy},#{show $ snd xy})

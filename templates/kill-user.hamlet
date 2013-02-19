@@ -13,6 +13,6 @@
       <div .control-group>
         <div .help-block>
           <span .label.label-important>_{MsgDanger}
-          message...message...
+          _{MsgNoteToKillUser}
         <div .controls.btn-group>
           <button type="submit" .btn.btn-danger><i class="glyphicon-skull glyphicon-white"></i> _{MsgKillUser}

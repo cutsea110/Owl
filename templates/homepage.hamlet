@@ -16,19 +16,9 @@
             <p>#{msg}
 
         <div .tab-pane :tabIs "profile":.active ##{menuProfile}>
-          <p>message...message...message...
           ^{profileWidget $ HOME ProfileR}
-          <div .control-group>
-            <span .help-block>
-              <span .label.label-info>_{MsgNOTE}
-              <p>message...message...message...message...
         <div .tab-pane :tabIs "password":.active ##{menuPassword}>
-          <p> message...message...message...message...
           ^{passwordWidget passform $ HOME PasswordR}
-          <div .control-group>
-            <span .help-block>
-              <span .label.label-info>_{MsgNOTE}
-              <p>message...message...message...message...
         <div .tab-pane :tabIs "email":.active ##{menuEmail}>
           ^{emailWidget $ HOME EmailR}
           <div .control-group>

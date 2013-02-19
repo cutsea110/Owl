@@ -17,15 +17,15 @@
     <div .help-block>
       <span .label.label-info>_{MsgNOTE}
       <h6>CSV format
-      <p>use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.use utf-8 and requeire header on first line.table format is below.
+      <p>_{MsgAboutCSVFormat}
       <dl .dl-horizontal>
         <dt>account id
-        <dd>description for account id...description for account id...description for account id...description for account id...
+        <dd>_{MsgAboutAccountIdColumn}
         <dt>password
-        <dd>description for password...description for password...description for password...description for password...description for password...
+        <dd>_{MsgAboutPasswordColumn}
         <dt>email address
-        <dd>description for email address
+        <dd>_{MsgAboutEmailColumn}
         <dt>family name
-        <dd>description for family name
+        <dd>_{MsgAboutFamilyNameColumn}
         <dt>given name
-        <dd>description for given name
+        <dd>_{MsgAboutGivenNameColumn}
