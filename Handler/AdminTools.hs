@@ -18,6 +18,7 @@ import Data.CSV.Conduit (defCSVSettings)
 import Data.CSV.Conduit.Parser.ByteString (parseCSV)
 import Data.Conduit (($$))
 import Data.Conduit.List (consume)
+import Data.List (intersperse)
 import Data.Maybe
 import qualified Data.Text as T
 import Data.Text.Encoding (decodeUtf8)
@@ -25,18 +26,20 @@ import Owl.Helpers.Auth.HashDB (setPassword)
 import Owl.Helpers.Widget
 import Owl.Helpers.Form
 import Owl.Helpers.Util
-import Settings (userNumPerPage)
+import Settings (userNumPerPage, fillGapWidth, pagenateWidth)
 
 getUserListR :: Handler RepHtml
 getUserListR = do
   (modalCreateUser, modalEditUser, modalKillUser) <- newIdent3
   (mq, mp) <- (,) <$> lookupGetParam "q" <*> lookupGetParam "p"
-  let p = maybe 0 (read . T.unpack) mp
-  us <- runDB $ selectList (maybeToList $ fmap (ilike UserUsername) mq)
-                           [ Asc UserId
-                           , LimitTo userNumPerPage
-                           , OffsetBy (userNumPerPage * p)
-                           ]
+  let (p, qf) = (maybe 0 (read . T.unpack) mp,
+                 maybeToList $ fmap (ilike UserUsername) mq)
+  (c, us) <- runDB $ (,)
+        <$> count qf
+        <*> selectList qf [Asc UserId, LimitTo userNumPerPage, OffsetBy (userNumPerPage * p)]
+  let (q, pages) =
+        (maybeToList $ fmap ("q",) mq,
+         pagenate fillGapWidth pagenateWidth userNumPerPage (AdminTool UserListR, q) c p)
   mmsg <- getMessage
   defaultLayout $ do
     setTitleI MsgMaintUser

@@ -37,14 +37,12 @@
 
     <div .pagination.pagination-centered>
       <ul>
-        <li .disabled><a href="#">«</a>
-        <li .active><a href="#">1</a>
-        <li><a href="#">2</a>
-        <li><a href="#">3</a>
-        <li><a href="#">4</a>
-        <li><a href="#">5</a>
-        <li .disabled><a href="#">..</a>
-        <li><a href="#">»</a>
+        $forall page <- pages
+          $case page
+            $of Left x
+              <li .active><a href="#">#{x}</a>
+            $of Right x
+              <li><a href="@?{snd x}">#{fst x}</a>
 
 <!-- Create User Dialog -->
 <div ##{modalCreateUser} .modal.hide.fade>

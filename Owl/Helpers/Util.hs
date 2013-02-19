@@ -22,6 +22,8 @@ module Owl.Helpers.Util
        , frh4
          -- like query
        , ilike
+         -- pagenate
+       , pagenate
        ) where
 
 import Prelude
@@ -37,6 +39,8 @@ import qualified Data.ByteString.Lazy.Char8 as BL
 import qualified Data.ByteString.Lazy.UTF8 as BL
 import Data.Char (toLower, isSpace)
 import Data.Digest.Pure.MD5 (md5)
+import Data.Either
+import Data.List (intersperse)
 import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Tuple.HT (fst3, snd3, thd3)
@@ -120,3 +124,34 @@ ilike field val = Filter field (Left $ T.concat ["%", escape val, "%"]) (Backend
     escape = T.foldr esc ""
     esc c t | T.any (==c) "%?'" = '\\' `T.cons` c `T.cons` t
             | otherwise = c `T.cons` t
+
+pagenate :: Int    -- fillGapWidth
+            -> Int -- pagenateWidth
+            -> Int -- numPerPage
+            -> (Route a, [(Text, Text)]) -- for @?{}
+            -> Int -- itemCount
+            -> Int -- current page
+            -> [Either Text (Text, (Route a, [(Text, Text)]))]
+pagenate f w n (rt, qs) i c = concat $ intersperse [Left ".."] $ ps
+  where
+    maxpage = ceiling (fromIntegral i/fromIntegral n) - 1
+    ints = mkPagenate f w maxpage c
+    ps = map (map make) ints
+    make n | n /= c    = Right (T.pack $ show (n+1), (rt, ("p", T.pack $ show n):qs))
+           | otherwise = Left (T.pack $ show (n+1))
+
+mkPagenate :: Int -> Int -> Int -> Int -> [[Int]]
+mkPagenate fillGap width maxpage current =
+  if leftConnected && rightConnected
+  then [[ll..rr]]
+  else if leftConnected
+       then [[ll..cr], [rl..rr]]
+       else if rightConnected
+            then [[ll..lr],[cl..rr]]
+            else [[ll..lr],[cl..cr],[rl..rr]]
+  where
+    leftConnected = cl-lr <= fillGap
+    rightConnected = rl-cr <= fillGap
+    (ll, lr) = (0, width)
+    (cl, cr) = (current-width, current+width)
+    (rl, rr) = (maxpage-width, maxpage)
