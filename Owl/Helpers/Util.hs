@@ -33,7 +33,7 @@ import qualified Codec.Crypto.RSA as RSA
 import Control.Applicative ((<$>),(<*>))
 import Control.Arrow (first)
 import Crypto.Random
-import qualified Crypto.PubKey.OpenSsh as SSH (OpenSshPublicKey(..), encode, decode)
+import qualified Crypto.PubKey.OpenSsh as SSH (OpenSshPublicKey(..), encode)
 import Database.Persist.Store
 import qualified Data.ByteString.Char8 as BS
 import qualified Data.ByteString.Base64 as Base64

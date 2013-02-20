@@ -69,5 +69,5 @@ killUserWidget = do
 
 editClientWidget :: Widget
 editClientWidget = do
-  (clientId, clientName, clientSecret) <- lift newIdent3
+  (cId, cName, cSecret) <- lift newIdent3
   $(widgetFile "edit-client")

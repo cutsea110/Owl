@@ -1,10 +1,10 @@
 function setRowdata4Modal(tr){
   var target_modal = $(tr.attr('href')),
-      xs = [ {id: '#{rawJS clientId}', kls: 'client_id'}
-           , {id: '#{rawJS clientName}', kls: 'client_name'}
-           , {id: '#{rawJS clientSecret}', kls: 'client_secret'}
+      xs = [ {id: '#{rawJS cId}', kls: 'client_id'}
+           , {id: '#{rawJS cName}', kls: 'client_name'}
+           , {id: '#{rawJS cSecret}', kls: 'client_secret'}
            ];
   for(var i in xs) {
-    $('#'+xs[i].id, target_modal).val($('td.'+xs[i].kls+' span', tr).text());
+    $('#'+xs[i].id, target_modal).val($('td.'+xs[i].kls+' span', tr).attr('value'));
   }
 }
