@@ -3,16 +3,16 @@
   <div .control-group>
     <label .control-label for="##{cId}">_{MsgClientID}
     <div .controls>
-      <input type="text" ##{cId} .span3>
+      <input type="text" ##{cId} .span3 disabled>
   <div .control-group>
     <label .control-label for="##{cName}">_{MsgClientName}
     <div .controls>
-      <input type="text" ##{cName} .span3>
+      <input type="text" ##{cName} .span3 disabled>
   <div .control-group>
     <label .control-label for="##{cSecret}">_{MsgClientSecret}
     <div .controls>
-      <input type="text" ##{cSecret} .span3>
-  <div .control-group>
+      <textarea ##{cSecret} .span3 disabled>
+  <div .control-group.hidden>
     <div .controls.btn-group>
       <button type="submit" .btn.btn-primary>_{MsgUpdate}
       <button type="submit" .btn.btn-danger><i class="icon-fire icon-white"></i> _{MsgFire}

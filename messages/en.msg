@@ -75,7 +75,7 @@ AddNewClient: Add new client
 ClientID: Client ID
 ClientName: Client Name
 ClientSecret: Client Secret
-EditClient: Edit Client
+EditClient: Client
 Fire: Fire
 YouUnauthorizedClient: You are Unauthorized client.
 

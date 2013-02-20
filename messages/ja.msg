@@ -75,7 +75,7 @@ AddNewClient: 新規クライアント追加
 ClientID: クライアントID
 ClientName: クライアント名
 ClientSecret: クライアント秘密キー
-EditClient: クライアント編集
+EditClient: クライアント
 Fire: 削除
 YouUnauthorizedClient: 正規のクライアントではありません.
 

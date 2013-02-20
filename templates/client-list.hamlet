@@ -9,7 +9,7 @@
         <button type="button" .close data-dismiss="alert">&times;
         <p>#{msg}
 
-    <form .pull-right>
+    <form .pull-right.hidden>
       <button href="##{modalEditClient}" data-toggle="modal" onclick="" .btn.btn-success><i class="glyphicon-circle_plus glyphicon-white"></i> _{MsgAddNewClient}
 
     <table .table.table-striped.table-hover>
