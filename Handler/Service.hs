@@ -6,6 +6,7 @@ import Import hiding (object)
 import Owl.Helpers.Auth.HashDB (validateUser)
 
 import Control.Monad (mzero)
+import Crypto.PubKey.RSA (PublicKey(..))
 import Data.Conduit as C
 import Network.Wai
 import Data.Aeson
@@ -69,19 +70,24 @@ instance ToJSON AuthRes where
                                                          ]
                                   ]
 
-postAuthenticateR :: Handler RepJson
-postAuthenticateR = do
+verifyRequest :: Handler (Maybe (Bool, PublicKey, Maybe Value))
+verifyRequest = do
   req <- getRequest
   let (req', h) = (reqWaiRequest req, requestHeaders req')
   mc <- liftIO $ runResourceT $ requestBody req' $$ await
-  let mchecked = mc >>= \cipher ->
-        lookup "X-Owl-clientId" h >>= \cid ->
-        lookup "X-Owl-signature" h >>= \signature ->
-        find ((==cid).clientId) Settings.clientPublicKeys >>= \c ->
-        return (verify (pubkey c) cipher signature,
-                pubkey c,
-                maybeResult $ parse json $ decrypt Settings.owl_priv cipher
-               )
+  return $ do
+    mc >>= \cipher ->
+      lookup "X-Owl-clientId" h >>= \cid ->
+      lookup "X-Owl-signature" h >>= \signature ->
+      find ((==cid).clientId) Settings.clientPublicKeys >>= \c ->
+      return (verify (pubkey c) cipher signature,
+              pubkey c,
+              maybeResult $ parse json $ decrypt Settings.owl_priv cipher
+             )
+
+postAuthenticateR :: Handler RepJson
+postAuthenticateR = do
+  mchecked <- verifyRequest
   case mchecked of
     Just (True, key, Just v) -> case fromJSON v of
       Success (AuthReq ident pass) ->
