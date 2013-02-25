@@ -59,4 +59,4 @@ postAuthenticateR = do
                 Rejected i p $ render MsgUnverifiedEmailaddress
         else do
         return $ Rejected i p $ render MsgTheAccountPasswordInvalid
-      return . AuthRes' . fst =<< (liftIO $ encrypt key $ encode r)
+      return . OwlRes . fst =<< (liftIO $ encrypt key $ encode r)

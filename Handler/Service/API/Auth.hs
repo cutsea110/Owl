@@ -20,12 +20,12 @@ instance ToJSON AuthReq where
   toJSON (AuthReq i p) = object ["ident" .= i, "pass" .= p]
 
 -- Response for Authentication API
-data AuthRes' = AuthRes' { cipher :: LB.ByteString }
-instance FromJSON AuthRes' where
-  parseJSON (Object o) = AuthRes' <$> o .: "cipher"
+data OwlRes = OwlRes { cipher :: LB.ByteString }
+instance FromJSON OwlRes where
+  parseJSON (Object o) = OwlRes <$> o .: "cipher"
   parseJSON _ = mzero
-instance ToJSON AuthRes' where
-  toJSON (AuthRes' e) = object [ "cipher" .= e ]
+instance ToJSON OwlRes where
+  toJSON (OwlRes e) = object [ "cipher" .= e ]
 
 data AuthRes = Rejected
                { rejected_ident :: Text
@@ -57,5 +57,3 @@ instance ToJSON AuthRes where
                                                          , "email" .= me
                                                          ]
                                   ]
-
-
