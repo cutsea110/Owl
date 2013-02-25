@@ -1,9 +1,10 @@
 module Handler.Service
        ( postAuthenticateR
+       , postChangePasswordR
        ) where
 
 import Import hiding (object)
-import Owl.Helpers.Auth.HashDB (validateUser)
+import Owl.Helpers.Auth.HashDB (validateUser, setPassword)
 import Handler.Service.API.Auth as A
 import Handler.Service.API.ChangePass as CP
 
@@ -52,11 +53,37 @@ postAuthenticateR = do
         u <- runDB $ getBy404 (UniqueUser i)
         return $ case userVerstatus (entityVal u) of
               Just Verified ->
-                Accepted i (userEmail (entityVal u))
+                A.Accepted i (userEmail (entityVal u))
               Just Unverified ->
-                Rejected i p $ render MsgUnverifiedEmailaddress
+                A.Rejected i p $ render MsgUnverifiedEmailaddress
               Nothing ->
-                Rejected i p $ render MsgUnverifiedEmailaddress
+                A.Rejected i p $ render MsgUnverifiedEmailaddress
         else do
-        return $ Rejected i p $ render MsgTheAccountPasswordInvalid
+        return $ A.Rejected i p $ render MsgTheAccountPasswordInvalid
+      return . OwlRes . fst =<< (liftIO $ encrypt key $ encode r)
+
+postChangePasswordR :: Handler RepJson
+postChangePasswordR = do
+  mchecked <- verifyRequest
+  case mchecked of
+    Just (True, key, Just v) -> case fromJSON v of
+      Success (ChangePassReq i c p p2) ->
+        jsonToRepJson =<< changePass key (i, c, p, p2)
+      Error msg -> invalidArgs [T.pack msg]
+    _ -> permissionDeniedI MsgYouUnauthorizedClient
+  where
+    changePass key (i, c, p, p2) = do
+      render <- getMessageRender
+      checked <- validateUser (UniqueUser i) c
+      r <- if checked
+           then if p == p2
+                then do
+                  runDB $ do
+                    u <- getBy404 $ UniqueUser i
+                    replace (entityKey u) =<< setPassword p (entityVal u)
+                  return $ CP.Accepted i p
+                else do
+                  return $ CP.Rejected i c p p2 $ render MsgPasswordsUnmatch
+           else do
+             return $ CP.Rejected i c p p2 $ render MsgTheAccountPasswordInvalid
       return . OwlRes . fst =<< (liftIO $ encrypt key $ encode r)

@@ -29,5 +29,6 @@
   /import-csv       ImportCsvR    GET POST
   /client-list      ClientListR   GET
 
-/srv         Service:
-  /auth      AuthenticateR   POST
+/srv           Service:
+  /auth        AuthenticateR   POST
+  /change-pass ChangePasswordR POST
