@@ -16,21 +16,23 @@ import Data.List (find)
 import qualified Data.Text as T
 import Owl.Helpers.Util
 import qualified Settings
+import qualified Data.ByteString.Char8 as BS
 
 verifyRequest :: Handler (Maybe (Bool, PublicKey, Maybe Value))
 verifyRequest = do
   req <- getRequest
   let (req', h) = (reqWaiRequest req, requestHeaders req')
-  mc <- liftIO $ runResourceT $ requestBody req' $$ await
-  return $ do
-    mc >>= \cph ->
-      lookup "X-Owl-clientId" h >>= \cid ->
-      lookup "X-Owl-signature" h >>= \signature ->
-      find ((==cid).clientId) Settings.clientPublicKeys >>= \c ->
-      return (verify (pubkey c) cph signature,
-              pubkey c,
-              maybeResult $ parse json $ decrypt Settings.owl_priv cph
-             )
+  mcipher <- liftIO $ runResourceT $ requestBody req' $$ await
+  maybe (return Nothing) checker $
+    (,,) <$> mcipher <*> lookup "X-Owl-clientId" h <*> lookup "X-Owl-signature" h
+  where
+    checker :: (BS.ByteString, BS.ByteString, BS.ByteString) -> Handler (Maybe (Bool, PublicKey, Maybe Value))
+    checker (cph, cid, sig) =
+      return $ find ((==cid).clientId) Settings.clientPublicKeys >>= \c ->
+        return (verify (pubkey c) cph sig,
+                pubkey c,
+                maybeResult $ parse json $ decrypt Settings.owl_priv cph
+               )
 
 postAuthenticateR :: Handler RepJson
 postAuthenticateR = do
