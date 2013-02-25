@@ -1,10 +1,15 @@
-module Handler.Service.API.Auth where
+module Handler.Service.API.Auth
+       ( OwlRes(..)
+       , AuthReq(..)
+       , AuthRes(..)
+       ) where
 
 import Import hiding (object)
 import Control.Monad (mzero)
 import Data.Aeson
 import qualified Data.ByteString.Lazy.Char8 as LB
 import Data.HashMap.Strict as M (toList)
+import Handler.Service.API.Internal.Res (OwlRes(..))
 
 -- Request for Authentication API
 data AuthReq = AuthReq
@@ -20,13 +25,6 @@ instance ToJSON AuthReq where
   toJSON (AuthReq i p) = object ["ident" .= i, "pass" .= p]
 
 -- Response for Authentication API
-data OwlRes = OwlRes { cipher :: LB.ByteString }
-instance FromJSON OwlRes where
-  parseJSON (Object o) = OwlRes <$> o .: "cipher"
-  parseJSON _ = mzero
-instance ToJSON OwlRes where
-  toJSON (OwlRes e) = object [ "cipher" .= e ]
-
 data AuthRes = Rejected
                { rejected_ident :: Text
                , rejected_pass :: Text

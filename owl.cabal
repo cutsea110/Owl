@@ -23,6 +23,7 @@ library
                      Handler.Config
                      Handler.Help
                      Handler.Home
+                     Handler.Service.API.Internal.Res
                      Handler.Service.API.Auth
                      Handler.Service.API.ChangePass
                      Handler.Service

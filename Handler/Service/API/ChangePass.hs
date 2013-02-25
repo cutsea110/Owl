@@ -1,8 +1,12 @@
-module Handler.Service.API.ChangePass where
+module Handler.Service.API.ChangePass
+       ( OwlRes(..)
+       , ChangePassReq(..)
+       ) where
 
 import Import hiding (object)
 import Control.Monad (mzero)
 import Data.Aeson
+import Handler.Service.API.Internal.Res (OwlRes(..))
 
 -- Request for Change Password API
 data ChangePassReq = ChangePassReq
