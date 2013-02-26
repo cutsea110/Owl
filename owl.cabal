@@ -23,9 +23,6 @@ library
                      Handler.Config
                      Handler.Help
                      Handler.Home
-                     Handler.Service.API.Internal.Res
-                     Handler.Service.API.Auth
-                     Handler.Service.API.ChangePass
                      Handler.Service
                      Handler.Top
                      Owl.Helpers.Auth.HashDB
@@ -103,6 +100,8 @@ library
                  , crypto-pubkey >= 0.1 && < 0.2
                  , crypto-pubkey-openssh >= 0.1 && < 0.2
                  , RSA >= 1.2 && < 1.3
+
+                 , owl-api >= 0.1 && < 0.2
 
 executable         owl
     if flag(library-only)

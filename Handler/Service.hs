@@ -5,8 +5,8 @@ module Handler.Service
 
 import Import hiding (object)
 import Owl.Helpers.Auth.HashDB (validateUser, setPassword)
-import Handler.Service.API.Auth as A
-import Handler.Service.API.ChangePass as CP
+import Owl.Service.API.Auth as A
+import Owl.Service.API.ChangePass as CP
 
 import Crypto.PubKey.RSA (PublicKey(..))
 import Data.Conduit as C
