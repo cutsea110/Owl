@@ -46,8 +46,11 @@ postPasswordResetR = do
 registOnetimePassword :: UserId -> Text -> Text -> Handler ()
 registOnetimePassword uid uname email = do
   r <- getMessageRender
-  (onepass, now) <- liftIO $ (,) <$> randomKey <*> getCurrentTime
-  _ <- runDB $ insert $ Onetime uid onepass now
+  (onepass, limit) <- liftIO $ (,)
+                      <$> randomKey 
+                      <*> fmap (addUTCTime 86400) getCurrentTime
+  _ <- runDB $ insert $ Onetime uid onepass limit
+
   liftIO $ sendRegister r uname onepass email
   where
     randomKey :: IO Text
