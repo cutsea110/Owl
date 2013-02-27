@@ -5,14 +5,6 @@ module Owl.Helpers.Util
        , getCurrentRoute'
        , toGravatarHash
        , gravatarUrl
-       , fromLazy
-       , toLazy
-         -- RSA
-       , genKey
-       , encrypt
-       , decrypt
-       , sign
-       , verify
        , showSshKey
        , fst3
        , snd3
@@ -73,42 +65,6 @@ gravatarUrl s h = T.concat [ "https://secure.gravatar.com/avatar/"
                            , "?d=identicon&s="
                            , T.pack $ show s
                            ]
-
--- |
---
--- RSA utility
---
-fromLazy :: BL.ByteString -> BS.ByteString
-fromLazy = BS.pack . BL.unpack
-toLazy :: BS.ByteString -> BL.ByteString
-toLazy = BL.pack . BS.unpack
-
-genKey :: IO (RSA.PublicKey, RSA.PrivateKey)
-genKey = (newGenIO::IO SystemRandom) >>= return . fs . flip RSA.generateKeyPair 2048
-  where
-    fs (f, s, _) = (f, s)
-
-encode :: BL.ByteString -> BL.ByteString
-encode = toLazy . Base64.encode . fromLazy
-decode :: BL.ByteString -> BL.ByteString
-decode = either BL.pack toLazy . Base64.decode . fromLazy
-
-encrypt :: RSA.PublicKey -> BL.ByteString -> IO (BL.ByteString, SystemRandom)
-encrypt pub plain = do
-  g <- newGenIO :: IO SystemRandom
-  return $ first encode $ RSA.encrypt g pub plain
-
-decrypt :: RSA.PrivateKey -> BS.ByteString -> BS.ByteString
-decrypt priv cipher = either BS.pack (fromLazy . RSA.decrypt priv . toLazy) $ Base64.decode cipher
-
-sign :: RSA.PrivateKey -> BL.ByteString -> BL.ByteString
-sign = (encode.).RSA.sign
-
-verify :: RSA.PublicKey -> BS.ByteString -> BS.ByteString -> Bool
-verify pub plain cipher = RSA.verify pub plain' $ decode cipher'
-  where
-    plain' = toLazy plain
-    cipher' = toLazy cipher
 
 showSshKey :: RSA.PublicKey -> BS.ByteString
 showSshKey pub = SSH.encode $ SSH.OpenSshPublicKeyRsa pub ""
