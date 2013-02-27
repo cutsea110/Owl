@@ -5,8 +5,9 @@ module Handler.Service
 
 import Import hiding (object)
 import Owl.Helpers.Auth.HashDB (validateUser, setPassword)
-import Owl.Service.API.Auth as A
-import Owl.Service.API.ChangePass as CP
+import Yesod.Auth.Owl.Util
+import Yesod.Auth.Owl.Auth as A
+import Yesod.Auth.Owl.ChangePass as CP
 
 import Crypto.PubKey.RSA (PublicKey(..))
 import Data.Conduit as C
@@ -15,7 +16,6 @@ import Data.Aeson
 import Data.Attoparsec (parse, maybeResult)
 import Data.List (find)
 import qualified Data.Text as T
-import Owl.Helpers.Util
 import qualified Settings
 import qualified Data.ByteString.Char8 as BS
 
@@ -30,7 +30,7 @@ verifyRequest = do
     checker :: (BS.ByteString, BS.ByteString, BS.ByteString) -> Handler (Maybe (Bool, PublicKey, Maybe Value))
     checker (cph, cid, sig) =
       return $ find ((==cid).clientId) Settings.clientPublicKeys >>= \c ->
-        return (verify (pubkey c) cph sig,
+        return (verify (pubkey c) (toLazy cph) (toLazy sig),
                 pubkey c,
                 maybeResult $ parse json $ decrypt Settings.owl_priv cph
                )
