@@ -60,6 +60,7 @@ postEmailR = do
 
 register :: UserId -> Text -> Handler ()
 register uid email = do
+  r <- getMessageRender
   verKey <- liftIO randomKey
   verUrl <- do
     render <- getUrlRenderParams
@@ -69,32 +70,32 @@ register uid email = do
                      , UserVerkey =. Just verKey
                      , UserVerstatus =. Just Unverified
                      ]
-  liftIO $ sendRegister email verUrl
+  liftIO $ sendRegister r email verUrl
   where
     randomKey :: IO Text
     randomKey = do
       stdgen <- newStdGen
       return $ T.pack $ fst $ randomString 10 stdgen
 
-sendRegister :: Text -> Text -> IO ()
-sendRegister addr verurl = do
+sendRegister :: (AppMessage -> Text) -> Text -> Text -> IO ()
+sendRegister render addr verurl = do
   mail <- simpleMail (to addr) Settings.owlEmailAddress sbj textPart htmlPart []
   renderSendMail mail
   where
     to = Address Nothing
-    sbj = "Verify your email address"
+    sbj = render MsgVerifyYourEmailAddress
     textPart = [stext|
-Please confirm your email address by clicking on the link below.
+\#{render MsgConfirmEmailAddress}
 
 \#{verurl}
 
-Thank you
+\#{render MsgThankyou}
 |]
     htmlPart = TLE.decodeUtf8 $ renderHtml [shamlet|
-<p>Please confirm your email address by clicking on the link below.
+<p>#{render MsgConfirmEmailAddress}
 <p>
   <a href=#{verurl}>#{verurl}
-<p>Thank you
+<p>#{render MsgThankyou}
 |]
 
 getVerifyR :: Handler RepHtml
