@@ -123,3 +123,7 @@ NoteToChangeOthersEmail: Be carefull to change user's email address.
 
 ConfigUserSetting: Config user settings
 DescriptForConfigSetting: No item to configure on this version.
+
+VerifyYourEmailAddress: Verify your email address
+ConfirmEmailAddress: Please confirm your email address by clicking on the link below.
+Thankyou: Thank you
