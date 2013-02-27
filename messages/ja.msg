@@ -133,4 +133,5 @@ CannotFindAccount: アカウントIDが間違っています.
 CannotSendPasswordReset: パスワードリセットメールを送信できませんでした.メールアドレスが確認済みである必要があります.
 ResetYourPassword: パスワードリセットメール
 LoginByOnetimepass: 下の一時パスワードを入力してログインしてください.一時的にログインできますので,すぐにパスワードを設定し直してください.
+IfYouDontRequestOnetimepassMail: このメールは一時パスワードの発行要求を受けてOwlシステムが送信したものです.心当たりがない場合には無視してください.
 OnetimePassword: 一時パスワード

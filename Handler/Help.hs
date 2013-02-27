@@ -67,7 +67,7 @@ sendRegister render uname pass addr =
 \#{render MsgAccountID} : #{uname}
 \#{render MsgOnetimePassword} : #{pass}
 
-\#{render MsgThankyou}
+\#{render MsgIfYouDontRequestOnetimepassMail}
 |]
     htmlPart = TLE.decodeUtf8 $ renderHtml [shamlet|
 <p>#{render MsgLoginByOnetimepass}
@@ -76,5 +76,6 @@ sendRegister render uname pass addr =
   <dd>#{uname}
   <dt>#{render MsgOnetimePassword}
   <dd>#{pass}
-<p>#{render MsgThankyou}
+
+<p>#{render MsgIfYouDontRequestOnetimepassMail}
 |]

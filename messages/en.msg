@@ -133,4 +133,5 @@ CannotFindAccount: Can not find the account.
 CannotSendPasswordReset: Can not send password reset mail.
 ResetYourPassword: Reset your password.
 LoginByOnetimepass: Please login the one time password by clicking on the link below.
+IfYouDontRequestOnetimepassMail: Ignore this mail, if you don't request to create an onetime password.
 OnetimePassword: Onetime Password
