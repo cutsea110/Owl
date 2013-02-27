@@ -84,7 +84,7 @@ toLazy :: BS.ByteString -> BL.ByteString
 toLazy = BL.pack . BS.unpack
 
 genKey :: IO (RSA.PublicKey, RSA.PrivateKey)
-genKey = (newGenIO::IO SystemRandom) >>= return . fs . flip RSA.generateKeyPair 1024
+genKey = (newGenIO::IO SystemRandom) >>= return . fs . flip RSA.generateKeyPair 2048
   where
     fs (f, s, _) = (f, s)
 
