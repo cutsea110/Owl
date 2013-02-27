@@ -23,13 +23,9 @@ import Prelude
 import Yesod
 import qualified Codec.Crypto.RSA as RSA
 import Control.Applicative ((<$>),(<*>))
-import Control.Arrow (first)
-import Crypto.Random
 import qualified Crypto.PubKey.OpenSsh as SSH (OpenSshPublicKey(..), encode)
 import Database.Persist.Store
 import qualified Data.ByteString.Char8 as BS
-import qualified Data.ByteString.Base64 as Base64
-import qualified Data.ByteString.Lazy.Char8 as BL
 import qualified Data.ByteString.Lazy.UTF8 as BL
 import Data.Char (toLower, isSpace)
 import Data.Digest.Pure.MD5 (md5)
