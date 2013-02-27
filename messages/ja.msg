@@ -25,7 +25,7 @@ DescrptForUsage: (No description)
 SendReminderMail: リマインダメール送信
 FailSentReminderMail: リマインダメールの送信に失敗しました
 
-SendVerifyMail: 認証確認メール送信
+SendVerifyMail: 確認メール送信
 FailSentVerifyMail: 確認メールの送信に失敗しました
 
 NOTE: NOTE
@@ -84,9 +84,9 @@ PasswordsUnmatch: 新しいパスワードが異なります.
 FailToUpdatePassword: パスワードの変更に失敗しました.
 InvalidCurrentPassword: 現在のパスワードが間違っています.
 
-Verify: 認証する
-VerifyKey: 認証キー
-VerifyYourEmail: メールアドレスを認証してください.
+Verify: 確認する
+VerifyKey: 確認キー
+VerifyYourEmail: メールアドレスを確認してください.
 YourVerifyingEmail: メールアドレス
 NotSetAnyEmail: メールアドレスが登録されていません.
 SuccessVerifyEmail: メールアドレスの確認に成功しました.
