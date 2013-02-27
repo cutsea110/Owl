@@ -78,9 +78,8 @@ register uid email = do
       return $ T.pack $ fst $ randomString 10 stdgen
 
 sendRegister :: (AppMessage -> Text) -> Text -> Text -> IO ()
-sendRegister render addr verurl = do
-  mail <- simpleMail (to addr) Settings.owlEmailAddress sbj textPart htmlPart []
-  renderSendMail mail
+sendRegister render addr verurl =
+  renderSendMail =<< simpleMail (to addr) Settings.owlEmailAddress sbj textPart htmlPart []
   where
     to = Address Nothing
     sbj = render MsgVerifyYourEmailAddress

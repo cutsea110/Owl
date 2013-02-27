@@ -127,3 +127,10 @@ DescriptForConfigSetting: 現在のバージョンでは設定可能な項目は
 VerifyYourEmailAddress: メールアドレス確認
 ConfirmEmailAddress: 下のリンクをクリックしてメールアドレスを確認してください.
 Thankyou: このメールに心当りがない方はOwl認証サーバの管理者までご連絡ください.
+
+SendPasswordReset: パスワードリセットメールを送信しました.
+CannotFindAccount: アカウントIDが間違っています.
+CannotSendPasswordReset: パスワードリセットメールを送信できませんでした.メールアドレスが確認済みである必要があります.
+ResetYourPassword: パスワードリセットメール
+LoginByOnetimepass: 下の一時パスワードを入力してログインしてください.一時的にログインできますので,すぐにパスワードを設定し直してください.
+OnetimePassword: 一時パスワード

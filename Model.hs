@@ -4,6 +4,7 @@ import Prelude
 import Yesod
 import Data.Text (Text)
 import qualified Data.Text as T
+import Data.Time
 import Database.Persist.Quasi
 import Data.Monoid ((<>))
 import Owl.Helpers.Util (toGravatarHash)

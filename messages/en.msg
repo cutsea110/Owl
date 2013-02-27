@@ -127,3 +127,10 @@ DescriptForConfigSetting: No item to configure on this version.
 VerifyYourEmailAddress: Verify your email address
 ConfirmEmailAddress: Please confirm your email address by clicking on the link below.
 Thankyou: Thank you
+
+SendPasswordReset: Send password reset mail.
+CannotFindAccount: Can not find the account.
+CannotSendPasswordReset: Can not send password reset mail.
+ResetYourPassword: Reset your password.
+LoginByOnetimepass: Please login the one time password by clicking on the link below.
+OnetimePassword: Onetime Password
