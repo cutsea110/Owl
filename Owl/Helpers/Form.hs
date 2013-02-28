@@ -9,6 +9,7 @@ module Owl.Helpers.Form
        , profileForm
        , profileForm'
        , fileForm
+       , onetimeForm
        ) where
 
 import Import
@@ -144,3 +145,8 @@ $("##{rawJS id'}").change(function(){
   <button type=submit .btn.btn-primary><i class="icon-upload icon-white"></i> _{MsgUpload}
 |]
     }
+
+onetimeForm :: Maybe (Text, Text) -> Form (Text, Text)
+onetimeForm mv = renderBootstrap $ (,)
+                 <$> areq textField (fs MsgAccountID) (fst <$> mv)
+                 <*> areq textField (fs MsgOnetimePassword) (snd <$> mv)
