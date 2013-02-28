@@ -140,3 +140,6 @@ SuccessLoginByOnetimePassword: Success to login by the onetime password.
 FailLoginByOnetimePassword: Fail to login by the onetime password.
 OnetimeLoginURL: Login URL(onetime password)
 OnetimeLogin: Onetime password Login
+
+ResetPasswordOnOnetimeLogin: Reset password on onetime login
+ResetPassword: Reset password

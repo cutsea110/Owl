@@ -13,10 +13,11 @@
   /email     EmailR          POST
   /verify    VerifyR         GET POST
 
-/help        HELP:
-  /          HelpR           GET
-  /pwd-reset PasswordResetR  POST
-  /onepass   OnetimeLoginR   GET POST
+/help         HELP:
+  /           HelpR           GET
+  /pwd-reset  PasswordResetR  POST
+  /onepass    OnetimeLoginR   GET POST
+  /reset-pass ResetPasswordR  GET POST
 
 /config      ConfigR         GET
 

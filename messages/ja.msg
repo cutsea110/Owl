@@ -140,3 +140,6 @@ SuccessLoginByOnetimePassword: 一時パスワードによるログインに成�
 FailLoginByOnetimePassword: 一時パスワードによるログインに失敗しました.
 OnetimeLoginURL: 一時パスワードログインURL
 OnetimeLogin: 一時パスワードログイン
+
+ResetPasswordOnOnetimeLogin: パスワードリセット(一時ログイン)
+ResetPassword: パスワードをリセットする

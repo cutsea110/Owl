@@ -3,6 +3,8 @@ module Handler.Help
        , postPasswordResetR
        , getOnetimeLoginR
        , postOnetimeLoginR
+       , getResetPasswordR
+       , postResetPasswordR
        ) where
 
 import Import
@@ -10,7 +12,8 @@ import qualified Data.Text as T
 import qualified Data.Text.Lazy.Encoding as TLE
 import Data.Time
 import Network.Mail.Mime
-import Owl.Helpers.Form (accountForm, onetimeForm)
+import Owl.Helpers.Auth.HashDB (setPassword)
+import Owl.Helpers.Form (accountForm, passwordForm, onetimeForm)
 import qualified Settings (owlEmailAddress)
 import System.Random (newStdGen)
 import Text.Shakespeare.Text (stext)
@@ -117,7 +120,7 @@ postOnetimeLoginR = do
             then do
             setCreds False $ Creds "onetime" uname [("pass", otp)]
             setMessageI MsgSuccessLoginByOnetimePassword
-            redirect $ HELP OnetimeLoginR
+            redirect $ HELP ResetPasswordR
             else do
             setMessageI MsgFailLoginByOnetimePassword
             redirect $ HELP OnetimeLoginR
@@ -127,3 +130,25 @@ postOnetimeLoginR = do
     _ -> do
       setMessageI MsgFailLoginByOnetimePassword
       redirect $ HELP OnetimeLoginR
+
+getResetPasswordR :: Handler RepHtml
+getResetPasswordR = do
+  (w, e) <- generateFormPost $ passwordForm Nothing
+  mmsg <- getMessage
+  defaultLayout $ do
+    setTitle "Reset password"
+    $(widgetFile "reset-password")
+
+postResetPasswordR :: Handler ()
+postResetPasswordR = do
+  uid <- requireAuthId
+  ((r, _), _) <- runFormPost $ passwordForm Nothing
+  case r of
+    FormSuccess newPass -> do
+      runDB $ do
+        u <- get404 uid
+        replace uid =<< setPassword newPass u
+      setMessageI MsgPasswordUpdated
+    FormFailure (x:_) -> setMessage $ toHtml x
+    _ -> setMessageI MsgFailToUpdatePassword
+  redirect $ HELP ResetPasswordR
