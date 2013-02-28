@@ -135,3 +135,7 @@ ResetYourPassword: Reset your password.
 LoginByOnetimepass: Please login the one time password by clicking on the link below.
 IfYouDontRequestOnetimepassMail: Ignore this mail, if you don't request to create an onetime password.
 OnetimePassword: Onetime Password
+LoginByOnetimePassword: Login by onetime password
+FailLoginByOnetimePassword: Fail to login by the onetime password.
+OnetimeLoginURL: Login URL(onetime password)
+OnetimeLogin: Onetime password Login

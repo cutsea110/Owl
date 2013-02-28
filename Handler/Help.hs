@@ -1,6 +1,8 @@
 module Handler.Help 
        ( getHelpR
        , postPasswordResetR
+       , getOnetimeLoginR
+       , postOnetimeLoginR
        ) where
 
 import Import
@@ -8,12 +10,13 @@ import qualified Data.Text as T
 import qualified Data.Text.Lazy.Encoding as TLE
 import Data.Time
 import Network.Mail.Mime
-import Owl.Helpers.Form (accountForm)
+import Owl.Helpers.Form (accountForm, onetimeForm)
 import qualified Settings (owlEmailAddress)
 import System.Random (newStdGen)
 import Text.Shakespeare.Text (stext)
 import Text.Blaze.Html.Renderer.Utf8 (renderHtml)
 import Text.Hamlet (shamlet)
+import Yesod.Auth
 
 getHelpR :: Handler RepHtml
 getHelpR = do
@@ -50,16 +53,19 @@ registOnetimePassword uid uname email = do
                       <$> randomKey 
                       <*> fmap (addUTCTime 86400) getCurrentTime
   _ <- runDB $ insert $ Onetime uid onepass limit
-
-  liftIO $ sendRegister r uname onepass email
+  url <- do
+    render <- getUrlRender
+    tm <- getRouteToMaster
+    return $ render (tm $ HELP OnetimeLoginR)
+  liftIO $ sendRegister r url uname onepass email
   where
     randomKey :: IO Text
     randomKey = do
       stdgen <- newStdGen
       return $ T.pack $ fst $ randomString 10 stdgen
 
-sendRegister :: (AppMessage -> Text) -> Text -> Text -> Text -> IO ()
-sendRegister render uname pass addr =
+sendRegister :: (AppMessage -> Text) -> Text -> Text -> Text -> Text -> IO ()
+sendRegister render url uname pass addr = do
   renderSendMail =<< simpleMail (to addr) Settings.owlEmailAddress sbj textPart htmlPart []
   where
     to = Address Nothing
@@ -67,6 +73,7 @@ sendRegister render uname pass addr =
     textPart = [stext|
 \#{render MsgLoginByOnetimepass}
 
+\#{render MsgOnetimeLoginURL}: #{url}
 \#{render MsgAccountID} : #{uname}
 \#{render MsgOnetimePassword} : #{pass}
 
@@ -74,6 +81,8 @@ sendRegister render uname pass addr =
 |]
     htmlPart = TLE.decodeUtf8 $ renderHtml [shamlet|
 <p>#{render MsgLoginByOnetimepass}
+<p>#{render MsgOnetimeLoginURL} :
+  <a href=#{url}>#{url}
 <dl>
   <dt>#{render MsgAccountID}
   <dd>#{uname}
@@ -82,3 +91,36 @@ sendRegister render uname pass addr =
 
 <p>#{render MsgIfYouDontRequestOnetimepassMail}
 |]
+
+getOnetimeLoginR :: Handler RepHtml
+getOnetimeLoginR = do
+  (w, e) <- generateFormPost $ onetimeForm Nothing
+  mmsg <- getMessage
+  defaultLayout $ do
+    setTitle "Onetime login"
+    $(widgetFile "onetime-login")
+
+postOnetimeLoginR :: Handler ()
+postOnetimeLoginR = do
+  ((r, _), _) <- runFormPost $ onetimeForm Nothing
+  case r of
+    FormSuccess (uname, otp) -> do
+      mu <- runDB $ getBy $ UniqueUser uname
+      case mu of
+        Just u -> do
+          now <- liftIO getCurrentTime
+          c <- runDB $ count [ OnetimeUser ==. entityKey u
+                             , OnetimePassword ==. otp
+                             , OnetimeLimit >=. now
+                             ]
+          if c > 0
+            then setCreds True $ Creds "onetime" uname [("pass", otp)]
+            else do
+            setMessageI MsgFailLoginByOnetimePassword
+            redirect $ HELP OnetimeLoginR
+        Nothing -> do
+          setMessageI MsgFailLoginByOnetimePassword
+          redirect $ HELP OnetimeLoginR
+    _ -> do
+      setMessageI MsgFailLoginByOnetimePassword
+      redirect $ HELP OnetimeLoginR

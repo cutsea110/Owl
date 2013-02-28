@@ -16,6 +16,7 @@
 /help        HELP:
   /          HelpR           GET
   /pwd-reset PasswordResetR  POST
+  /onepass   OnetimeLoginR   GET POST
 
 /config      ConfigR         GET
 
