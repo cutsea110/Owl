@@ -114,7 +114,10 @@ postOnetimeLoginR = do
                              , OnetimeLimit >=. now
                              ]
           if c > 0
-            then setCreds True $ Creds "onetime" uname [("pass", otp)]
+            then do
+            setCreds False $ Creds "onetime" uname [("pass", otp)]
+            setMessageI MsgSuccessLoginByOnetimePassword
+            redirect $ HELP OnetimeLoginR
             else do
             setMessageI MsgFailLoginByOnetimePassword
             redirect $ HELP OnetimeLoginR

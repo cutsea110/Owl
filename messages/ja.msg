@@ -136,6 +136,7 @@ LoginByOnetimepass: 下の一時パスワードログインURLから一時パス
 IfYouDontRequestOnetimepassMail: このメールは一時パスワードの発行要求を受けてOwlシステムが送信したものです.心当たりがない場合には無視してください.
 OnetimePassword: 一時パスワード
 LoginByOnetimePassword: 一時パスワードでログインする
+SuccessLoginByOnetimePassword: 一時パスワードによるログインに成功しました.すぐにパスワードを変更してください.
 FailLoginByOnetimePassword: 一時パスワードによるログインに失敗しました.
 OnetimeLoginURL: 一時パスワードログインURL
 OnetimeLogin: 一時パスワードログイン
