@@ -17,8 +17,8 @@ Settings: 設定
 Logout: ログアウト
 
 ForgetPassword: パスワードを忘れた?
-IfYouLostPassword: パスワードを忘れた場合には,リマインダメールを使ってパスワードをリセットしてください.
-ReceiveReminderMail: リマインダメールに記載しているアカウントで一時的にログインできるようになります.
+IfYouLostPassword: パスワードを忘れた場合には,リセットメールを使ってパスワードをリセットしてください.
+ReceiveResetMail: リセットメールに記載しているアカウントで一時的にログインできるようになります.
 Usage: 使用方法
 DescrptForUsage: (No description)
 

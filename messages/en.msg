@@ -18,7 +18,7 @@ Logout: Logout
 
 ForgetPassword: Forget Password?
 IfYouLostPassword: If you lost your password, reset password by using email reminder.
-ReceiveReminderMail: You can login to the Owl at one time.
+ReceiveResetMail: You can login to the Owl at one time.
 Usage: Usage
 DescrptForUsage: (No description)
 
