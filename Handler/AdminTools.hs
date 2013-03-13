@@ -104,7 +104,8 @@ postCreateUserR = do
   case r of
     FormSuccess (uname, role, pass) -> do
       runDB $ do
-        uid <- insert $ defUser { userUsername = uname, userRole = role }
+        usr <- liftIO newUser
+        uid <- insert $ usr { userUsername = uname, userRole = role }
         replace uid =<< setPassword pass =<< get404 uid
       setMessageI MsgCreateNewFace
     FormFailure (x:_) -> setMessage $ toHtml x
@@ -141,12 +142,13 @@ postImportCsvR = do
     importCSV :: [[BC.ByteString]] -> Handler ()
     importCSV = runDB . mapM_ importRow . fmap (fmap decodeUtf8) . filter ((>=5).length)
     importRow (uname:rawpass:email:fname:gname:_) = do
+      usr <- liftIO newUser
       uid <- maybe
-             (insert $ defUser { userUsername=uname
-                               , userFamilyname=fname
-                               , userGivenname=gname
-                               , userEmail=Just email
-                               })
+             (insert $ usr { userUsername=uname
+                           , userFamilyname=fname
+                           , userGivenname=gname
+                           , userEmail=Just email
+                           })
              (return . entityKey)
              =<< getBy (UniqueUser uname)
       replace uid =<< setPassword rawpass =<< get404 uid

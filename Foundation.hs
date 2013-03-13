@@ -164,7 +164,8 @@ instance YesodAuth App where
         case x of
             Just (Entity uid _) -> return $ Just uid
             Nothing -> do
-                fmap Just $ insert $ defUser { userUsername = (credsIdent creds) }
+              usr <- liftIO newUser
+              fmap Just $ insert $ usr { userUsername = (credsIdent creds) }
 
     -- You can add other plugins like BrowserID, email or OAuth here
     authPlugins _ = [authHashDB (Just . UniqueUser)]

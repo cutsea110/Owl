@@ -34,16 +34,20 @@ userMd5hash' u = case userMd5hash u of
   Just x -> x
   Nothing -> toGravatarHash $ userUsername u
 
-defUser :: User
-defUser = User { userUsername = ""
-               , userPassword = ""
-               , userSalt = ""
-               , userRole = None
-               , userFamilyname = ""
-               , userGivenname = ""
-               , userComment = Nothing
-               , userEmail = Nothing
-               , userVerkey = Nothing
-               , userVerstatus = Nothing
-               , userMd5hash = Nothing
-               }
+newUser :: IO User
+newUser = do
+  now <- liftIO getCurrentTime
+  return $ User { userUsername = ""
+                , userPassword = ""
+                , userSalt = ""
+                , userRole = None
+                , userFamilyname = ""
+                , userGivenname = ""
+                , userComment = Nothing
+                , userEmail = Nothing
+                , userVerkey = Nothing
+                , userVerstatus = Nothing
+                , userMd5hash = Nothing
+                , userCreated = now
+                , userUpdated = now
+                }

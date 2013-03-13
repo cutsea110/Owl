@@ -13,6 +13,9 @@ User
     verstatus   VerStatus Maybe
     md5hash     Text Maybe
 
+    created     UTCTime default=now()
+    updated     UTCTime default=now()
+
     UniqueUser username
 
 Onetime
