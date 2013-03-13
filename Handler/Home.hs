@@ -12,6 +12,7 @@ import Import
 import Yesod.Auth
 import qualified Data.Text as T
 import qualified Data.Text.Lazy.Encoding as TLE
+import Data.Time (getCurrentTime)
 import Network.Mail.Mime
 import Owl.Helpers.Auth.HashDB (setPassword)
 import Owl.Helpers.Form
@@ -40,7 +41,8 @@ postPasswordR = do
   ((r, _), _) <- runFormPost $ passwordForm' (entityVal u) Nothing
   case r of
     FormSuccess newPass -> do
-      runDB . replace (entityKey u) =<< setPassword newPass (entityVal u)
+      now <- liftIO getCurrentTime
+      runDB . replace (entityKey u) =<< setPassword newPass (entityVal u) { userUpdated = now }
       setMessageI MsgPasswordUpdated
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailToUpdatePassword
@@ -66,9 +68,11 @@ register uid email = do
     render <- getUrlRenderParams
     tm <- getRouteToMaster
     return $ render (tm (HOME VerifyR)) [("key", verKey)]
+  now <- liftIO getCurrentTime
   runDB $ update uid [ UserEmail =. Just email
                      , UserVerkey =. Just verKey
                      , UserVerstatus =. Just Unverified
+                     , UserUpdated =. now
                      ]
   liftIO $ sendRegister r email verUrl
   where
@@ -121,7 +125,12 @@ postVerifyR = do
           then do
           lift $ setMessageI MsgSuccessVerifyEmail
           let hash = fmap toGravatarHash $ userEmail u
-          update uid [UserVerkey =.Nothing, UserVerstatus =. Just Verified, UserMd5hash =. hash]
+          now <- liftIO getCurrentTime
+          update uid [ UserVerkey =.Nothing
+                     , UserVerstatus =. Just Verified
+                     , UserMd5hash =. hash
+                     , UserUpdated =. now
+                     ]
           else do
           lift $ setMessageI MsgFailVerifyEmail
           return ()
@@ -135,7 +144,12 @@ postProfileR = do
   ((r, _), _) <- runFormPost $ profileForm Nothing
   case r of
     FormSuccess (fn, gn, cmt) -> do
-      runDB $ update uid [UserFamilyname =. fn, UserGivenname =. gn, UserComment =. cmt]
+      now <- liftIO getCurrentTime
+      runDB $ update uid [ UserFamilyname =. fn
+                         , UserGivenname =. gn
+                         , UserComment =. cmt
+                         , UserUpdated =. now
+                         ]
       setMessageI MsgUpdateProfile
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailUpdateProfile

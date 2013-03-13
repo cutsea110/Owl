@@ -147,7 +147,8 @@ postResetPasswordR = do
     FormSuccess newPass -> do
       runDB $ do
         u <- get404 uid
-        replace uid =<< setPassword newPass u
+        now <- liftIO getCurrentTime
+        replace uid =<< setPassword newPass u { userUpdated = now }
       setMessageI MsgPasswordUpdated
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailToUpdatePassword

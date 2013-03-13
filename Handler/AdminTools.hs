@@ -21,6 +21,7 @@ import Data.Conduit.List (consume)
 import Data.Maybe
 import qualified Data.Text as T
 import Data.Text.Encoding (decodeUtf8)
+import Data.Time (getCurrentTime)
 import Owl.Helpers.Auth.HashDB (setPassword)
 import Owl.Helpers.Widget
 import Owl.Helpers.Form
@@ -60,7 +61,13 @@ postUserProfileR uid = do
   ((r, _), _) <- runFormPost $ profileForm' Nothing
   case r of
     FormSuccess (fn, gn, role, cmt) -> do
-      runDB $ update uid [UserFamilyname =. fn, UserGivenname =. gn, UserRole =. role, UserComment =. cmt]
+      now <- liftIO getCurrentTime
+      runDB $ update uid [ UserFamilyname =. fn
+                         , UserGivenname =. gn
+                         , UserRole =. role
+                         , UserComment =. cmt
+                         , UserUpdated =. now
+                         ]
       setMessageI MsgUpdateProfile
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailUpdateProfile
@@ -72,7 +79,8 @@ postUserPasswordR uid = do
   ((r, _), _) <- runFormPost $ passwordForm Nothing
   case r of
     FormSuccess newPass -> do
-      runDB $ replace uid =<< setPassword newPass u
+      now <- liftIO getCurrentTime
+      runDB $ replace uid =<< setPassword newPass u { userUpdated = now }
       setMessageI MsgPasswordUpdated
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailToUpdatePassword
@@ -92,7 +100,12 @@ postUserEmailR uid = do
   ((r, _), _) <- runFormPost $ emailForm' Nothing
   case r of
     FormSuccess (memail, mverstatus, mverkey) -> do
-      runDB $ update uid [UserEmail =. memail, UserVerstatus =. mverstatus, UserVerkey =. mverkey]
+      now <- liftIO getCurrentTime
+      runDB $ update uid [ UserEmail =. memail
+                         , UserVerstatus =. mverstatus
+                         , UserVerkey =. mverkey
+                         , UserUpdated =. now
+                         ]
       setMessageI MsgUpdateEmailaddress
     FormFailure (x:_) -> setMessage $ toHtml x
     _ -> setMessageI MsgFailToUpdateEmail
