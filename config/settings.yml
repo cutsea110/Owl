@@ -6,14 +6,17 @@ Default: &defaults
   #analytics: UA-YOURCODE
 
 Development:
+  port: 3002
+  approot: "http://localhost:3002"
   <<: *defaults
 
 Testing:
   <<: *defaults
 
 Staging:
+  approot: "https://bisocie2.basement.timedia.co.jp/_owl"
   <<: *defaults
 
 Production:
-  #approot: "http://www.example.com"
+  approot: "http://bisocie.seitoku.timedia.co.jp/_owl"
   <<: *defaults
