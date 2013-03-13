@@ -20,6 +20,8 @@ Staging:
   <<: *defaults
 
 Production:
-  database: owl_production
+  user: soubun
+  password: sougoubunnka
+  database: owl
   poolsize: 100
   <<: *defaults
