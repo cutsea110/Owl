@@ -93,13 +93,13 @@ SuccessVerifyEmail: success to verify your email address.
 FailVerifyEmail: fail to verify your email address.
 SentVerifyMail: Send verify mail
 
-UpdateProfile: Update profile.Wait about 10 min to reflect the other systems.
+UpdateProfile: Update profile.Wait about 5 minutes to reflect the other systems.
 FailUpdateProfile: Fail to update profile
 
 NoEmailAddress: No email address
 Fullname: Name
 
-UpdateEmailaddress: Update email address.Wait about 10 min to reflect the other systems.
+UpdateEmailaddress: Update email address.Wait about 5 minutes to reflect the other systems.
 FailToUpdateEmail: Fail to update email address
 
 SuccessImportUsers: Success import users
