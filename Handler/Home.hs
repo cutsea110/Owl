@@ -88,11 +88,11 @@ sendRegister render addr verurl =
     to = Address Nothing
     sbj = render MsgVerifyYourEmailAddress
     textPart = [stext|
-\#{render MsgConfirmEmailAddress}
+ #{render MsgConfirmEmailAddress}
 
-\#{verurl}
+ #{verurl}
 
-\#{render MsgThankyou}
+ #{render MsgThankyou}
 |]
     htmlPart = TLE.decodeUtf8 $ renderHtml [shamlet|
 <p>#{render MsgConfirmEmailAddress}
