@@ -18,5 +18,6 @@ Staging:
   <<: *defaults
 
 Production:
-  approot: "http://bisocie.seitoku.timedia.co.jp/_owl"
+  #approot: "https://bisocie2.basement.timedia.co.jp/_owl"
+  approot: "https://bisocie.seitoku.ac.jp/_owl"
   <<: *defaults
