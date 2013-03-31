@@ -21,6 +21,7 @@ import Web.ClientSession (getKey)
 import Text.Hamlet (hamletFile)
 import Owl.Helpers.Auth.HashDB (authHashDB, HashDBUser(..))
 import Owl.Helpers.Util (getCurrentRoute', gravatarUrl)
+import System.Log.FastLogger (Logger)
 
 -- | The site argument for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
@@ -32,6 +33,7 @@ data App = App
     , connPool :: Database.Persist.Store.PersistConfigPool Settings.PersistConfig -- ^ Database connection pool.
     , httpManager :: Manager
     , persistConfig :: Settings.PersistConfig
+    , appLogger :: Logger
     }
 
 -- Set up i18n messages. See the message folder.
@@ -125,6 +127,8 @@ instance Yesod App where
     -- in development, and warnings and errors in production.
     shouldLog _ _source level =
         development || level == LevelWarn || level == LevelError
+
+    getLogger = return . appLogger
 
 -- Utility functions for isAuthorized
 loggedInAuth :: GHandler s App AuthResult
