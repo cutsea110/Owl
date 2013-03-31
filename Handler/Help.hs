@@ -74,13 +74,13 @@ sendRegister render url uname pass addr = do
     to = Address Nothing
     sbj = render MsgResetYourPassword
     textPart = [stext|
-\#{render MsgLoginByOnetimepass}
+ #{render MsgLoginByOnetimepass}
 
-\#{render MsgOnetimeLoginURL}: #{url}
-\#{render MsgAccountID} : #{uname}
-\#{render MsgOnetimePassword} : #{pass}
+ #{render MsgOnetimeLoginURL}: #{url}
+ #{render MsgAccountID} : #{uname}
+ #{render MsgOnetimePassword} : #{pass}
 
-\#{render MsgIfYouDontRequestOnetimepassMail}
+ #{render MsgIfYouDontRequestOnetimepassMail}
 |]
     htmlPart = TLE.decodeUtf8 $ renderHtml [shamlet|
 <p>#{render MsgLoginByOnetimepass}
