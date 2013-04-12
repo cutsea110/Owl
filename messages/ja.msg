@@ -102,7 +102,7 @@ Fullname: 氏名
 UpdateEmailaddress: メールアドレスを更新しました.
 FailToUpdateEmail: メールアドレスの更新に失敗しました.
 
-AboutCSVFormat: 文字コードはUTF-8で書かれていることと,先頭にヘッダ行が必要です.フィールドの書式を以下にしめします.
+AboutCSVFormat: 文字コードはUTF-8で書かれている必要があります.フィールドの書式を以下にしめします.
 AboutAccountIdColumn: ユーザアカウントID
 AboutPasswordColumn: デフォルトパスワード
 AboutEmailColumn: ユーザのメールアドレス
