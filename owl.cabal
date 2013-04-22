@@ -84,7 +84,7 @@ library
                  , SHA >= 1.6 && < 1.7
                  , transformers >= 0.3 && < 0.4
                  , yesod-persistent >= 1.1 && < 1.2
-                 , utility-ht >= 0.0.8 && < 0.0.9
+                 , utility-ht >= 0.0.9 && < 0.0.10
                  , yesod-routes >= 1.1 && < 1.2
                  , mime-mail >= 0.4 && < 0.5
                  , blaze-html >= 0.6 && < 0.7
