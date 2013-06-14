@@ -23,8 +23,8 @@ import Prelude
 import Yesod
 import qualified Codec.Crypto.RSA as RSA
 import Control.Applicative ((<$>),(<*>))
-import qualified Crypto.PubKey.OpenSsh as SSH (OpenSshPublicKey(..), encode)
-import Database.Persist.Store
+import qualified Crypto.PubKey.OpenSsh as SSH (OpenSshPublicKey(..), encodePublic, encodePrivate)
+import Database.Persist.Sql
 import qualified Data.ByteString.Char8 as BS
 import qualified Data.ByteString.Lazy.UTF8 as BL
 import Data.Char (toLower, isSpace)
@@ -34,21 +34,18 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Tuple.HT (fst3, snd3, thd3)
 
-newIdent2 :: Yesod m => GHandler s m (Text, Text)
+newIdent2 :: Yesod m => HandlerT m IO (Text, Text)
 newIdent2 = (,) <$> newIdent <*> newIdent
 
-newIdent3 :: Yesod m => GHandler s m (Text, Text, Text)
+newIdent3 :: Yesod m => HandlerT m IO (Text, Text, Text)
 newIdent3 = (,,) <$> newIdent <*> newIdent <*> newIdent
 
-newIdent4 :: Yesod m => GHandler s m (Text, Text, Text, Text)
+newIdent4 :: Yesod m => HandlerT m IO (Text, Text, Text, Text)
 newIdent4 = (,,,) <$> newIdent <*> newIdent <*> newIdent <*> newIdent
 
-
-getCurrentRoute' :: Yesod m => GHandler s m (Maybe (Route m))
-getCurrentRoute' = do
-  mcr' <- getCurrentRoute
-  toMaster <- getRouteToMaster
-  return $ fmap toMaster mcr'
+{-# DEPRECATED getCurrentRoute' "Use original getCurrentRoute" #-}
+getCurrentRoute' :: Yesod m => HandlerT m IO (Maybe (Route m))
+getCurrentRoute' = getCurrentRoute
 
 toGravatarHash :: Text -> Text
 toGravatarHash = T.pack . show . md5 . BL.fromString . map toLower . trim . T.unpack
@@ -63,7 +60,7 @@ gravatarUrl s h = T.concat [ "https://secure.gravatar.com/avatar/"
                            ]
 
 showSshKey :: RSA.PublicKey -> BS.ByteString
-showSshKey pub = SSH.encode $ SSH.OpenSshPublicKeyRsa pub ""
+showSshKey pub = SSH.encodePublic $ SSH.OpenSshPublicKeyRsa pub ""
 
 fst4 :: (a, b, c, d) -> a
 fst4 (f,_,_,_) = f
