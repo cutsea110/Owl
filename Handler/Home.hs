@@ -22,9 +22,8 @@ import qualified Settings (owlEmailAddress)
 import System.Random (newStdGen)
 import Text.Shakespeare.Text (stext)
 import Text.Blaze.Html.Renderer.Utf8 (renderHtml)
-import Text.Hamlet (shamlet)
 
-getHomeR :: Handler RepHtml
+getHomeR :: Handler Html
 getHomeR = do
   u <- requireAuth
   (menuProfile, menuPassword, menuEmail) <- newIdent3
@@ -66,8 +65,7 @@ register uid email = do
   verKey <- liftIO randomKey
   verUrl <- do
     render <- getUrlRenderParams
-    tm <- getRouteToMaster
-    return $ render (tm (HOME VerifyR)) [("key", verKey)]
+    return $ render (HOME VerifyR) [("key", verKey)]
   now <- liftIO getCurrentTime
   runDB $ update uid [ UserEmail =. Just email
                      , UserVerkey =. Just verKey
@@ -101,7 +99,7 @@ sendRegister render addr verurl =
 <p>#{render MsgThankyou}
 |]
 
-getVerifyR :: Handler RepHtml
+getVerifyR :: Handler Html
 getVerifyR = do
   uid <- requireAuthId
   memail <- runDB $ do
