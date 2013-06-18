@@ -1,4 +1,5 @@
-module Handler.AdminTools 
+{-# OPTIONS_GHC -fno-warn-incomplete-patterns #-}
+module Handler.AdminTools
        ( getUserListR
        , getUserProfileR
        , postUserProfileR

@@ -1,8 +1,8 @@
+{-# OPTIONS_GHC -fno-warn-type-defaults #-}
 module Owl.Helpers.Util
        ( newIdent2
        , newIdent3
        , newIdent4
-       , getCurrentRoute'
        , toGravatarHash
        , gravatarUrl
        , showSshKey
@@ -23,8 +23,7 @@ import Prelude
 import Yesod
 import qualified Codec.Crypto.RSA as RSA
 import Control.Applicative ((<$>),(<*>))
-import qualified Crypto.PubKey.OpenSsh as SSH (OpenSshPublicKey(..), encodePublic, encodePrivate)
-import Database.Persist.Sql
+import qualified Crypto.PubKey.OpenSsh as SSH (OpenSshPublicKey(..), encodePublic)
 import qualified Data.ByteString.Char8 as BS
 import qualified Data.ByteString.Lazy.UTF8 as BL
 import Data.Char (toLower, isSpace)
@@ -42,10 +41,6 @@ newIdent3 = (,,) <$> newIdent <*> newIdent <*> newIdent
 
 newIdent4 :: Yesod m => HandlerT m IO (Text, Text, Text, Text)
 newIdent4 = (,,,) <$> newIdent <*> newIdent <*> newIdent <*> newIdent
-
-{-# DEPRECATED getCurrentRoute' "Use original getCurrentRoute" #-}
-getCurrentRoute' :: Yesod m => HandlerT m IO (Maybe (Route m))
-getCurrentRoute' = getCurrentRoute
 
 toGravatarHash :: Text -> Text
 toGravatarHash = T.pack . show . md5 . BL.fromString . map toLower . trim . T.unpack
@@ -91,8 +86,8 @@ pagenate f w n (rt, qs) i c = concat $ intersperse [Left ".."] $ ps
     ints = mkPagenate f w maxpage c
     ps = map (map make) ints
     toText = T.pack . show
-    make n | n /= c    = Right (toText (n+1), (rt, ("p", toText n):qs))
-           | otherwise = Left (toText (n+1))
+    make x | x /= c    = Right (toText (x+1), (rt, ("p", toText x):qs))
+           | otherwise = Left (toText (x+1))
 
 mkPagenate :: Int -> Int -> Int -> Int -> [[Int]]
 mkPagenate fillGap width maxpage current =
