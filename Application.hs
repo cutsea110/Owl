@@ -12,8 +12,8 @@ import Yesod.Default.Config
 import Yesod.Default.Main
 import Yesod.Default.Handlers
 import Network.Wai.Middleware.RequestLogger
-import qualified Database.Persist.Store
-import Database.Persist.GenericSql (runMigration)
+import qualified Database.Persist.Sql
+import Database.Persist.Sql (runMigration)
 import Network.HTTP.Conduit (newManager, def)
 import Control.Monad.Logger (runLoggingT)
 import System.IO (stdout)
