@@ -122,7 +122,7 @@ profileForm' mv = renderBootstrap $ (,,,)
 fileForm :: Maybe FileInfo -> Form FileInfo
 fileForm mv = renderBootstrap $ areq fileField' (fs MsgUploadFilePath) mv
 
-fileField' :: Field s App FileInfo
+fileField' :: Field Handler FileInfo
 fileField' = fileField
     { fieldView = \id' name attrs _ isReq -> do
        toWidget [lucius|##{id'}-custom:hover {

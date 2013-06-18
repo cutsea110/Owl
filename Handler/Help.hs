@@ -18,10 +18,9 @@ import qualified Settings (owlEmailAddress)
 import System.Random (newStdGen)
 import Text.Shakespeare.Text (stext)
 import Text.Blaze.Html.Renderer.Utf8 (renderHtml)
-import Text.Hamlet (shamlet)
 import Yesod.Auth
 
-getHelpR :: Handler RepHtml
+getHelpR :: Handler Html
 getHelpR = do
   (menuSendReminderMail, menuUsage) <- (,) <$> newIdent <*> newIdent
   (w, e) <- generateFormPost $ accountForm Nothing
@@ -58,8 +57,7 @@ registOnetimePassword uid uname email = do
   _ <- runDB $ insert $ Onetime uid onepass limit
   url <- do
     render <- getUrlRender
-    tm <- getRouteToMaster
-    return $ render (tm $ HELP OnetimeLoginR)
+    return $ render $ HELP OnetimeLoginR
   liftIO $ sendRegister r url uname onepass email
   where
     randomKey :: IO Text
@@ -95,7 +93,7 @@ sendRegister render url uname pass addr = do
 <p>#{render MsgIfYouDontRequestOnetimepassMail}
 |]
 
-getOnetimeLoginR :: Handler RepHtml
+getOnetimeLoginR :: Handler Html
 getOnetimeLoginR = do
   (w, e) <- generateFormPost $ onetimeForm Nothing
   mmsg <- getMessage
@@ -131,7 +129,7 @@ postOnetimeLoginR = do
       setMessageI MsgFailLoginByOnetimePassword
       redirect $ HELP OnetimeLoginR
 
-getResetPasswordR :: Handler RepHtml
+getResetPasswordR :: Handler Html
 getResetPasswordR = do
   (w, e) <- generateFormPost $ passwordForm Nothing
   mmsg <- getMessage

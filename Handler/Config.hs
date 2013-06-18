@@ -2,7 +2,7 @@ module Handler.Config where
 
 import Import
 
-getConfigR :: Handler RepHtml
+getConfigR :: Handler Html
 getConfigR = do
   defaultLayout $ do
     setTitle "Config user setting"

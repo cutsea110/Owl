@@ -35,13 +35,13 @@ verifyRequest = do
                 maybeResult $ parse json $ decrypt Settings.owl_priv cph
                )
 
-postAuthenticateR :: Handler RepJson
+postAuthenticateR :: Handler Value
 postAuthenticateR = do
   mchecked <- verifyRequest
   case mchecked of
     Just (True, key, Just v) -> case fromJSON v of
       Success (AuthReq i p) ->
-        jsonToRepJson =<< authentication key (i, p)
+        returnJson =<< authentication key (i, p)
       Error msg -> invalidArgs [T.pack msg]
     _ -> permissionDeniedI MsgYouUnauthorizedClient
   where
@@ -62,13 +62,13 @@ postAuthenticateR = do
         return $ A.Rejected i p $ render MsgTheAccountPasswordInvalid
       return . OwlRes . fst =<< (liftIO $ encrypt key $ encode r)
 
-postChangePasswordR :: Handler RepJson
+postChangePasswordR :: Handler Value
 postChangePasswordR = do
   mchecked <- verifyRequest
   case mchecked of
     Just (True, key, Just v) -> case fromJSON v of
       Success (ChangePassReq i c p p2) ->
-        jsonToRepJson =<< changePass key (i, c, p, p2)
+        returnJson =<< changePass key (i, c, p, p2)
       Error msg -> invalidArgs [T.pack msg]
     _ -> permissionDeniedI MsgYouUnauthorizedClient
   where
