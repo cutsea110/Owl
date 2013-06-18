@@ -27,7 +27,7 @@ import Owl.Helpers.Widget
 import Owl.Helpers.Form
 import Owl.Helpers.Util
 
-getUserListR :: Handler RepHtml
+getUserListR :: Handler Html
 getUserListR = do
   (modalCreateUser, modalEditUser, modalKillUser) <- newIdent3
   (mq, mp) <- (,) <$> lookupGetParam "q" <*> lookupGetParam "p"
@@ -44,17 +44,17 @@ getUserListR = do
     setTitleI MsgMaintUser
     $(widgetFile "user-list")
 
-getUserProfileR :: UserId -> Handler RepJson
+getUserProfileR :: UserId -> Handler Value
 getUserProfileR uid = do
   u <- runDB $ get404 uid
-  jsonToRepJson $ object [ "username" .= userUsername u
-                         , "familyname" .= userFamilyname u
-                         , "givenname" .= userGivenname u
-                         , "fullname" .= userFullname u
-                         , "role" .= show (fromEnum (userRole u) + 1)
-                         , "comment" .= fmap unTextarea (userComment u)
-                         , "avatarUrl80" .= gravatarUrl 80 (userMd5hash' u)
-                         ]
+  returnJson $ object [ "username" .= userUsername u
+                      , "familyname" .= userFamilyname u
+                      , "givenname" .= userGivenname u
+                      , "fullname" .= userFullname u
+                      , "role" .= show (fromEnum (userRole u) + 1)
+                      , "comment" .= fmap unTextarea (userComment u)
+                      , "avatarUrl80" .= gravatarUrl 80 (userMd5hash' u)
+                      ]
 
 postUserProfileR :: UserId -> Handler ()
 postUserProfileR uid = do
@@ -86,14 +86,14 @@ postUserPasswordR uid = do
     _ -> setMessageI MsgFailToUpdatePassword
   redirect $ AdminTool UserListR
 
-getUserEmailR :: UserId -> Handler RepJson
+getUserEmailR :: UserId -> Handler Value
 getUserEmailR uid = do
   u <- runDB $ get404 uid
-  jsonToRepJson $ object [ "email" .= userEmail u
-                         , "verstatus" .= fmap ((+1).fromEnum) (userVerstatus u)
-                         , "verstatus_str" .= fmap show (userVerstatus u)
-                         , "verkey" .= userVerkey u
-                         ]
+  returnJson $ object [ "email" .= userEmail u
+                      , "verstatus" .= fmap ((+1).fromEnum) (userVerstatus u)
+                      , "verstatus_str" .= fmap show (userVerstatus u)
+                      , "verkey" .= userVerkey u
+                      ]
 
 postUserEmailR :: UserId -> Handler ()
 postUserEmailR uid = do
@@ -131,7 +131,7 @@ postKillUserR uid = do
   setMessageI MsgUserKilled
   redirect $ AdminTool UserListR
 
-getImportCsvR :: Handler RepHtml
+getImportCsvR :: Handler Html
 getImportCsvR = do
   mmsg <- getMessage
   (w, e) <- generateFormPost $ fileForm Nothing
@@ -144,7 +144,7 @@ postImportCsvR = do
   ((r, _), _) <- runFormPost $ fileForm Nothing
   case r of
     FormSuccess fi  -> do
-      lbs <- lift $ BC.unlines <$> (fileSource fi $$ consume)
+      lbs <- BC.unlines <$> (fileSource fi $$ consume)
       either
         (setMessage.toHtml)
         (\csv -> importCSV csv >> setMessageI MsgSuccessImportUsers)
@@ -166,7 +166,7 @@ postImportCsvR = do
              =<< getBy (UniqueUser uname)
       replace uid =<< setPassword rawpass =<< get404 uid
 
-getClientListR :: Handler RepHtml
+getClientListR :: Handler Html
 getClientListR = do
   mmsg <- getMessage
   modalEditClient <- newIdent
