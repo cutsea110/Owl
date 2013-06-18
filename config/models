@@ -17,6 +17,7 @@ User
     updated     UTCTime default=now()
 
     UniqueUser username
+    deriving Typeable
 
 Onetime
     user        UserId

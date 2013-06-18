@@ -1,4 +1,6 @@
-module Model where
+module Model ( module Model
+             , module Model.Fields) 
+       where
 
 import Prelude
 import Yesod
@@ -7,21 +9,15 @@ import qualified Data.Text as T
 import Data.Time
 import Database.Persist.Quasi
 import Data.Monoid ((<>))
+import Data.Typeable (Typeable)
 import Owl.Helpers.Util (toGravatarHash)
-
-data Role = None | Admin
-          deriving (Read, Show, Eq, Ord, Enum, Bounded)
-derivePersistField "Role"
-
-data VerStatus = Unverified | Verified
-            deriving (Read, Show, Eq, Ord, Enum, Bounded)
-derivePersistField "VerStatus"
+import Model.Fields
 
 -- You can define all of your database entities in the entities file.
 -- You can find more information on persistent and how to declare entities
 -- at:
 -- http://www.yesodweb.com/book/persistent/
-share [mkPersist sqlSettings, mkMigrate "migrateAll"]
+share [mkPersist sqlOnlySettings, mkMigrate "migrateAll"]
     $(persistFileWith lowerCaseSettings "config/models")
 
 userFullname :: User -> Text

@@ -11,16 +11,15 @@ import Yesod.Default.Util (addStaticContentExternal)
 import Network.HTTP.Conduit (Manager)
 import qualified Settings
 import Settings.Development (development)
-import qualified Database.Persist.Store
+import qualified Database.Persist
+import Database.Persist.Sql (SqlPersistT)
 import Settings.StaticFiles
-import Database.Persist.GenericSql
 import Settings (widgetFile, Extra (..))
 import Model
 import Text.Jasmine (minifym)
-import Web.ClientSession (getKey)
 import Text.Hamlet (hamletFile)
 import Owl.Helpers.Auth.HashDB (authHashDB, HashDBUser(..))
-import Owl.Helpers.Util (getCurrentRoute', gravatarUrl)
+import Owl.Helpers.Util (gravatarUrl)
 import System.Log.FastLogger (Logger)
 
 -- | The site argument for your application. This can be a good place to
@@ -30,9 +29,9 @@ import System.Log.FastLogger (Logger)
 data App = App
     { settings :: AppConfig DefaultEnv Extra
     , getStatic :: Static -- ^ Settings for static file serving.
-    , connPool :: Database.Persist.Store.PersistConfigPool Settings.PersistConfig -- ^ Database connection pool.
+    , connPool :: Database.Persist.PersistConfigPool Settings.PersistConf -- ^ Database connection pool.
     , httpManager :: Manager
-    , persistConfig :: Settings.PersistConfig
+    , persistConfig :: Settings.PersistConf
     , appLogger :: Logger
     }
 
@@ -60,7 +59,7 @@ mkMessage "App" "messages" "en"
 -- split these actions into two functions and place them in separate files.
 mkYesodData "App" $(parseRoutesFile "config/routes")
 
-type Form x = Html -> MForm App App (FormResult x, Widget)
+type Form x = Html -> MForm (HandlerT App IO ) (FormResult x, Widget)
 
 -- Please see the documentation for the Yesod typeclass. There are a number
 -- of settings which can be configured by overriding methods here.
@@ -69,17 +68,15 @@ instance Yesod App where
 
     -- Store session data on the client in encrypted cookies,
     -- default session idle timeout is 120 minutes
-    makeSessionBackend _ = do
-        key <- getKey "config/client_session_key.aes"
-        let timeout = 120 * 60 -- 120 minutes
-        (getCachedDate, _closeDateCache) <- clientSessionDateCacher timeout
-        return . Just $ clientSessionBackend2 key getCachedDate
+    makeSessionBackend _ = fmap Just $ defaultClientSessionBackend
+        (120 * 60) -- 120 minutes
+        "config/client_session_key.aes"
 
     defaultLayout widget = do
         mu <- maybeAuth
         isadmin <- isAdmin
         master <- getYesod
-        mcr <- getCurrentRoute'
+        mcr <- getCurrentRoute
 
         -- We break up the default layout into two components:
         -- default-layout is the contents of the body tag, and
@@ -96,7 +93,7 @@ instance Yesod App where
           
           let navbar = $(widgetFile "navbar")
           $(widgetFile "default-layout")
-        hamletToRepHtml $(hamletFile "templates/default-layout-wrapper.hamlet")
+        giveUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
 
     -- This is done to provide an optimization for serving static files from
     -- a separate domain. Please see the staticRoot setting in Settings.hs
@@ -118,7 +115,11 @@ instance Yesod App where
     -- and names them based on a hash of their content. This allows
     -- expiration dates to be set far in the future without worry of
     -- users receiving stale content.
-    addStaticContent = addStaticContentExternal minifym base64md5 Settings.staticDir (StaticR . flip StaticRoute [])
+    addStaticContent = addStaticContentExternal minifym genFilename Settings.staticDir (StaticR . flip StaticRoute [])
+      where
+        genFilename lbs
+          | development = "autogen-" ++ base64md5 lbs
+          | otherwise = base64md5 lbs
 
     -- Place Javascript at bottom of the body tag so the rest of the page loads first
     jsLoader _ = BottomOfBody
@@ -128,16 +129,16 @@ instance Yesod App where
     shouldLog _ _source level =
         development || level == LevelWarn || level == LevelError
 
-    getLogger = return . appLogger
+    makeLogger = return . appLogger
 
 -- Utility functions for isAuthorized
-loggedInAuth :: GHandler s App AuthResult
+loggedInAuth :: Handler AuthResult
 loggedInAuth = fmap (maybe AuthenticationRequired $ const Authorized) maybeAuthId
 
-isAdmin :: GHandler s App Bool
+isAdmin :: Handler Bool
 isAdmin = fmap (maybe False $ (==Admin).userRole.entityVal) maybeAuth
 
-isAdminAuth :: GHandler s App AuthResult
+isAdminAuth :: Handler AuthResult
 isAdminAuth = fmap (maybe AuthenticationRequired isadmin) maybeAuth
   where
     isadmin = toAuth.(==Admin).userRole.entityVal
@@ -145,15 +146,14 @@ isAdminAuth = fmap (maybe AuthenticationRequired isadmin) maybeAuth
                then Authorized 
                else Unauthorized "This account doesn't have administrator privileges."
 
+
 -- How to run database actions.
 instance YesodPersist App where
-    type YesodPersistBackend App = SqlPersist
-    runDB f = do
-        master <- getYesod
-        Database.Persist.Store.runPool
-            (persistConfig master)
-            f
-            (connPool master)
+    type YesodPersistBackend App = SqlPersistT
+    runDB = defaultRunDB persistConfig connPool
+
+instance YesodPersistRunner App where
+    getDBRunner = defaultGetDBRunner connPool
 
 instance YesodAuth App where
     type AuthId App = UserId
