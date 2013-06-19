@@ -1,5 +1,5 @@
 module Model ( module Model
-             , module Model.Fields) 
+             , module Model.Fields)
        where
 
 import Prelude
