@@ -1,6 +1,6 @@
 module Model ( module Model
-             , module Model.Fields)
-       where
+             , module Model.Fields
+             ) where
 
 import Prelude
 import Yesod
