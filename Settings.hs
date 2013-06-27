@@ -4,7 +4,7 @@
 -- by overriding methods in the Yesod typeclass. That instance is
 -- declared in the Foundation.hs file.
 module Settings
-       ( PersistConfig
+       ( PersistConf
        , staticDir
        , staticRoot
        , widgetFileSettings
@@ -38,7 +38,7 @@ import Network.Mail.Mime (Address(..))
 import Crypto.PubKey.RSA
 
 -- | Which Persistent backend this site is using.
-type PersistConfig = PostgresConf
+type PersistConf = PostgresConf
 
 -- Static setting below. Changing these requires a recompile
 

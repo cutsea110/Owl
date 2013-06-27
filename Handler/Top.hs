@@ -3,7 +3,7 @@ module Handler.Top where
 import Import
 import Yesod.Auth
 
-getTopR :: Handler RepHtml
+getTopR :: Handler Html
 getTopR = do
   mu <- maybeAuth
   defaultLayout $ do
