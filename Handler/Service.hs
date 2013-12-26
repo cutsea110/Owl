@@ -10,10 +10,10 @@ import Yesod.Auth.Owl.Auth as A
 import Yesod.Auth.Owl.ChangePass as CP
 
 import Crypto.PubKey.RSA (PublicKey(..))
-import Data.Conduit as C
 import Network.Wai
 import Data.Aeson
 import Data.Attoparsec (parse, maybeResult)
+import Data.Conduit (($$), await)
 import Data.List (find)
 import qualified Data.Text as T
 import qualified Settings
@@ -23,7 +23,7 @@ verifyRequest :: Handler (Maybe (Bool, PublicKey, Maybe Value))
 verifyRequest = do
   req <- getRequest
   let (req', h) = (reqWaiRequest req, requestHeaders req')
-  mcipher <- liftIO $ runResourceT $ requestBody req' $$ await
+  mcipher <- liftIO $ requestBody req' $$ await
   maybe (return Nothing) checker $
     (,,) <$> mcipher <*> lookup "X-Owl-clientId" h <*> lookup "X-Owl-signature" h
   where

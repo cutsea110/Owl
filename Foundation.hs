@@ -20,7 +20,7 @@ import Text.Jasmine (minifym)
 import Text.Hamlet (hamletFile)
 import Owl.Helpers.Auth.HashDB (authHashDB, HashDBUser(..))
 import Owl.Helpers.Util (gravatarUrl)
-import System.Log.FastLogger (Logger)
+import Yesod.Core.Types (Logger)
 
 -- | The site argument for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
