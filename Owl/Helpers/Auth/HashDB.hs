@@ -19,6 +19,7 @@ import Yesod.Persist
 import Yesod.Form
 import Yesod.Auth
 import Yesod.Core
+import qualified Yesod.Auth.Message as Msg
 
 import Control.Applicative         ((<$>), (<*>))
 import Control.Monad               (replicateM,liftM)
@@ -106,7 +107,7 @@ postLoginR :: ( YesodAuth y, YesodPersist y
               , PersistUnique (b (HandlerT y IO))
               )
            => (Text -> Maybe (Unique user))
-           -> HandlerT Auth (HandlerT y IO) ()
+           -> HandlerT Auth (HandlerT y IO) TypedContent
 postLoginR uniq = do
     (mu,mp) <- lift $ runInputPost $ (,)
         <$> iopt textField "username"
@@ -115,8 +116,8 @@ postLoginR uniq = do
     isValid <- lift $ fromMaybe (return False)
                  (validateUser <$> (uniq =<< mu) <*> mp)
     if isValid
-       then lift $ setCreds True $ Creds "hashdb" (fromMaybe "" mu) []
-       else loginErrorMessage LoginR "Invalid username/password"
+       then lift $ setCredsRedirect $ Creds "hashdb" (fromMaybe "" mu) []
+       else loginErrorMessageI LoginR Msg.InvalidUsernamePass
 
 -- | A drop in for the getAuthId method of your YesodAuth instance which
 --   can be used if authHashDB is the only plugin in use.
@@ -137,13 +138,14 @@ getAuthIdHashDB authR uniq creds = do
         -- user already authenticated
         Just uid -> return $ Just uid
         Nothing       -> do
+          -- TODO : Refactoring
             x <- case uniq (credsIdent creds) of
                    Nothing -> return Nothing
                    Just u  -> runDB (getBy u)
             case x of
                 -- user exists
                 Just (Entity uid _) -> return $ Just uid
-                Nothing -> loginErrorMessage (authR LoginR) "User not found"
+                Nothing -> return Nothing
 
 -- | Prompt for username and password, validate that against a database
 --   which holds the username and a hash of the password
