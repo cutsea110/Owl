@@ -58,27 +58,29 @@ library
                  -- , yesod-platform                >= 1.1        && < 1.2
                  , yesod                         >= 1.2        && < 1.3
                  , yesod-core                    >= 1.2        && < 1.3
-                 , yesod-auth                    >= 1.2        && < 1.3
+                 , yesod-auth                    >= 1.3        && < 1.4
                  , yesod-static                  >= 1.2        && < 1.3
                  , yesod-default                 >= 1.2        && < 1.3
                  , yesod-form                    >= 1.3        && < 1.4
                  , clientsession                 >= 0.9        && < 0.10
                  , bytestring                    >= 0.9        && < 0.11
                  , text                          >= 0.11       && < 0.12
-                 , persistent                    >= 1.2        && < 1.3
-                 , persistent-postgresql         >= 1.2        && < 1.3
+                 , persistent                    >= 1.3        && < 1.4
+                 , persistent-postgresql         >= 1.3        && < 1.4
                  , template-haskell
-                 , hamlet                        >= 1.1        && < 1.2
-                 , shakespeare-css               >= 1.0        && < 1.1
-                 , shakespeare-js                >= 1.0.2      && < 1.2
-                 , shakespeare-text              >= 1.0        && < 1.1
+                 , hamlet                        >= 1.1        && < 1.3
+                 , shakespeare                   >= 2.0        && < 2.1
+                 , shakespeare-css               >= 1.1        && < 1.2
+                 , shakespeare-js                >= 1.3        && < 1.4
+                 , shakespeare-text              >= 1.1        && < 1.2
                  , hjsmin                        >= 0.1        && < 0.2
                  , monad-control                 >= 0.3        && < 0.4
-                 , wai-extra                     >= 1.3        && < 1.4
+                 , wai-extra                     >= 1.3        && < 3.0
+                 , wai-logger                    >= 2.0        && < 3.0
                  , yaml                          >= 0.8        && < 0.9
-                 , http-conduit                  >= 1.9        && < 1.10
+                 , http-conduit                  >= 1.9        && < 3.0
                  , directory                     >= 1.1        && < 1.3
-                 , warp                          >= 1.3        && < 1.4
+                 , warp                          >= 1.3        && < 3.0
                  , data-default
                  , aeson
 
@@ -86,22 +88,22 @@ library
                  , SHA >= 1.6 && < 1.7
                  , transformers >= 0.3 && < 0.4
                  , yesod-persistent >= 1.2 && < 1.3
-                 , utility-ht >= 0.0.9 && < 0.0.10
+                 , utility-ht >= 0.0.10 && < 0.1
                  , yesod-routes >= 1.2 && < 1.3
                  , mime-mail >= 0.4 && < 0.5
-                 , blaze-html >= 0.6 && < 0.7
+                 , blaze-html >= 0.7 && < 0.8
                  , utf8-string >= 0.3 && < 0.4
                  , pureMD5 >= 2.1 && < 2.2
-                 , conduit >= 1.0 && < 1.1
-                 , csv-conduit >= 0.5 && < 0.6
-                 , wai >= 1.4 && < 1.5
-                 , attoparsec >= 0.10 && < 0.11
-                 , crypto-pubkey >= 0.1 && < 0.2
+                 , conduit >= 1.1 && < 1.2
+                 , csv-conduit >= 0.6 && < 0.7
+                 , wai >= 1.4 && < 3.0
+                 , attoparsec >= 0.11 && < 0.12
+                 , crypto-pubkey >= 0.1 && < 0.3
                  , crypto-pubkey-openssh >= 0.2 && < 0.3
-                 , RSA >= 1.2 && < 1.3
+                 , RSA >= 2.0 && < 2.1
                  , time >= 1.4 && < 1.5
                  , monad-logger >= 0.3 && < 0.4
-                 , fast-logger >= 0.3 && < 0.4
+                 , fast-logger >= 0.3 && < 3.0
 
                  , owl-auth >= 0.2 && < 0.3
 
