@@ -1,7 +1,6 @@
 module Owl.Helpers.Widget where
 
 import Import
-import Prelude (head, tail)
 import Control.Monad (join)
 import Owl.Helpers.Form
 import Owl.Helpers.Util (newIdent3)
@@ -11,7 +10,7 @@ import Yesod.Routes.Class (Route)
 
 passwordWidget :: Form Text -> Route App -> Widget
 passwordWidget form toPost = do
-  u <- handlerToWidget requireAuth
+  _u <- handlerToWidget requireAuth
   r <- handlerToWidget getUrlRender
   (w, e) <- handlerToWidget $ generateFormPost form
   $(widgetFile "password")
@@ -58,7 +57,7 @@ createUserWidget mv toPost = do
 
 editUserWidget :: Widget
 editUserWidget = do
-  u <- handlerToWidget requireAuth
+  _u <- handlerToWidget requireAuth
   (menuProfile, menuPassword, menuEmail) <- handlerToWidget newIdent3
   let passform = passwordForm Nothing
   $(widgetFile "edit-user")
