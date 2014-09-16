@@ -67,11 +67,11 @@ registOnetimePassword uid uname email = do
 
 sendRegister :: (AppMessage -> Text) -> Text -> Text -> Text -> Text -> IO ()
 sendRegister render url uname pass addr = do
-  renderSendMail =<< simpleMail (to addr) Settings.owlEmailAddress sbj textPart htmlPart []
+  renderSendMail =<< simpleMail (to addr) Settings.owlEmailAddress sbj textPart' htmlPart' []
   where
     to = Address Nothing
     sbj = render MsgResetYourPassword
-    textPart = [stext|
+    textPart' = [stext|
  #{render MsgLoginByOnetimepass}
 
  #{render MsgOnetimeLoginURL}: #{url}
@@ -80,7 +80,7 @@ sendRegister render url uname pass addr = do
 
  #{render MsgIfYouDontRequestOnetimepassMail}
 |]
-    htmlPart = TLE.decodeUtf8 $ renderHtml [shamlet|
+    htmlPart' = TLE.decodeUtf8 $ renderHtml [shamlet|
 <p>#{render MsgLoginByOnetimepass}
 <p>#{render MsgOnetimeLoginURL} :
   <a href=#{url}>#{url}

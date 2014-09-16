@@ -37,12 +37,12 @@ fs' msg attrs = FieldSettings { fsLabel = SomeMessage msg
 
 
 accountForm :: Maybe Text -> Form Text
-accountForm mv = renderBootstrap $ areq textField (fs MsgAccountID) mv
+accountForm mv = renderBootstrap2 $ areq textField (fs MsgAccountID) mv
 
 newAccountForm :: Maybe (Text, Role, Text, Text) -> Form (Text, Role, Text)
 newAccountForm mv fragment = do
   render <- lift getMessageRender
-  (res, widget) <- flip renderBootstrap fragment $ (,,,)
+  (res, widget) <- flip renderBootstrap2 fragment $ (,,,)
                    <$> areq textField (fs MsgAccountID) (fst4 <$> mv)
                    <*> areq (selectFieldList rls) (fs MsgRole) (snd4 <$> mv)
                    <*> areq passwordField (fs MsgNewPassword) (thd4 <$> mv)
@@ -60,7 +60,7 @@ newAccountForm mv fragment = do
 passwordForm' :: User -> Maybe (Text, Text, Text) -> Form Text
 passwordForm' u mv fragment = do
   render <- lift getMessageRender
-  (res, widget) <- flip renderBootstrap fragment $ (,,)
+  (res, widget) <- flip renderBootstrap2 fragment $ (,,)
                    <$> areq passwordField (fs MsgCurrentPassword) (fst3 <$> mv)
                    <*> areq passwordField (fs MsgNewPassword) (snd3 <$> mv)
                    <*> areq passwordField (fs MsgConfirmNewPassword) (thd3 <$> mv)
@@ -77,7 +77,7 @@ passwordForm' u mv fragment = do
 passwordForm :: Maybe (Text, Text) -> Form Text
 passwordForm mv fragment = do
   render <- lift getMessageRender
-  (res, widget) <- flip renderBootstrap fragment $ (,)
+  (res, widget) <- flip renderBootstrap2 fragment $ (,)
                    <$> areq passwordField (fs MsgNewPassword) (fst <$> mv)
                    <*> areq passwordField (fs MsgConfirmNewPassword) (snd <$> mv)
   return $ case res of
@@ -87,11 +87,11 @@ passwordForm mv fragment = do
     _ -> (fst <$> res, widget)
 
 emailForm :: Maybe Text -> Form Text
-emailForm mv = renderBootstrap $
+emailForm mv = renderBootstrap2 $
                areq emailField (fs' MsgEmail [("placeholder", "your@example.com")]) mv
 
 emailForm' :: Maybe (Maybe Text, Maybe VerStatus, Maybe Text) -> Form (Maybe Text, Maybe VerStatus, Maybe Text)
-emailForm' mv = renderBootstrap $ (,,)
+emailForm' mv = renderBootstrap2 $ (,,)
                    <$> aopt emailField (fs' MsgEmail [("placeholder", "your@example.com")]) (fst3 <$> mv)
                    <*> aopt (selectFieldList vss) (fs MsgVerstatus) (snd3 <$> mv)
                    <*> aopt textField (fs MsgVerkey) (thd3 <$> mv)
@@ -100,16 +100,16 @@ emailForm' mv = renderBootstrap $ (,,)
     vss = map ((T.pack . show) &&& id) [minBound..maxBound]
 
 verifyForm :: Maybe Text -> Form Text
-verifyForm mv = renderBootstrap $ areq hiddenField "verkey" mv
+verifyForm mv = renderBootstrap2 $ areq hiddenField "verkey" mv
 
 profileForm :: Maybe (Text, Text, Maybe Textarea) -> Form (Text, Text, Maybe Textarea)
-profileForm mv = renderBootstrap $ (,,)
+profileForm mv = renderBootstrap2 $ (,,)
                  <$> areq textField (fs MsgFamilyName) (fst3 <$> mv)
                  <*> areq textField (fs MsgGivenName) (snd3 <$> mv)
                  <*> aopt textareaField (fs MsgProfile) (thd3 <$> mv)
 
 profileForm' :: Maybe (Text, Text, Role, Maybe Textarea) -> Form (Text, Text, Role, Maybe Textarea)
-profileForm' mv = renderBootstrap $ (,,,)
+profileForm' mv = renderBootstrap2 $ (,,,)
                   <$> areq textField (fs MsgFamilyName) (fst4 <$> mv)
                   <*> areq textField (fs MsgGivenName) (snd4 <$> mv)
                   <*> areq (selectFieldList rls) (fs MsgRole) (thd4 <$> mv)
@@ -120,7 +120,7 @@ profileForm' mv = renderBootstrap $ (,,,)
 
 
 fileForm :: Maybe FileInfo -> Form FileInfo
-fileForm mv = renderBootstrap $ areq fileField' (fs MsgUploadFilePath) mv
+fileForm mv = renderBootstrap2 $ areq fileField' (fs MsgUploadFilePath) mv
 
 fileField' :: Field Handler FileInfo
 fileField' = fileField
@@ -147,6 +147,6 @@ $("##{rawJS id'}").change(function(){
     }
 
 onetimeForm :: Maybe (Text, Text) -> Form (Text, Text)
-onetimeForm mv = renderBootstrap $ (,)
+onetimeForm mv = renderBootstrap2 $ (,)
                  <$> areq textField (fs MsgAccountID) (fst <$> mv)
                  <*> areq textField (fs MsgOnetimePassword) (snd <$> mv)

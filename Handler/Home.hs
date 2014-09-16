@@ -81,18 +81,18 @@ register uid email = do
 
 sendRegister :: (AppMessage -> Text) -> Text -> Text -> IO ()
 sendRegister render addr verurl =
-  renderSendMail =<< simpleMail (to addr) Settings.owlEmailAddress sbj textPart htmlPart []
+  renderSendMail =<< simpleMail (to addr) Settings.owlEmailAddress sbj textPart' htmlPart' []
   where
     to = Address Nothing
     sbj = render MsgVerifyYourEmailAddress
-    textPart = [stext|
+    textPart' = [stext|
  #{render MsgConfirmEmailAddress}
 
  #{verurl}
 
  #{render MsgThankyou}
 |]
-    htmlPart = TLE.decodeUtf8 $ renderHtml [shamlet|
+    htmlPart' = TLE.decodeUtf8 $ renderHtml [shamlet|
 <p>#{render MsgConfirmEmailAddress}
 <p>
   <a href=#{verurl}>#{verurl}

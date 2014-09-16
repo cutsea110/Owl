@@ -75,7 +75,7 @@ instance Yesod App where
     defaultLayout widget = do
         mu <- maybeAuth
         isadmin <- isAdmin
-        master <- getYesod
+        _master <- getYesod
         mcr <- getCurrentRoute
 
         -- We break up the default layout into two components:
