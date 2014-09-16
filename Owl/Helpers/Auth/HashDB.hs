@@ -132,7 +132,7 @@ getAuthIdHashDB :: ( YesodAuth master, YesodPersist master
                 -> (Text -> Maybe (Unique user)) -- ^ gets user ID
                 -> Creds master                  -- ^ the creds argument
                 -> HandlerT master IO (Maybe (AuthId master))
-getAuthIdHashDB authR uniq creds = do
+getAuthIdHashDB _authR uniq creds = do
     muid <- maybeAuthId
     case muid of
         -- user already authenticated
