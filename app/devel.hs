@@ -1,5 +1,5 @@
 {-# LANGUAGE PackageImports #-}
-import "Test" Application (develMain)
+import "owl" Application (develMain)
 import Prelude (IO)
 
 main :: IO ()
