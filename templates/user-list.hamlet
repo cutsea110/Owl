@@ -23,7 +23,7 @@
             $with h <- userMd5hash' u
               <img .img-rounded src="#{gravatarUrl 80 h}" data-src="holder.js/150x100" alt>
             <div .caption>
-              <h5>#{userUsername u} #
+              <h5>#{userName u} #
                 $if userRole u == Admin
                   <i .glyphicon-crown>
               $maybe s <- userVerstatus u

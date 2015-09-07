@@ -1,6 +1,6 @@
 <!-- Home menu and Dialogs -->
 <div .page-header>
-  <h2>#{userUsername $ entityVal u}
+  <h2>#{userName $ entityVal u}
 
 <div .row>
   <div .span12>

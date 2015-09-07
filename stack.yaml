@@ -1,0 +1,10 @@
+flags: {}
+packages:
+- '.'
+- '../owl-auth'
+extra-deps:
+- crypto-pubkey-openssh-0.2.7
+- utility-ht-0.0.11
+- yesod-pnotify-0.6.0
+- yesod-auth-hashdb-1.4.2.2
+resolver: lts-3.4

@@ -3,8 +3,8 @@ module Handler.Service
        , postChangePasswordR
        ) where
 
-import Import hiding (object)
-import Owl.Helpers.Auth.HashDB (validateUser, setPassword)
+import Import hiding (object, requestHeaders, requestBody)
+import Yesod.Auth.HashDB (validateUser, setPassword)
 import Yesod.Auth.Owl.Util
 import Yesod.Auth.Owl.Auth as A
 import Yesod.Auth.Owl.ChangePass as CP
@@ -13,7 +13,6 @@ import Crypto.PubKey.RSA (PublicKey(..))
 import Network.Wai
 import Data.Aeson
 import Data.Attoparsec.ByteString (parse, maybeResult)
-import Data.List (find)
 import qualified Data.Text as T
 import qualified Settings
 import qualified Data.ByteString.Char8 as BS

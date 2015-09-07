@@ -2,14 +2,10 @@ module Model ( module Model
              , module Model.Fields
              ) where
 
-import Prelude
-import Yesod
-import Data.Text (Text)
-import qualified Data.Text as T
-import Data.Time
+import ClassyPrelude.Yesod
 import Database.Persist.Quasi
-import Data.Monoid ((<>))
-import Data.Typeable (Typeable)
+
+import qualified Data.Text as T
 import Owl.Helpers.Util (toGravatarHash)
 import Model.Fields
 
@@ -17,7 +13,7 @@ import Model.Fields
 -- You can find more information on persistent and how to declare entities
 -- at:
 -- http://www.yesodweb.com/book/persistent/
-share [mkPersist sqlOnlySettings, mkMigrate "migrateAll"]
+share [mkPersist sqlSettings, mkMigrate "migrateAll"]
     $(persistFileWith lowerCaseSettings "config/models")
 
 userFullname :: User -> Text
@@ -28,13 +24,13 @@ userFullname u = if T.null $ userFamilyname u <> userGivenname u
 userMd5hash' :: User -> Text
 userMd5hash' u = case userMd5hash u of
   Just x -> x
-  Nothing -> toGravatarHash $ userUsername u
+  Nothing -> toGravatarHash $ userName u
 
 newUser :: IO User
 newUser = do
   now <- liftIO getCurrentTime
-  return $ User { userUsername = ""
-                , userPassword = ""
+  return $ User { userName = ""
+                , userPassword = Nothing
                 , userSalt = ""
                 , userRole = None
                 , userFamilyname = ""

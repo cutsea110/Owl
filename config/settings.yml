@@ -1,23 +1,29 @@
-Default: &defaults
-  host: "*4" # any IPv4 host
-  port: 3002
-  approot: "http://localhost:3002"
-  copyright: Insert copyright statement here
-  #analytics: UA-YOURCODE
+# Values formatted like "_env:ENV_VAR_NAME:default_value" can be overridden by the specified environment variable.
+# See https://github.com/yesodweb/yesod/wiki/Configuration#overriding-configuration-values-with-environment-variables
 
-Development:
-  port: 3002
-  approot: "http://localhost:3002"
-  <<: *defaults
+static-dir:     "_env:STATIC_DIR:static"
+host:           "_env:HOST:*4" # any IPv4 host
+port:           "_env:PORT:3002"
+approot:        "_env:APPROOT:http://localhost:3002"
+ip-from-header: "_env:IP_FROM_HEADER:false"
 
-Testing:
-  <<: *defaults
+# Optional values with the following production defaults.
+# In development, they default to the inverse.
+#
+# development: false
+# detailed-logging: false
+# should-log-all: false
+# reload-templates: false
+# mutable-static: false
+# skip-combining: false
 
-Staging:
-  approot: "https://bisocie2.basement.timedia.co.jp/_owl"
-  <<: *defaults
+database:
+  user:     "_env:PGUSER:cutsea110"
+  password: "_env:PGPASS:cutsea110"
+  host:     "_env:PGHOST:localhost"
+  port:     "_env:PGPORT:5432"
+  database: "_env:PGDATABASE:owl"
+  poolsize: "_env:PGPOOLSIZE:10"
 
-Production:
-  #approot: "https://bisocie2.basement.timedia.co.jp/_owl"
-  approot: "https://bisocie.seitoku.ac.jp/_owl"
-  <<: *defaults
+copyright: Insert copyright statement here
+#analytics: UA-YOURCODE
