@@ -1,4 +1,7 @@
-flags: {}
+flags:
+  owl:
+    library-only: false
+    dev: false
 packages:
 - '.'
 - '../owl-auth'
