@@ -6,7 +6,7 @@ import Owl.Helpers.Form
 import Owl.Helpers.Util (newIdent3)
 import Text.Julius (rawJS)
 import Yesod.Auth (requireAuth)
-import Yesod.Routes.Class (Route)
+import Yesod.Core (Route)
 
 passwordWidget :: Form Text -> Route App -> Widget
 passwordWidget form toPost = do

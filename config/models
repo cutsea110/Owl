@@ -1,6 +1,6 @@
 User
-    username    Text Eq
-    password    Text
+    name        Text Eq
+    password    Text Maybe
     salt        Text
 
     role        Role
@@ -16,7 +16,7 @@ User
     created     UTCTime default=now()
     updated     UTCTime default=now()
 
-    UniqueUser username
+    UniqueUser name
     deriving Typeable
 
 Onetime

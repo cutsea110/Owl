@@ -15,7 +15,7 @@ module Owl.Helpers.Form
 import Import
 import Control.Arrow ((&&&))
 import qualified Data.Text as T (pack)
-import Owl.Helpers.Auth.HashDB (validateUser)
+import Yesod.Auth.HashDB (validateUser)
 import Owl.Helpers.Util
 import Text.Julius (rawJS)
 
@@ -67,7 +67,7 @@ passwordForm' u mv fragment = do
   lift $ case res of
     FormSuccess (curPass, newPass, newPass')
       | newPass == newPass' -> do
-        checkPass <- validateUser (UniqueUser $ userUsername u) curPass
+        checkPass <- validateUser (UniqueUser $ userName u) curPass
         if checkPass 
           then return (FormSuccess newPass, widget) 
           else return (FormFailure [render MsgInvalidCurrentPassword], widget)

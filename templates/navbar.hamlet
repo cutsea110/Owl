@@ -17,7 +17,7 @@
         <ul .nav.pull-right>
           <li .dropdown>
             <a href="" .dropdown-toggle data-toggle="dropdown">
-              #{userUsername usr} #
+              #{userName usr} #
               <span class="caret">
             <ul .dropdown-menu>
               $if isadmin

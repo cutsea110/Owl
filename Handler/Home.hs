@@ -9,12 +9,10 @@ module Handler.Home
        ) where
 
 import Import
-import Yesod.Auth
 import qualified Data.Text as T
 import qualified Data.Text.Lazy.Encoding as TLE
-import Data.Time (getCurrentTime)
 import Network.Mail.Mime
-import Owl.Helpers.Auth.HashDB (setPassword)
+import Yesod.Auth.HashDB (setPassword)
 import Owl.Helpers.Form
 import Owl.Helpers.Util (newIdent3, toGravatarHash)
 import Owl.Helpers.Widget
@@ -122,11 +120,11 @@ postVerifyR = do
         if userVerkey u == Just verKey
           then do
           lift $ setMessageI MsgSuccessVerifyEmail
-          let hash = fmap toGravatarHash $ userEmail u
+          let hash' = fmap toGravatarHash $ userEmail u
           now <- liftIO getCurrentTime
           update uid [ UserVerkey =.Nothing
                      , UserVerstatus =. Just Verified
-                     , UserMd5hash =. hash
+                     , UserMd5hash =. hash'
                      , UserUpdated =. now
                      ]
           else do
