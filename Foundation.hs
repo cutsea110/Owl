@@ -4,7 +4,7 @@ import Import.NoFoundation
 import Database.Persist.Sql (ConnectionPool, runSqlPool)
 import Text.Hamlet (hamletFile)
 import Text.Jasmine (minifym)
-import Yesod.Auth.HashDB (authHashDB, HashDBUser(..))
+import Yesod.Auth.HashDB (authHashDBWithForm, HashDBUser(..))
 import Yesod.Auth.Message   (AuthMessage (InvalidLogin))
 import Yesod.Default.Util   (addStaticContentExternal)
 import Yesod.Core.Types     (Logger)
@@ -161,7 +161,13 @@ instance YesodAuth App where
             Nothing -> UserError InvalidLogin
 
     -- You can add other plugins like BrowserID, email or OAuth here
-    authPlugins _ = [authHashDB (Just . UniqueUser)]
+    authPlugins _ = [authHashDBWithForm loginWidget (Just . UniqueUser)]
+        where
+          loginWidget :: Route App -> Widget
+          loginWidget action = do
+            name <- newIdent
+            pwd <- newIdent
+            $(widgetFile "loginform")
 
     authHttpManager = getHttpManager
 
