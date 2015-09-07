@@ -1,0 +1,19 @@
+<div .page-header>
+  <h3>Login
+<form method="post" action="@{action}" .form-horizontal>
+  <div .control-group.info>
+    <label .control-label for="##{name}">Account ID
+    <div .controls>
+      <input type="text" ##{name} name="username" .span3 autofocus="" required>
+  <div .control-group.info>
+    <label .control-label for="##{pwd}">Password
+    <div .controls>
+     <input type="password" ##{pwd} name="password" .span3 required>
+  <div .control-group>
+    <div .controls.btn-group>
+      <input type="submit" .btn.btn-primary value="Login">
+
+  <script>
+    if (!("autofocus" in document.createElement("input"))) {
+      document.getElementById("#{name}").focus();
+    }
