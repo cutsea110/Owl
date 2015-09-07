@@ -13,7 +13,6 @@ module Owl.Helpers.Form
        ) where
 
 import Import
-import Control.Arrow ((&&&))
 import qualified Data.Text as T (pack)
 import Yesod.Auth.HashDB (validateUser)
 import Owl.Helpers.Util

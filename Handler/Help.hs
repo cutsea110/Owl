@@ -18,7 +18,6 @@ import qualified Settings (owlEmailAddress)
 import System.Random (newStdGen)
 import Text.Shakespeare.Text (stext)
 import Text.Blaze.Html.Renderer.Utf8 (renderHtml)
-import Yesod.Auth
 
 getHelpR :: Handler Html
 getHelpR = do

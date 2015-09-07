@@ -12,6 +12,7 @@ Flag library-only
     Default:       False
 
 library
+    hs-source-dirs: ., app
     exposed-modules: Application
                      Foundation
                      Import
@@ -112,10 +113,6 @@ library
                  , yesod-auth-hashdb >= 1.4 && < 1.5
                  , owl-auth >= 0.2 && < 0.5
 
-    -- see https://github.com/yesodweb/yesod/issues/814
-    if !os(windows)
-        build-depends: unix
-
 executable         owl
     if flag(library-only)
         Buildable: False
@@ -124,7 +121,6 @@ executable         owl
     hs-source-dirs:    app
     build-depends:     base
                      , owl
-                     , yesod
 
     ghc-options:       -threaded -O2 -rtsopts -with-rtsopts=-N
 

@@ -1,12 +1,9 @@
 module Owl.Helpers.Widget where
 
 import Import
-import Control.Monad (join)
 import Owl.Helpers.Form
 import Owl.Helpers.Util (newIdent3)
 import Text.Julius (rawJS)
-import Yesod.Auth (requireAuth)
-import Yesod.Core (Route)
 
 passwordWidget :: Form Text -> Route App -> Widget
 passwordWidget form toPost = do
