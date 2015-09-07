@@ -22,7 +22,6 @@ module Owl.Helpers.Util
 import Prelude
 import Yesod
 import qualified Codec.Crypto.RSA as RSA
-import Control.Applicative ((<$>),(<*>))
 import qualified Crypto.PubKey.OpenSsh as SSH (OpenSshPublicKey(..), encodePublic)
 import qualified Data.ByteString.Char8 as BS
 import qualified Data.ByteString.Lazy.UTF8 as BL

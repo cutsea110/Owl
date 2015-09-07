@@ -13,17 +13,16 @@ module Handler.AdminTools
        , getClientListR
        ) where
 
+import Prelude (read)
 import Import
 import qualified Data.ByteString.Char8 as BC
 import Data.CSV.Conduit (defCSVSettings)
 import Data.CSV.Conduit.Parser.ByteString (parseCSV)
-import Data.Conduit (($$))
 import Data.Conduit.List (consume)
 import Data.Maybe
 import qualified Data.Text as T
-import Data.Text.Encoding (decodeUtf8)
-import Data.Time (getCurrentTime)
-import Owl.Helpers.Auth.HashDB (setPassword)
+import Data.Text.Encoding as TE (decodeUtf8)
+import Yesod.Auth.HashDB (setPassword)
 import Owl.Helpers.Widget
 import Owl.Helpers.Form
 import Owl.Helpers.Util
@@ -33,7 +32,7 @@ getUserListR = do
   (modalCreateUser, modalEditUser, modalKillUser) <- newIdent3
   (mq, mp) <- (,) <$> lookupGetParam "q" <*> lookupGetParam "p"
   let (p, qf) = (maybe 0 (read . T.unpack) mp,
-                 maybeToList $ fmap (ilike UserUsername) mq)
+                 maybeToList $ fmap (ilike UserName) mq)
   (c, us) <- runDB $ (,)
         <$> count qf
         <*> selectList qf [Asc UserId, LimitTo userNumPerPage, OffsetBy (userNumPerPage * p)]
@@ -48,7 +47,7 @@ getUserListR = do
 getUserProfileR :: UserId -> Handler Value
 getUserProfileR uid = do
   u <- runDB $ get404 uid
-  returnJson $ object [ "username" .= userUsername u
+  returnJson $ object [ "username" .= userName u
                       , "familyname" .= userFamilyname u
                       , "givenname" .= userGivenname u
                       , "fullname" .= userFullname u
@@ -119,7 +118,7 @@ postCreateUserR = do
     FormSuccess (uname, role, pass) -> do
       runDB $ do
         usr <- liftIO newUser
-        uid <- insert $ usr { userUsername = uname, userRole = role }
+        uid <- insert $ usr { userName = uname, userRole = role }
         replace uid =<< setPassword pass =<< get404 uid
       setMessageI MsgCreateNewFace
     FormFailure (x:_) -> setMessage $ toHtml x
@@ -154,11 +153,11 @@ postImportCsvR = do
   redirect $ AdminTool ImportCsvR
   where
     importCSV :: [[BC.ByteString]] -> Handler ()
-    importCSV = runDB . mapM_ importRow . fmap (fmap decodeUtf8) . filter ((>=5).length)
+    importCSV = runDB . mapM_ importRow . fmap (fmap TE.decodeUtf8) . filter ((>=5).length)
     importRow (uname:rawpass:email:fname:gname:_) = do
       usr <- liftIO newUser
       uid <- maybe
-             (insert $ usr { userUsername=uname
+             (insert $ usr { userName=uname
                            , userFamilyname=fname
                            , userGivenname=gname
                            , userEmail=Just email

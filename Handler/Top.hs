@@ -1,7 +1,6 @@
 module Handler.Top where
 
 import Import
-import Yesod.Auth
 
 getTopR :: Handler Html
 getTopR = do

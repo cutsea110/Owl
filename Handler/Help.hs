@@ -12,13 +12,12 @@ import qualified Data.Text as T
 import qualified Data.Text.Lazy.Encoding as TLE
 import Data.Time
 import Network.Mail.Mime
-import Owl.Helpers.Auth.HashDB (setPassword)
+import Yesod.Auth.HashDB (setPassword)
 import Owl.Helpers.Form (accountForm, passwordForm, onetimeForm)
 import qualified Settings (owlEmailAddress)
 import System.Random (newStdGen)
 import Text.Shakespeare.Text (stext)
 import Text.Blaze.Html.Renderer.Utf8 (renderHtml)
-import Yesod.Auth
 
 getHelpR :: Handler Html
 getHelpR = do
@@ -41,7 +40,7 @@ postPasswordResetR = do
       case mu of
         Just u -> case userEmail $ entityVal u of
           Just email -> do
-            registOnetimePassword (entityKey u) (userUsername $ entityVal u) email
+            registOnetimePassword (entityKey u) (userName $ entityVal u) email
             setMessageI MsgSendPasswordReset
           Nothing -> setMessageI MsgCannotSendPasswordReset
         Nothing -> setMessageI MsgCannotFindAccount
