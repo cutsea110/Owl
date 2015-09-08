@@ -4,7 +4,7 @@
 static-dir:     "_env:STATIC_DIR:static"
 host:           "_env:HOST:*4" # any IPv4 host
 port:           "_env:PORT:3002"
-approot:        "_env:APPROOT:http://localhost:3002"
+approot:        "_env:APPROOT:https://bisocie2.seitoku.ac.jp/_owl"
 ip-from-header: "_env:IP_FROM_HEADER:false"
 
 # Optional values with the following production defaults.
