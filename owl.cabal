@@ -103,12 +103,9 @@ library
                  , mime-mail >= 0.4 && < 0.5
                  , pureMD5 >= 2.1 && < 2.2
                  , random >= 1.0 && < 1.2
-                 , time >= 1.4 && < 1.6
-                 , transformers >= 0.3 && < 0.5
                  , utf8-string >= 1.0 && < 1.1
                  , utility-ht >= 0.0.10 && < 0.1
                  , wai >= 1.4 && < 4.0
-                 , yesod-persistent >= 1.2 && < 1.5
 
                  , owl-auth >= 0.2 && < 0.5
                  , yesod-auth-hashdb >= 1.4 && < 1.5
