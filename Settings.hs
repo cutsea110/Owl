@@ -137,6 +137,8 @@ combineScripts = combineScripts'
     (appSkipCombining compileTimeAppSettings)
     combineSettings
 
+-- The rest of this file contains owl's settings
+
 userNumPerPage :: Int
 userNumPerPage = 30
 fillGapWidth :: Int

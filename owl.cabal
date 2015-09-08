@@ -93,25 +93,22 @@ library
                  , vector
                  , time
 
-                 , random >= 1.0 && < 1.2
+                 , RSA >= 2.0 && < 2.2
                  , SHA >= 1.6 && < 1.7
-                 , transformers >= 0.3 && < 0.5
-                 , yesod-persistent >= 1.2 && < 1.5
-                 , utility-ht >= 0.0.10 && < 0.1
-                 , mime-mail >= 0.4 && < 0.5
-                 , blaze-html >= 0.7 && < 0.9
-                 , utf8-string >= 1.0 && < 1.1
-                 , pureMD5 >= 2.1 && < 2.2
-                 , csv-conduit >= 0.6 && < 0.7
-                 , wai >= 1.4 && < 4.0
                  , attoparsec >= 0.10 && < 0.14
+                 , blaze-html >= 0.7 && < 0.9
                  , crypto-pubkey >= 0.1 && < 0.3
                  , crypto-pubkey-openssh >= 0.2 && < 0.3
-                 , RSA >= 2.0 && < 2.2
-                 , time >= 1.4 && < 1.6
+                 , csv-conduit >= 0.6 && < 0.7
+                 , mime-mail >= 0.4 && < 0.5
+                 , pureMD5 >= 2.1 && < 2.2
+                 , random >= 1.0 && < 1.2
+                 , utf8-string >= 1.0 && < 1.1
+                 , utility-ht >= 0.0.10 && < 0.1
+                 , wai >= 1.4 && < 4.0
 
-                 , yesod-auth-hashdb >= 1.4 && < 1.5
                  , owl-auth >= 0.2 && < 0.5
+                 , yesod-auth-hashdb >= 1.4 && < 1.5
 
 executable         owl
     if flag(library-only)
