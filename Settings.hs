@@ -20,7 +20,7 @@ import Yesod.Default.Util          (WidgetFileSettings, widgetFileNoReload,
 import Database.Persist.Postgresql (PostgresConf)
 import qualified Data.ByteString as B
 import Network.Mail.Mime (Address(..))
-import Crypto.PubKey.RSA
+import "crypto-pubkey" Crypto.PubKey.RSA
 
 -- | Runtime settings to configure this application. These settings can be
 -- loaded from various sources: defaults, environment variables, config files,
