@@ -21,7 +21,6 @@ module Owl.Helpers.Util
 
 import Prelude
 import Yesod
-import qualified Codec.Crypto.RSA as RSA
 import qualified Crypto.PubKey.OpenSsh as SSH (OpenSshPublicKey(..), encodePublic)
 import qualified Data.ByteString.Char8 as BS
 import qualified Data.ByteString.Lazy.UTF8 as BL
@@ -31,6 +30,8 @@ import Data.List (intersperse)
 import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Tuple.HT (fst3, snd3, thd3)
+
+import Yesod.Auth.Owl (PublicKey(..))
 
 newIdent2 :: Yesod m => HandlerT m IO (Text, Text)
 newIdent2 = (,) <$> newIdent <*> newIdent
@@ -53,7 +54,7 @@ gravatarUrl s h = T.concat [ "https://secure.gravatar.com/avatar/"
                            , T.pack $ show s
                            ]
 
-showSshKey :: RSA.PublicKey -> BS.ByteString
+showSshKey :: PublicKey -> BS.ByteString
 showSshKey pub = SSH.encodePublic $ SSH.OpenSshPublicKeyRsa pub ""
 
 fst4 :: (a, b, c, d) -> a

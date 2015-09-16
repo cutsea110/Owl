@@ -93,7 +93,6 @@ library
                  , vector
                  , time
 
-                 , RSA >= 2.0 && < 2.2
                  , SHA >= 1.6 && < 1.7
                  , attoparsec >= 0.10 && < 0.14
                  , blaze-html >= 0.7 && < 0.9
