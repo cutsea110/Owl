@@ -18,9 +18,9 @@ import Yesod.Default.Util          (WidgetFileSettings, widgetFileNoReload,
                                     widgetFileReload)
 
 import Database.Persist.Postgresql (PostgresConf)
-import qualified Data.ByteString as B
 import Network.Mail.Mime (Address(..))
-import "crypto-pubkey" Crypto.PubKey.RSA
+
+import Yesod.Auth.Owl (ClientID,PublicKey(..),PrivateKey(..))
 
 -- | Runtime settings to configure this application. These settings can be
 -- loaded from various sources: defaults, environment variables, config files,
@@ -199,7 +199,7 @@ mockingbird_pub = PublicKey { public_size = 256
                             , public_e = 65537
                             }
 
-data Client = Client { clientId :: B.ByteString
+data Client = Client { clientId :: ClientID
                      , clientName :: Text
                      , pubkey :: PublicKey
                      }
