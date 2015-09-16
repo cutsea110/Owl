@@ -84,6 +84,8 @@ instance Yesod App where
     -- The page to be redirected to when authentication is required.
     authRoute _ = Just $ AuthR LoginR
 
+    isAuthorized FaviconR _ = return Authorized
+    isAuthorized RobotsR _ = return Authorized
     isAuthorized (AuthR _) _ = return Authorized
     isAuthorized (AdminTool _) _ = isAdminAuth
     isAuthorized (HELP ResetPasswordR) _ = loggedInAuth
