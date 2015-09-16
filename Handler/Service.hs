@@ -9,13 +9,13 @@ import Yesod.Auth.Owl.Util
 import Yesod.Auth.Owl.Auth as A
 import Yesod.Auth.Owl.ChangePass as CP
 
-import Crypto.PubKey.RSA (PublicKey(..))
 import Network.Wai
 import Data.Aeson
 import Data.Attoparsec.ByteString (parse, maybeResult)
 import qualified Data.Text as T
 import qualified Settings
 import qualified Data.ByteString.Char8 as BS
+import Yesod.Auth.Owl (PublicKey(..))
 
 verifyRequest :: Handler (Maybe (Bool, PublicKey, Maybe Value))
 verifyRequest = do
