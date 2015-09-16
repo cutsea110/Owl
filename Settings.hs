@@ -190,12 +190,22 @@ bisocie_pub = PublicKey { public_size = 256
                         , public_e = 65537
                         }
 
+-- |
+-- mockingbird RSA keys
+--
+mockingbird_pub :: PublicKey
+mockingbird_pub = PublicKey { public_size = 256
+                            , public_n = 26153640976640153519860660637352857750655721601394047799319251443924890697009910596857973411812052773686351503508482023681802723612596968513965694251298791722517803479608180853753105854856994427725446796233960468933058580744447480303580978441065805131828899609760843116845158251326329062696985949365791463692417427698327866165282682255409895945192576497582175675995717643612234818670105549786870908886602736653665906590907665163680800116842584595552715618816691495034564724657442481103819778035747690174403258896839484750632496630885051259937325380159702649492526451358677724476064075276076736567070784816761640813359
+                            , public_e = 65537
+                            }
+
 data Client = Client { clientId :: B.ByteString
                      , clientName :: Text
                      , pubkey :: PublicKey
                      }
 
 clientPublicKeys :: [Client]
-clientPublicKeys = [ Client "Kestrel" "Kestrel" kestrel_pub
+clientPublicKeys = [ Client "mockingbird" "mockingbird" mockingbird_pub
+                   , Client "Kestrel" "Kestrel" kestrel_pub
                    , Client "BISocie" "BISocie" bisocie_pub
                    ]
