@@ -186,6 +186,7 @@ unsafeHandler = Unsafe.fakeHandlerGetLogger appLogger
 
 instance HashDBUser User where
   userPasswordHash = userPassword
+  userPasswordSalt = Just . userSalt
   setPasswordHash h u = u { userPassword = Just h }
 
 -- Note: Some functionality previously present in the scaffolding has been
