@@ -10,4 +10,4 @@ extra-deps:
 - utility-ht-0.0.11
 - yesod-auth-hashdb-1.4.2.2
 - yesod-pnotify-1.1.2
-resolver: lts-3.5
+resolver: lts-3.7
