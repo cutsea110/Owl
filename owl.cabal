@@ -1,5 +1,5 @@
 name:              owl
-version:           0.3.0
+version:           0.3.0.1
 cabal-version:     >= 1.8
 build-type:        Simple
 
@@ -12,7 +12,7 @@ Flag library-only
     Default:       False
 
 library
-    hs-source-dirs: ., app
+    hs-source-dirs: src
     exposed-modules: Application
                      Foundation
                      Import
